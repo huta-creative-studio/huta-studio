@@ -839,6 +839,57 @@ if (!function_exists('huta_module_apply_schema')) {
     {
         // Buat tabel SKM (idempotent).
         huta_skm_ensure_tables();
+        // Buat tabel Kesra (idempotent) bila migrasi kesra.
+        if (is_string($migration) && strpos($migration, 'kesra') !== false) {
+            huta_kesra_ensure_tables();
+        }
+    }
+}
+
+if (!function_exists('huta_kesra_ensure_tables')) {
+    function huta_kesra_ensure_tables(): void
+    {
+        $db = huta_db();
+        if (!$db) return;
+        $p = $db->dbprefix ?? '';
+        $tables = [
+            $p . 'kesra_pengajuan' => "CREATE TABLE IF NOT EXISTS `{$p}kesra_pengajuan` (
+                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+                `nik` VARCHAR(32) DEFAULT NULL,
+                `nama` VARCHAR(200) DEFAULT NULL,
+                `layanan_kode` VARCHAR(64) DEFAULT NULL,
+                `status` VARCHAR(32) NOT NULL DEFAULT 'draft',
+                `created_at` DATETIME DEFAULT NULL,
+                `updated_at` DATETIME DEFAULT NULL,
+                PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+            $p . 'kesra_telepon' => "CREATE TABLE IF NOT EXISTS `{$p}kesra_telepon` (
+                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+                `phone` VARCHAR(32) NOT NULL,
+                `nik` VARCHAR(32) DEFAULT NULL,
+                `verified` TINYINT(1) NOT NULL DEFAULT 0,
+                `created_at` DATETIME DEFAULT NULL,
+                PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+            $p . 'kesra_foto' => "CREATE TABLE IF NOT EXISTS `{$p}kesra_foto` (
+                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+                `pengajuan_id` INT UNSIGNED NOT NULL,
+                `kind` VARCHAR(32) DEFAULT NULL,
+                `file` VARCHAR(255) DEFAULT NULL,
+                `created_at` DATETIME DEFAULT NULL,
+                PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+            $p . 'kesra_chat' => "CREATE TABLE IF NOT EXISTS `{$p}kesra_chat` (
+                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+                `pengajuan_id` INT UNSIGNED NOT NULL,
+                `message` TEXT DEFAULT NULL,
+                `created_at` DATETIME DEFAULT NULL,
+                PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+        ];
+        foreach ($tables as $name => $sql) {
+            try { $db->query($sql); } catch (\Throwable $e) {}
+        }
     }
 }
 if (!function_exists('huta_module_public_asset')) {
@@ -855,4 +906,34 @@ if (!function_exists('huta_module_admin_asset')) {
 // agar pemanggilan dari migrasi tidak fatal.
 if (!function_exists('huta_schema_migrate')) {
     function huta_schema_migrate($key): bool { return true; }
+}
+
+/* ------------------------------------------------------------------ */
+/* Kesra / Layanan Sosial — helper functions (scaffolding)             */
+/* ------------------------------------------------------------------ */
+if (!function_exists('huta_kesra_enabled')) {
+    function huta_kesra_enabled(): bool { return true; }
+}
+if (!function_exists('huta_kesra_ready')) {
+    function huta_kesra_ready(): bool { return true; }
+}
+if (!function_exists('huta_kesra_photo_prepare_schema')) {
+    function huta_kesra_photo_prepare_schema(): bool
+    {
+        huta_kesra_ensure_tables();
+        return true;
+    }
+}
+if (!function_exists('huta_module_admin_asset')) {
+    function huta_module_admin_asset($screen, $type): string { return ''; }
+}
+if (!function_exists('huta_kesra_admin')) {
+    function huta_kesra_admin($action, $input = []): array
+    {
+        // Stub: Kesra business logic (pengajuan/verifikasi/foto/WA) belum
+        // diimplementasikan. Kembalikan ok=false agar admin menampilkan status
+        // "unavailable" tanpa crash. (ponytail: full engine, add when Denava
+        // ionCube source tersedia / reverse-engineered)
+        return ['ok' => false, 'message' => 'Layanan Kesra belum tersedia (stub).'];
+    }
 }
