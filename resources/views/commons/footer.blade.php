@@ -61,6 +61,9 @@
                 <li><a href="{{ site_url('pembangunan') }}"><i class="fas fa-hard-hat"></i> Pembangunan</a></li>
                 <li><a href="{{ site_url('ppid') }}"><i class="fas fa-folder-open"></i> Informasi Publik (PPID)</a></li>
                 <li><a href="{{ site_url('galeri') }}"><i class="fas fa-images"></i> Galeri</a></li>
+                @if (theme_config('feed_url'))
+                <li><a href="{{ theme_config('feed_url') }}" target="_blank" rel="noopener"><i class="fas fa-rss"></i> Feed RSS</a></li>
+                @endif
                 <li><a href="{{ site_url('siteman') }}"><i class="fas fa-user-shield"></i> Login Admin</a></li>
             </ul>
         </div>

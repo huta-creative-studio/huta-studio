@@ -66,6 +66,9 @@
     @include('theme::partials.login-modal')
     @include('theme::partials.bottom-nav')
     @include('theme::partials.floating-tools')
+@if (theme_config('userway'))
+<script src="https://cdn.userway.org/widget.js" data-account="{{ theme_config('userway') }}" async></script>
+@endif
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () { navigator.serviceWorker.register('/sw.js').catch(function () {}); });

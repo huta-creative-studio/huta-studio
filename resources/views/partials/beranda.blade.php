@@ -40,6 +40,10 @@
     @include('theme::partials.galeri-home')
 @endif
 
+@if ($tampil('link_youtube'))
+    @include('theme::partials.youtube-home')
+@endif
+
 @if ($tampil('home_apbdes_enable'))
     @include('theme::partials.apbdes-home')
 @endif
