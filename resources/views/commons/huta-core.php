@@ -293,7 +293,7 @@ if (!function_exists('huta_skm_v2_dispatch')) {
                 }
             }
             return [
-                'ok'            => true,
+                'ok'            => ($survei !== null),
                 'survei'        => $survei,
                 'daftar_survei' => $daftar,
                 'pertanyaan'    => $pertanyaan,
@@ -401,7 +401,7 @@ if (!function_exists('huta_skm_v2_dispatch')) {
             }
 
             return [
-                'ok'                => true,
+                'ok'                => ($survei !== null),
                 'survei'            => $survei,
                 'rekap'             => $rekap,
                 'daftar_survei'     => $daftar,
