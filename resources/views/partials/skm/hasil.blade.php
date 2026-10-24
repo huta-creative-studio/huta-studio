@@ -12,8 +12,7 @@
     <h1 class="text-h2">Hasil Survei Kepuasan Masyarakat</h1>
 
     @if(!empty($daftar_survei) && count($daftar_survei) > 1)
-        <form method="POST" action="{{ site_url('survei-kepuasan/hasil') }}" class="mb-4">
-            @csrf
+        {!! form_open(site_url('survei-kepuasan/hasil'), ['class' => 'mb-4']) !!}
             <label for="pilih_survei" class="font-bold">Pilih Survei</label>
             <select name="pilih_survei" id="pilih_survei" class="form-control" onchange="this.form.submit()">
                 @foreach($daftar_survei as $s)
@@ -22,7 +21,7 @@
                     </option>
                 @endforeach
             </select>
-        </form>
+        {!! form_close() !!}
     @endif
 
     @if(empty($ok) || empty($survei))

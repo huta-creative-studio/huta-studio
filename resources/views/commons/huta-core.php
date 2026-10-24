@@ -165,17 +165,20 @@ if (!function_exists('huta_view_arsip_context')) {
     {
         $desa = is_array($desa) ? $desa : [];
         $routeReq = (string) ($GLOBALS['HUTA_PUBLIC_ROUTE_REQ'] ?? '');
+        $isPenduduk = ($routeReq === 'huta-penduduk');
+        $isIndeks = ($routeReq === 'huta-indeks');
         $isCuaca = ($routeReq === 'huta-cuaca');
         $isGempa = ($routeReq === 'huta-gempa');
+        $isJdih = ($routeReq === 'jdih-tubaba');
         $hutaCuaca = ($isCuaca && function_exists('huta_cuaca_fetch')) ? huta_cuaca_fetch($desa) : ['ok' => false, 'message' => 'Data cuaca dimuat dari BMKG.', 'forecast' => [], 'adm4' => '', 'timezone' => '', 'analysis_label' => '', 'current_label' => 'Cuaca Saat Ini', '_current_weather' => [], '_current_temp' => '-', '_current_wind' => '-', '_today_temp' => '-', '_hum_min' => '-', '_hum_max' => '-'];
         $ctx = [
             // penduduk
             'hutaPencarianPendudukEnabled' => false,
             'hutaCekPendudukLocked'        => false,
             'hutaCekPendudukVisible'       => false,
-            'hutaArsipPenduduk'            => false,
+            'hutaArsipPenduduk'            => $isPenduduk,
             // indeks desa
-            'hutaArsipIndeks'              => false,
+            'hutaArsipIndeks'              => $isIndeks,
             'hutaIndeksEnabled'            => false,
             'hutaIndeksYear'               => (int) date('Y'),
             'hutaIndeksYears'              => [],
@@ -206,6 +209,7 @@ if (!function_exists('huta_view_arsip_context')) {
             'hutaAirScale'                 => [],
             // gempa
             'hutaArsipGempa'               => $isGempa,
+            'hutaArsipJdih'                => $isJdih,
             'hutaGempaEnabled'             => true,
             'hutaGempaBoot'                => [
                 'endpoint' => 'https://data.bmkg.go.id/DataMKG/TEWS/autogempa.json',

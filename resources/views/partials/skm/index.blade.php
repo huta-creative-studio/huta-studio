@@ -26,8 +26,7 @@
     @else
         {{-- Pilih survei --}}
         @if(!empty($daftar_survei) && count($daftar_survei) > 1)
-            <form method="POST" action="{{ site_url('survei-kepuasan') }}" class="mb-4">
-                @csrf
+            {!! form_open(site_url('survei-kepuasan'), ['class' => 'mb-4']) !!}
                 <label for="survei" class="font-bold">Pilih Survei</label>
                 <select name="survei" id="survei" class="form-control" onchange="this.form.submit()">
                     @foreach($daftar_survei as $s)
@@ -36,7 +35,7 @@
                         </option>
                     @endforeach
                 </select>
-            </form>
+            {!! form_close() !!}
         @endif
 
         @if(!empty($survei))
@@ -50,8 +49,7 @@
                             Anda sudah memberikan penilaian untuk survei ini. Terima kasih!
                         </div>
                     @else
-                        <form method="POST" action="{{ site_url('survei-kepuasan/kirim') }}">
-                            @csrf
+                        {!! form_open(site_url('survei-kepuasan/kirim')) !!}
                             <input type="hidden" name="survei" value="{{ $survei->id }}">
                             <input type="hidden" name="token" value="{{ $token ?? '' }}">
 
@@ -76,7 +74,7 @@
 
                             <button type="submit" class="btn btn-primary">Kirim Penilaian</button>
                             <a href="{{ site_url('survei-kepuasan/hasil') }}" class="btn btn-default ml-2">Lihat Hasil</a>
-                        </form>
+                        {!! form_close() !!}
                     @endif
                 </div>
             </div>

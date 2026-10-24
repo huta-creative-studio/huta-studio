@@ -16,8 +16,7 @@
                 <h3 class="box-title">Tinggalkan Pesan</h3>
             </div>
             <div class="box-body">
-                <form method="POST" action="{{ site_url('buku-tamu') }}">
-                    @csrf
+                {!! form_open(site_url('buku-tamu')) !!}
                     <div class="form-group">
                         <label for="nama" class="font-bold">Nama</label>
                         <input type="text" name="nama" id="nama" class="form-control" required maxlength="100">
@@ -31,7 +30,7 @@
                         <textarea name="pesan" id="pesan" class="form-control" rows="4" required maxlength="500"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Kirim</button>
-                </form>
+                {!! form_close() !!}
             </div>
         </div>
     @else
