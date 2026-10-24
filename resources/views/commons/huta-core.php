@@ -150,22 +150,531 @@ if (!function_exists('huta_indeks_desa_bootstrap')) {
 /* ------------------------------------------------------------------ */
 /* SKM helpers (stub)                                                 */
 /* ------------------------------------------------------------------ */
+/* ------------------------------------------------------------------ */
+/* SKM — helper DB                                                    */
+/* ------------------------------------------------------------------ */
+if (!function_exists('huta_db')) {
+    function huta_db()
+    {
+        if (function_exists('get_instance')) {
+            $ci = get_instance();
+            if (is_object($ci) && isset($ci->db) && is_object($ci->db)) return $ci->db;
+        }
+        return null;
+    }
+}
+
+if (!function_exists('huta_table_exists')) {
+    function huta_table_exists($db, string $table): bool
+    {
+        if (!$db) return false;
+        try { return $db->table_exists($table); } catch (\Throwable $e) { return false; }
+    }
+}
+
+if (!function_exists('huta_now')) {
+    function huta_now(): string { return date('Y-m-d H:i:s'); }
+}
+
+/* ------------------------------------------------------------------ */
+/* SKM — schema                                                      */
+/* ------------------------------------------------------------------ */
+if (!function_exists('huta_skm_ensure_tables')) {
+    function huta_skm_ensure_tables(): void
+    {
+        $db = huta_db();
+        if (!$db) return;
+        $prefix = $db->dbprefix ?? '';
+        $tSurvei = $prefix . 'skm_survei';
+        $tQ      = $prefix . 'skm_pertanyaan';
+        $tTang   = $prefix . 'skm_tanggapan';
+        $tJaw    = $prefix . 'skm_jawaban';
+
+        if (!huta_table_exists($db, $tSurvei)) {
+            $db->query("CREATE TABLE IF NOT EXISTS `{$tSurvei}` (
+                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+                `judul` VARCHAR(200) NOT NULL,
+                `objek` VARCHAR(200) DEFAULT NULL,
+                `mulai` DATE DEFAULT NULL,
+                `mulai_jam` VARCHAR(8) DEFAULT '00:00',
+                `selesai` DATE DEFAULT NULL,
+                `selesai_jam` VARCHAR(8) DEFAULT '23:59',
+                `aktif` TINYINT(1) NOT NULL DEFAULT 0,
+                `publikasi` TINYINT(1) NOT NULL DEFAULT 0,
+                `publikasi_min` INT NOT NULL DEFAULT 5,
+                `arsip` TINYINT(1) NOT NULL DEFAULT 0,
+                `created_at` DATETIME DEFAULT NULL,
+                `updated_at` DATETIME DEFAULT NULL,
+                PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+        }
+        if (!huta_table_exists($db, $tQ)) {
+            $db->query("CREATE TABLE IF NOT EXISTS `{$tQ}` (
+                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+                `survei_id` INT UNSIGNED NOT NULL,
+                `pertanyaan` VARCHAR(500) NOT NULL,
+                `urutan` INT NOT NULL DEFAULT 0,
+                `created_at` DATETIME DEFAULT NULL,
+                PRIMARY KEY (`id`),
+                KEY `survei_id` (`survei_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+        }
+        if (!huta_table_exists($db, $tTang)) {
+            $db->query("CREATE TABLE IF NOT EXISTS `{$tTang}` (
+                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+                `survei_id` INT UNSIGNED NOT NULL,
+                `token` VARCHAR(64) NOT NULL,
+                `created_at` DATETIME DEFAULT NULL,
+                PRIMARY KEY (`id`),
+                UNIQUE KEY `survei_token` (`survei_id`,`token`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+        }
+        if (!huta_table_exists($db, $tJaw)) {
+            $db->query("CREATE TABLE IF NOT EXISTS `{$tJaw}` (
+                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+                `tanggapan_id` INT UNSIGNED NOT NULL,
+                `pertanyaan_id` INT UNSIGNED NOT NULL,
+                `nilai` TINYINT NOT NULL,
+                `saran` TEXT DEFAULT NULL,
+                `created_at` DATETIME DEFAULT NULL,
+                PRIMARY KEY (`id`),
+                KEY `tanggapan_id` (`tanggapan_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+        }
+    }
+}
+
+/* ------------------------------------------------------------------ */
+/* SKM — dispatch                                                     */
+/* ------------------------------------------------------------------ */
 if (!function_exists('huta_skm_v2_dispatch')) {
     function huta_skm_v2_dispatch(string $mode, array $args = []): array
     {
-        // Stub: kembalikan struktur minimal agar partial tidak fatal.
-        return [
-            'ok'            => false,
-            'survei'        => null,
-            'daftar_survei' => [],
-            'pertanyaan'    => [],
-            'token'         => '',
-            'sudah_menilai' => false,
-            'rekap'         => ['jumlah' => 0, 'rata' => 0, 'mutu' => '-', 'persen' => 0, 'prioritas' => []],
-            'jumlah_per_survei' => [],
-            'halaman'       => 1,
-            'jumlah_halaman' => 1,
-        ];
+        huta_skm_ensure_tables();
+        $db = huta_db();
+        if (!$db) return ['ok' => false, 'message' => 'Database tidak tersedia.'];
+
+        $prefix = $db->dbprefix ?? '';
+        $tSurvei = $prefix . 'skm_survei';
+        $tQ      = $prefix . 'skm_pertanyaan';
+        $tTang   = $prefix . 'skm_tanggapan';
+        $tJaw    = $prefix . 'skm_jawaban';
+
+        /* ---------- public_form ---------- */
+        if ($mode === 'public_form') {
+            $chosen = isset($args['survei']) ? (int) $args['survei'] : 0;
+            $daftar = $db->query("SELECT * FROM `{$tSurvei}` WHERE arsip=0 AND aktif=1 ORDER BY id DESC")->result();
+            if (!$daftar) $daftar = [];
+            if ($chosen <= 0 && $daftar) $chosen = (int) $daftar[0]->id;
+            $survei = null;
+            foreach ($daftar as $s) { if ((int)$s->id === $chosen) { $survei = $s; break; } }
+            if (!$survei && $daftar) $survei = $daftar[0];
+
+            $pertanyaan = [];
+            $token = '';
+            $sudah = false;
+            if ($survei) {
+                $pertanyaan = $db->query("SELECT * FROM `{$tQ}` WHERE survei_id=? ORDER BY urutan ASC, id ASC", [(int)$survei->id])->result();
+                if (!$pertanyaan) $pertanyaan = [];
+                // token pengunjung (hash IP+UA)
+                $ip = $_SERVER['REMOTE_ADDR'] ?? '';
+                $ua = $_SERVER['HTTP_USER_AGENT'] ?? '';
+                $token = substr(hash('sha256', $ip . '|' . $ua . '|' . $survei->id), 0, 32);
+                // cek sudah menilai
+                $row = $db->query("SELECT id FROM `{$tTang}` WHERE survei_id=? AND token=?", [(int)$survei->id, $token])->row();
+                if ($row) $sudah = true;
+            }
+            $receipt = null;
+            if (function_exists('get_instance')) {
+                $ci = get_instance();
+                if (isset($ci->session)) {
+                    $r = $ci->session->flashdata('huta_skm2_receipt');
+                    if (is_array($r) && !empty($r['survei_id'])) $receipt = $r;
+                }
+            }
+            return [
+                'ok'            => true,
+                'survei'        => $survei,
+                'daftar_survei' => $daftar,
+                'pertanyaan'    => $pertanyaan,
+                'token'         => $token,
+                'sudah_menilai' => $sudah,
+                'receipt'       => $receipt,
+            ];
+        }
+
+        /* ---------- public_results ---------- */
+        if ($mode === 'public_results') {
+            $input = is_array($args) ? $args : [];
+            $pilih = isset($input['pilih_survei']) ? (int) $input['pilih_survei'] : 0;
+            $halaman = isset($input['halaman']) ? (int) $input['halaman'] : 1;
+            if ($halaman < 1) $halaman = 1;
+            $daftar = $db->query("SELECT * FROM `{$tSurvei}` WHERE arsip=0 ORDER BY id DESC")->result();
+            if (!$daftar) $daftar = [];
+            if ($pilih <= 0 && $daftar) $pilih = (int) $daftar[0]->id;
+            $survei = null;
+            foreach ($daftar as $s) { if ((int)$s->id === $pilih) { $survei = $s; break; } }
+            if (!$survei && $daftar) $survei = $daftar[0];
+
+            $pertanyaan = [];
+            $rekap = ['jumlah' => 0, 'rata' => 0, 'mutu' => '-', 'persen' => 0, 'prioritas' => []];
+            $jumlah_per_survei = [];
+            $jumlah_halaman = 1;
+
+            if ($survei) {
+                $pertanyaan = $db->query("SELECT * FROM `{$tQ}` WHERE survei_id=? ORDER BY urutan ASC, id ASC", [(int)$survei->id])->result();
+                if (!$pertanyaan) $pertanyaan = [];
+
+                // hitung tanggapan & jawaban
+                $tanggapan = $db->query("SELECT id FROM `{$tTang}` WHERE survei_id=?", [(int)$survei->id])->result();
+                $jumlah = count($tanggapan ?: []);
+                $rekap['jumlah'] = $jumlah;
+
+                // distribusi per pertanyaan
+                $totalNilai = 0; $totalJawaban = 0;
+                foreach ($pertanyaan as $q) {
+                    $q->b1 = $q->b2 = $q->b3 = $q->b4 = 0;
+                    $q->rata = 0;
+                }
+                $jawaban = $db->query("SELECT j.pertanyaan_id, j.nilai FROM `{$tJaw}` j JOIN `{$tTang}` t ON t.id=j.tanggapan_id WHERE t.survei_id=?", [(int)$survei->id])->result();
+                foreach ($jawaban as $j) {
+                    foreach ($pertanyaan as $q) {
+                        if ((int)$q->id === (int)$j->pertanyaan_id) {
+                            $n = (int) $j->nilai;
+                            if ($n === 1) $q->b1++;
+                            elseif ($n === 2) $q->b2++;
+                            elseif ($n === 3) $q->b3++;
+                            elseif ($n === 4) $q->b4++;
+                            $q->rata += $n;
+                            $totalNilai += $n;
+                            $totalJawaban++;
+                        }
+                    }
+                }
+                foreach ($pertanyaan as $q) {
+                    $n = $q->b1 + $q->b2 + $q->b3 + $q->b4;
+                    if ($n > 0) $q->rata = round($q->rata / $n, 2);
+                }
+                if ($totalJawaban > 0) {
+                    $rata = $totalNilai / $totalJawaban;
+                    $rekap['rata'] = round($rata, 2);
+                    $rekap['persen'] = (int) round(($rata / 4) * 100);
+                }
+                // mutu
+                $r = $rekap['rata'];
+                if ($r >= 3.5) $rekap['mutu'] = 'A';
+                elseif ($r >= 3.0) $rekap['mutu'] = 'B';
+                elseif ($r >= 2.5) $rekap['mutu'] = 'C';
+                elseif ($r > 0) $rekap['mutu'] = 'D';
+                else $rekap['mutu'] = '-';
+
+                // prioritas (3 terendah)
+                $sorted = $pertanyaan;
+                usort($sorted, function($a,$b){ return ($a->rata ?? 0) <=> ($b->rata ?? 0); });
+                $pri = [];
+                foreach (array_slice($sorted, 0, 3) as $q) {
+                    if (($q->rata ?? 0) > 0) $pri[] = $q->pertanyaan;
+                }
+                $rekap['prioritas'] = $pri;
+
+                // jumlah per survei
+                foreach ($daftar as $s) {
+                    $c = $db->query("SELECT COUNT(*) c FROM `{$tTang}` WHERE survei_id=?", [(int)$s->id])->row();
+                    $jumlah_per_survei[(int)$s->id] = $c ? (int)$c->c : 0;
+                }
+
+                // batas publikasi
+                $min = (int) ($survei->publikasi_min ?? 5);
+                if ($survei->publikasi != 1 || $jumlah < $min) {
+                    // hasil belum boleh ditampilkan → kembalikan ok false
+                    return [
+                        'ok' => false,
+                        'survei' => $survei,
+                        'rekap' => $rekap,
+                        'daftar_survei' => $daftar,
+                        'pertanyaan' => $pertanyaan,
+                        'jumlah_per_survei' => $jumlah_per_survei,
+                        'halaman' => $halaman,
+                        'jumlah_halaman' => $jumlah_halaman,
+                    ];
+                }
+            }
+
+            return [
+                'ok'                => true,
+                'survei'            => $survei,
+                'rekap'             => $rekap,
+                'daftar_survei'     => $daftar,
+                'pertanyaan'        => $pertanyaan,
+                'jumlah_per_survei' => $jumlah_per_survei,
+                'halaman'           => $halaman,
+                'jumlah_halaman'    => $jumlah_halaman,
+            ];
+        }
+
+        /* ---------- public_submit ---------- */
+        if ($mode === 'public_submit') {
+            $post = is_array($args) ? $args : [];
+            $surveiId = isset($post['survei']) ? (int) $post['survei'] : 0;
+            if ($surveiId <= 0) return ['ok' => false, 'message' => 'Survei tidak valid.'];
+
+            $survei = $db->query("SELECT * FROM `{$tSurvei}` WHERE id=? AND aktif=1 AND arsip=0", [$surveiId])->row();
+            if (!$survei) return ['ok' => false, 'message' => 'Survei tidak aktif.'];
+
+            $ip = $_SERVER['REMOTE_ADDR'] ?? '';
+            $ua = $_SERVER['HTTP_USER_AGENT'] ?? '';
+            $token = substr(hash('sha256', $ip . '|' . $ua . '|' . $surveiId), 0, 32);
+
+            // cek sudah menilai
+            $existing = $db->query("SELECT id FROM `{$tTang}` WHERE survei_id=? AND token=?", [$surveiId, $token])->row();
+            if ($existing) return ['ok' => false, 'message' => 'Anda sudah memberikan penilaian untuk survei ini.'];
+
+            $jawaban = isset($post['jawaban']) && is_array($post['jawaban']) ? $post['jawaban'] : [];
+            $pertanyaan = $db->query("SELECT id FROM `{$tQ}` WHERE survei_id=?", [$surveiId])->result();
+            $validIds = [];
+            foreach ($pertanyaan as $q) $validIds[] = (int) $q->id;
+            if (empty($validIds)) return ['ok' => false, 'message' => 'Survei belum memiliki pertanyaan.'];
+
+            // validasi semua pertanyaan terjawab
+            foreach ($validIds as $qid) {
+                if (!isset($jawaban[$qid])) return ['ok' => false, 'message' => 'Semua pertanyaan harus dijawab.'];
+                $v = (int) $jawaban[$qid];
+                if ($v < 1 || $v > 4) return ['ok' => false, 'message' => 'Jawaban tidak valid.'];
+            }
+
+            // simpan tanggapan
+            $db->query("INSERT INTO `{$tTang}` (survei_id, token, created_at) VALUES (?,?,?)", [$surveiId, $token, huta_now()]);
+            $tanggapanId = (int) $db->insert_id();
+
+            $saran = isset($post['saran']) ? trim((string) $post['saran']) : '';
+            if (strlen($saran) > 500) $saran = substr($saran, 0, 500);
+
+            foreach ($validIds as $qid) {
+                $db->query("INSERT INTO `{$tJaw}` (tanggapan_id, pertanyaan_id, nilai, saran, created_at) VALUES (?,?,?,?,?)",
+                    [$tanggapanId, $qid, (int) $jawaban[$qid], $saran, huta_now()]);
+                $saran = ''; // saran hanya disimpan di jawaban pertama? simpan sekali
+            }
+            // simpan saran di jawaban pertama saja (sudah di atas); pastikan tidak duplikat: set saran='' untuk sisanya sudah dilakukan
+
+            // receipt
+            $receipt = ['survei_id' => $surveiId, 'baris' => count($validIds)];
+            if (function_exists('get_instance')) {
+                $ci = get_instance();
+                if (isset($ci->session)) $ci->session->set_flashdata('huta_skm2_receipt', $receipt);
+            }
+
+            return ['ok' => true, 'receipt' => $receipt];
+        }
+
+        /* ---------- admin_list ---------- */
+        if ($mode === 'admin_list') {
+            $surveiId = isset($args['survei']) ? (int) $args['survei'] : 0;
+            $saranPage = isset($args['saran_page']) ? (int) $args['saran_page'] : 1;
+            if ($saranPage < 1) $saranPage = 1;
+
+            $daftar = $db->query("SELECT * FROM `{$tSurvei}` WHERE arsip=0 ORDER BY id DESC")->result();
+            if (!$daftar) $daftar = [];
+
+            if ($surveiId <= 0 && $daftar) $surveiId = (int) $daftar[0]->id;
+            $survei = null;
+            foreach ($daftar as $s) { if ((int)$s->id === $surveiId) { $survei = $s; break; } }
+
+            $pertanyaan = [];
+            $rekap = ['jumlah' => 0, 'rata' => 0, 'mutu' => '-', 'persen' => 0, 'prioritas' => []];
+            $saran = [];
+            $saran_page = $saranPage;
+            $saran_pages = 1;
+
+            if ($survei) {
+                $pertanyaan = $db->query("SELECT * FROM `{$tQ}` WHERE survei_id=? ORDER BY urutan ASC, id ASC", [(int)$survei->id])->result();
+                if (!$pertanyaan) $pertanyaan = [];
+
+                $tanggapan = $db->query("SELECT id, created_at FROM `{$tTang}` WHERE survei_id=? ORDER BY id DESC", [(int)$survei->id])->result();
+                $jumlah = count($tanggapan ?: []);
+                $rekap['jumlah'] = $jumlah;
+
+                $totalNilai = 0; $totalJawaban = 0;
+                foreach ($pertanyaan as $q) { $q->b1=$q->b2=$q->b3=$q->b4=0; $q->rata=0; }
+                $jawaban = $db->query("SELECT j.pertanyaan_id, j.nilai, j.saran, j.created_at, t.created_at AS tgl FROM `{$tJaw}` j JOIN `{$tTang}` t ON t.id=j.tanggapan_id WHERE t.survei_id=?", [(int)$survei->id])->result();
+                foreach ($jawaban as $j) {
+                    foreach ($pertanyaan as $q) {
+                        if ((int)$q->id === (int)$j->pertanyaan_id) {
+                            $n = (int)$j->nilai;
+                            if ($n===1) $q->b1++; elseif($n===2) $q->b2++; elseif($n===3) $q->b3++; elseif($n===4) $q->b4++;
+                            $q->rata += $n; $totalNilai += $n; $totalJawaban++;
+                            if (!empty($j->saran)) $saran[] = ['tanggal' => $j->tgl, 'saran' => $j->saran];
+                        }
+                    }
+                }
+                foreach ($pertanyaan as $q) {
+                    $n = $q->b1+$q->b2+$q->b3+$q->b4;
+                    if ($n > 0) $q->rata = round($q->rata/$n, 2);
+                }
+                if ($totalJawaban > 0) {
+                    $r = $totalNilai/$totalJawaban;
+                    $rekap['rata'] = round($r,2);
+                    $rekap['persen'] = (int)round(($r/4)*100);
+                }
+                $r = $rekap['rata'];
+                if ($r >= 3.5) $rekap['mutu']='A';
+                elseif ($r >= 3.0) $rekap['mutu']='B';
+                elseif ($r >= 2.5) $rekap['mutu']='C';
+                elseif ($r > 0) $rekap['mutu']='D';
+                else $rekap['mutu']='-';
+
+                $sorted = $pertanyaan;
+                usort($sorted, function($a,$b){ return ($a->rata ?? 0) <=> ($b->rata ?? 0); });
+                $pri = [];
+                foreach (array_slice($sorted, 0, 3) as $q) { if (($q->rata ?? 0) > 0) $pri[] = $q->pertanyaan; }
+                $rekap['prioritas'] = $pri;
+
+                // paginasi saran (10 per halaman)
+                $perPage = 10;
+                $totalSaran = count($saran);
+                $saran_pages = max(1, (int)ceil($totalSaran / $perPage));
+                if ($saranPage > $saran_pages) $saranPage = $saran_pages;
+                $saran = array_slice($saran, ($saranPage-1)*$perPage, $perPage);
+                $saran_page = $saranPage;
+
+                // survei_terbuka (survei aktif lain)
+                $survei_terbuka = [];
+                foreach ($daftar as $s) {
+                    if ((int)$s->id !== (int)$survei->id && (int)$s->aktif === 1) $survei_terbuka[] = $s;
+                }
+            }
+
+            $editing = false;
+            if ($survei && function_exists('can') && can('u','huta-skm') && !$survei->aktif && !$survei->publikasi && ($rekap['jumlah'] ?? 0) === 0) {
+                $editing = true;
+            }
+            $mode = function_exists('theme_config') ? (string) theme_config('skm_v2_mode','0') : '0';
+            $selected = $survei ? (int)$survei->id : 0;
+            $otherOpen = null;
+
+            return [
+                'ok'              => true,
+                'survei'          => $survei,
+                'daftar_survei'   => $daftar,
+                'pertanyaan'      => $pertanyaan,
+                'rekap'           => $rekap,
+                'saran'           => $saran,
+                'saran_page'      => $saran_page,
+                'saran_pages'     => $saran_pages,
+                'survei_terbuka'  => $survei_terbuka ?? [],
+                'editing'         => $editing,
+                'mode'            => $mode,
+                'selected'        => $selected,
+                'otherOpen'       => $otherOpen,
+            ];
+        }
+
+        /* ---------- admin mutations ---------- */
+        $post = is_array($args) ? $args : [];
+
+        if ($mode === 'admin_survey_create') {
+            $judul = trim((string)($post['judul'] ?? ''));
+            $objek = trim((string)($post['objek'] ?? ''));
+            $mulai = trim((string)($post['mulai'] ?? ''));
+            $selesai = trim((string)($post['selesai'] ?? ''));
+            if ($judul === '') return ['ok' => false, 'message' => 'Judul survei wajib diisi.'];
+            if ($mulai === '') $mulai = date('Y-m-d');
+            if ($selesai === '') $selesai = date('Y-m-d', strtotime('+30 days'));
+            $db->query("INSERT INTO `{$tSurvei}` (judul, objek, mulai, mulai_jam, selesai, selesai_jam, aktif, publikasi, publikasi_min, arsip, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+                [$judul, $objek, $mulai, $post['mulai_jam'] ?? '00:00', $selesai, $post['selesai_jam'] ?? '23:59', 0, 0, 5, 0, huta_now(), huta_now()]);
+            return ['ok' => true, 'message' => 'Survei berhasil dibuat.', 'survei_id' => (int) $db->insert_id()];
+        }
+
+        if ($mode === 'admin_survey_edit') {
+            $id = (int)($post['survei_id'] ?? 0);
+            if ($id <= 0) return ['ok' => false, 'message' => 'Survei tidak valid.'];
+            $fields = [];
+            $params = [];
+            foreach (['judul','objek','mulai','mulai_jam','selesai','selesai_jam'] as $f) {
+                if (isset($post[$f])) { $fields[] = "`{$f}`=?"; $params[] = $post[$f]; }
+            }
+            if ($fields) {
+                $params[] = $id;
+                $db->query("UPDATE `{$tSurvei}` SET " . implode(',', $fields) . ", updated_at=? WHERE id=?", array_merge($params, [huta_now(), $id]));
+            }
+            return ['ok' => true, 'message' => 'Survei berhasil diubah.', 'survei_id' => $id];
+        }
+
+        if ($mode === 'admin_survey_archive') {
+            $id = (int)($post['survei_id'] ?? 0);
+            $konf = trim((string)($post['konfirmasi'] ?? ''));
+            if ($konf !== 'ARSIPKAN') return ['ok' => false, 'message' => 'Konfirmasi arsip tidak sesuai.'];
+            $db->query("UPDATE `{$tSurvei}` SET arsip=1, updated_at=? WHERE id=?", [huta_now(), $id]);
+            return ['ok' => true, 'message' => 'Survei berhasil diarsipkan.', 'survei_id' => 0];
+        }
+
+        if ($mode === 'admin_question_save') {
+            $surveiId = (int)($post['survei_id'] ?? 0);
+            $qid = (int)($post['pertanyaan_id'] ?? 0);
+            $teks = trim((string)($post['pertanyaan'] ?? ''));
+            if ($surveiId <= 0 || $teks === '') return ['ok' => false, 'message' => 'Data pertanyaan tidak valid.'];
+            if ($qid > 0) {
+                $db->query("UPDATE `{$tQ}` SET pertanyaan=? WHERE id=? AND survei_id=?", [$teks, $qid, $surveiId]);
+            } else {
+                $urutan = (int) $db->query("SELECT COALESCE(MAX(urutan),0)+1 u FROM `{$tQ}` WHERE survei_id=?", [$surveiId])->row()->u;
+                $db->query("INSERT INTO `{$tQ}` (survei_id, pertanyaan, urutan, created_at) VALUES (?,?,?,?)", [$surveiId, $teks, $urutan, huta_now()]);
+            }
+            return ['ok' => true, 'message' => 'Pertanyaan berhasil disimpan.', 'survei_id' => $surveiId];
+        }
+
+        if ($mode === 'admin_question_delete') {
+            $surveiId = (int)($post['survei_id'] ?? 0);
+            $qid = (int)($post['pertanyaan_id'] ?? 0);
+            if ($qid > 0) $db->query("DELETE FROM `{$tQ}` WHERE id=? AND survei_id=?", [$qid, $surveiId]);
+            return ['ok' => true, 'message' => 'Pertanyaan berhasil dihapus.', 'survei_id' => $surveiId];
+        }
+
+        if ($mode === 'admin_status') {
+            $surveiId = (int)($post['survei_id'] ?? 0);
+            $field = (string)($post['field'] ?? '');
+            $value = (string)($post['value'] ?? '0');
+            if (!in_array($field, ['aktif','publikasi'], true)) return ['ok' => false, 'message' => 'Field tidak valid.'];
+            if ($field === 'aktif' && $value === '1') {
+                // tutup survei lain yang aktif
+                $db->query("UPDATE `{$tSurvei}` SET aktif=0 WHERE id<>?", [$surveiId]);
+            }
+            $db->query("UPDATE `{$tSurvei}` SET `{$field}`=?, updated_at=? WHERE id=?", [(int)$value, huta_now(), $surveiId]);
+            return ['ok' => true, 'message' => 'Status berhasil diubah.', 'survei_id' => $surveiId];
+        }
+
+        if ($mode === 'admin_minimum') {
+            $surveiId = (int)($post['survei_id'] ?? 0);
+            $min = (int)($post['publikasi_min'] ?? $post['minimum'] ?? 5);
+            if ($min < 1) $min = 1;
+            $db->query("UPDATE `{$tSurvei}` SET publikasi_min=?, updated_at=? WHERE id=?", [$min, huta_now(), $surveiId]);
+            return ['ok' => true, 'message' => 'Batas publikasi berhasil diubah.', 'survei_id' => $surveiId];
+        }
+
+        if ($mode === 'admin_reset') {
+            $surveiId = (int)($post['survei_id'] ?? 0);
+            $konf = trim((string)($post['konfirmasi'] ?? ''));
+            if ($konf !== 'HAPUS SURVEI') return ['ok' => false, 'message' => 'Konfirmasi tidak sesuai.'];
+            // hapus jawaban & tanggapan & pertanyaan & survei
+            $tang = $db->query("SELECT id FROM `{$tTang}` WHERE survei_id=?", [$surveiId])->result();
+            foreach ($tang as $t) $db->query("DELETE FROM `{$tJaw}` WHERE tanggapan_id=?", [(int)$t->id]);
+            $db->query("DELETE FROM `{$tTang}` WHERE survei_id=?", [$surveiId]);
+            $db->query("DELETE FROM `{$tQ}` WHERE survei_id=?", [$surveiId]);
+            $db->query("DELETE FROM `{$tSurvei}` WHERE id=?", [$surveiId]);
+            return ['ok' => true, 'message' => 'Survei berhasil dihapus.', 'survei_id' => 0];
+        }
+
+        if ($mode === 'admin_export') {
+            $surveiId = (int)($post['survei'] ?? $post['survei_id'] ?? 0);
+            $survei = $db->query("SELECT * FROM `{$tSurvei}` WHERE id=?", [$surveiId])->row();
+            if (!$survei) return ['ok' => false, 'message' => 'Survei tidak ditemukan.'];
+            $pertanyaan = $db->query("SELECT * FROM `{$tQ}` WHERE survei_id=? ORDER BY urutan ASC, id ASC", [$surveiId])->result();
+            if (!$pertanyaan) $pertanyaan = [];
+            $rekap = ['jumlah' => 0];
+            $tang = $db->query("SELECT COUNT(*) c FROM `{$tTang}` WHERE survei_id=?", [$surveiId])->row();
+            $rekap['jumlah'] = $tang ? (int)$tang->c : 0;
+            return ['ok' => true, 'survei' => $survei, 'pertanyaan' => $pertanyaan, 'rekap' => $rekap];
+        }
+
+        return ['ok' => false, 'message' => 'Aksi tidak dikenal: ' . $mode];
     }
 }
 
@@ -214,7 +723,8 @@ if (!function_exists('huta_kesra_photo_prepare_schema')) {
 if (!function_exists('huta_module_apply_schema')) {
     function huta_module_apply_schema($migration, $template): void
     {
-        // Stub: migrasi aktual ditangani oleh OpenSID Migrator / core.
+        // Buat tabel SKM (idempotent).
+        huta_skm_ensure_tables();
     }
 }
 if (!function_exists('huta_module_public_asset')) {
