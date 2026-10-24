@@ -1,0 +1,20 @@
+{
+    "name":  "themes/huta-studio",
+    "type":  "library",
+    "description":  "Tema portal transparansi desa Huta Studio",
+    "license":  "GPL-3.0-or-later",
+    "version":  "v2610.5.0",
+    "keywords":  [
+                     "Themes",
+                     "OpenSID"
+                 ],
+    "authors":  [
+                    {
+                        "name":  "Huta Studio contributors"
+                    },
+                    {
+                        "name":  "Diki Siswanto",
+                        "email":  "dickyachmady@gmail.com"
+                    }
+                ]
+}

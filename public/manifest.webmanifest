@@ -1,0 +1,36 @@
+{
+  "name": "Nagori Sordang Bolon",
+  "short_name": "Sordang Bolon",
+  "description": "Website resmi Nagori Sordang Bolon, Kecamatan Ujung Padang, Kabupaten Simalungun",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#072416",
+  "theme_color": "#052516",
+  "lang": "id",
+  "icons": [
+    {
+      "src": "/desa/logo/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/desa/logo/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/desa/logo/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ]
+}

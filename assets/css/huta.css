@@ -1,0 +1,152 @@
+/* Huta Studio — gaya kustom ringan */
+:root {
+    --huta-aksen: #0f766e;
+}
+
+body {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+a {
+    color: var(--hv-primary-ink, var(--huta-aksen));
+}
+
+header a:hover,
+footer a:hover {
+    opacity: .9;
+}
+
+.huta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    min-width: 48px;
+    padding: .5rem 1.25rem;
+    border-radius: .5rem;
+    background: var(--huta-aksen);
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    border: 0;
+    cursor: pointer;
+}
+
+.huta-btn:hover,
+.huta-btn:focus {
+    filter: brightness(1.08);
+    color: #fff;
+}
+
+.huta-btn-ghost {
+    background: transparent;
+    color: var(--huta-aksen);
+    border: 2px solid var(--huta-aksen);
+}
+
+.huta-kartu {
+    background: #fff;
+    border-radius: .75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .08);
+    padding: 1.25rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow .15s ease, transform .15s ease;
+}
+
+.huta-kartu:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .12);
+    transform: translateY(-2px);
+    color: inherit;
+}
+
+.huta-kartu .huta-ikon {
+    width: 48px;
+    height: 48px;
+    border-radius: .5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, var(--huta-aksen) 12%, #fff);
+    color: var(--huta-aksen);
+    font-size: 1.35rem;
+}
+
+.huta-kartu .huta-angka {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--huta-aksen);
+}
+
+.huta-kartu .huta-updated {
+    font-size: .8rem;
+    color: #6b7280;
+}
+
+.huta-judul-bagian {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0 0 .75rem;
+}
+
+.huta-strip {
+    background: color-mix(in srgb, var(--huta-aksen) 8%, #fff);
+    border-left: 4px solid var(--huta-aksen);
+    border-radius: .35rem;
+    padding: .65rem .9rem;
+}
+
+.huta-hero {
+    background: var(--huta-aksen);
+    color: #fff;
+    border-radius: .75rem;
+    padding: 1.5rem 1.25rem;
+    background-size: cover;
+    background-position: center;
+}
+
+.huta-hero h1 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: 0 0 .25rem;
+    color: #fff;
+}
+
+.huta-hero p {
+    margin: 0;
+    opacity: .92;
+}
+
+/* Pencarian header */
+.huta-cari {
+    display: flex;
+    gap: .35rem;
+    width: 100%;
+    max-width: 22rem;
+}
+
+.huta-cari input[type="search"] {
+    flex: 1;
+    min-height: 44px;
+    padding: .4rem .75rem;
+    border-radius: .5rem;
+    border: 1px solid rgba(255, 255, 255, .45);
+    background: rgba(255, 255, 255, .95);
+    color: #111827;
+}
+
+.huta-cari button {
+    min-height: 44px;
+    padding: .4rem .9rem;
+    border-radius: .5rem;
+    border: 0;
+    background: var(--huta-aksen);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
