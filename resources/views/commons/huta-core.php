@@ -1,6 +1,6 @@
-<?php
+﻿<?php
 /**
- * huta-core.php — Runtime core Huta Studio (plain PHP, bukan ionCube).
+ * huta-core.php â€” Runtime core Huta Studio (plain PHP, bukan ionCube).
  *
  * Status: STUB/SCAFFOLD. Fungsi bisnis penuh (SKM engine, XLSX, camera token,
  * dispatch WA) belum diimplementasikan. Gate::core() mengembalikan true agar
@@ -52,7 +52,7 @@ if (!function_exists('huta_weather_icon_url')) {
 /* Konteks arsip (cuaca, gempa, indeks, shalat)                       */
 /* ------------------------------------------------------------------ */
 /* ------------------------------------------------------------------ */
-/* Cuaca — fetch BMKG (prakiraan-cuaca) */
+/* Cuaca â€” fetch BMKG (prakiraan-cuaca) */
 /* ------------------------------------------------------------------ */
 if (!function_exists('huta_cuaca_fetch')) {
     function huta_cuaca_fetch(array $desa): array
@@ -150,9 +150,9 @@ if (!function_exists('huta_cuaca_fetch')) {
             'wind_direction' => (string) ($firstSlot['wd'] ?? '-'),
             'image' => (string) ($firstSlot['image'] ?? ''),
         ] : [];
-        $out['_current_temp'] = $firstSlot ? (($firstSlot['t'] ?? '-') . '°C') : '-';
+        $out['_current_temp'] = $firstSlot ? (($firstSlot['t'] ?? '-') . 'Â°C') : '-';
         $out['_current_wind'] = $firstSlot ? (($firstSlot['ws'] ?? '-') . ' km/jam') : '-';
-        $out['_today_temp'] = !empty($temps) ? (min($temps) . '°C - ' . max($temps) . '°C') : '-';
+        $out['_today_temp'] = !empty($temps) ? (min($temps) . 'Â°C - ' . max($temps) . 'Â°C') : '-';
         $out['_hum_min'] = $humMin === 100 ? '-' : $humMin;
         $out['_hum_max'] = $humMax === 0 ? '-' : $humMax;
         $out['message'] = '';
@@ -217,7 +217,7 @@ if (!function_exists('huta_view_arsip_context')) {
                 'scope'    => 'autogempa',
                 'village'  => trim(ucwords((string)(function_exists('setting') ? setting('sebutan_desa') : 'Desa')) . ' ' . ($desa['nama_desa'] ?? '')),
             ],
-            // shalat (dinonaktifkan default — user tidak memilih)
+            // shalat (dinonaktifkan default â€” user tidak memilih)
             'hutaArsipShalat'              => false,
             'hutaShalatData'               => [],
             'hutaRequestedShalatCalendar'  => 'masehi',
@@ -269,7 +269,7 @@ if (!function_exists('huta_indeks_desa_bootstrap')) {
 /* SKM helpers (stub)                                                 */
 /* ------------------------------------------------------------------ */
 /* ------------------------------------------------------------------ */
-/* SKM — helper DB                                                    */
+/* SKM â€” helper DB                                                    */
 /* ------------------------------------------------------------------ */
 if (!function_exists('huta_db')) {
     function huta_db()
@@ -295,7 +295,7 @@ if (!function_exists('huta_now')) {
 }
 
 /* ------------------------------------------------------------------ */
-/* SKM — schema                                                      */
+/* SKM â€” schema                                                      */
 /* ------------------------------------------------------------------ */
 if (!function_exists('huta_skm_ensure_tables')) {
     function huta_skm_ensure_tables(): void
@@ -363,7 +363,7 @@ if (!function_exists('huta_skm_ensure_tables')) {
 }
 
 /* ------------------------------------------------------------------ */
-/* SKM — dispatch                                                     */
+/* SKM â€” dispatch                                                     */
 /* ------------------------------------------------------------------ */
 if (!function_exists('huta_skm_v2_dispatch')) {
     function huta_skm_v2_dispatch(string $mode, array $args = []): array
@@ -504,7 +504,7 @@ if (!function_exists('huta_skm_v2_dispatch')) {
                 // batas publikasi
                 $min = (int) ($survei->publikasi_min ?? 5);
                 if ($survei->publikasi != 1 || $jumlah < $min) {
-                    // hasil belum boleh ditampilkan → kembalikan ok false
+                    // hasil belum boleh ditampilkan â†’ kembalikan ok false
                     return [
                         'ok' => false,
                         'survei' => $survei,
@@ -821,6 +821,9 @@ if (!function_exists('huta_skm_v2_tables')) {
 if (!function_exists('huta_skm_v2_min_respondents')) {
     function huta_skm_v2_min_respondents(): int { return 5; }
 }
+if (!function_exists('huta_skm_v2_upgrade_fairness')) {
+    function huta_skm_v2_upgrade_fairness(): bool { return true; }
+}
 
 /* ------------------------------------------------------------------ */
 /* Kesra helpers (stub)                                               */
@@ -841,9 +844,7 @@ if (!function_exists('huta_kesra_photo_prepare_schema')) {
 if (!function_exists('huta_module_apply_schema')) {
     function huta_module_apply_schema($migration, $template): void
     {
-        // Buat tabel SKM (idempotent).
         huta_skm_ensure_tables();
-        // Buat tabel Kesra (idempotent) bila migrasi kesra.
         if (is_string($migration) && strpos($migration, 'kesra') !== false) {
             huta_kesra_ensure_tables();
         }
@@ -856,44 +857,163 @@ if (!function_exists('huta_kesra_ensure_tables')) {
         $db = huta_db();
         if (!$db) return;
         $p = $db->dbprefix ?? '';
+        $cfg = $p . 'config_id INT UNSIGNED NOT NULL DEFAULT 1';
         $tables = [
             $p . 'kesra_pengajuan' => "CREATE TABLE IF NOT EXISTS `{$p}kesra_pengajuan` (
-                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-                `nik` VARCHAR(32) DEFAULT NULL,
-                `nama` VARCHAR(200) DEFAULT NULL,
-                `layanan_kode` VARCHAR(64) DEFAULT NULL,
+                `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+                `config_id` BIGINT UNSIGNED NOT NULL DEFAULT 1,
+                `uuid` CHAR(32) NOT NULL,
+                `nomor` VARCHAR(36) NOT NULL DEFAULT '',
+                `nik_hash` CHAR(64) NOT NULL DEFAULT '',
+                `nik_cipher` TEXT NULL,
+                `penduduk_id` BIGINT UNSIGNED NULL,
+                `nama_snapshot` VARCHAR(150) NOT NULL DEFAULT '',
+                `layanan_kode` VARCHAR(30) NULL,
+                `pengirim_hash` CHAR(64) NOT NULL DEFAULT '',
                 `status` VARCHAR(32) NOT NULL DEFAULT 'draft',
-                `created_at` DATETIME DEFAULT NULL,
-                `updated_at` DATETIME DEFAULT NULL,
-                PRIMARY KEY (`id`)
+                `jawaban_json` TEXT NULL,
+                `catatan_petugas` TEXT NULL,
+                `submitted_at` TIMESTAMP NULL DEFAULT NULL,
+                `created_at` TIMESTAMP NULL DEFAULT NULL,
+                `updated_at` TIMESTAMP NULL DEFAULT NULL,
+                PRIMARY KEY (`id`),
+                UNIQUE KEY `uuid` (`uuid`),
+                KEY `config_id` (`config_id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
-            $p . 'kesra_telepon' => "CREATE TABLE IF NOT EXISTS `{$p}kesra_telepon` (
-                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-                `phone` VARCHAR(32) NOT NULL,
-                `nik` VARCHAR(32) DEFAULT NULL,
-                `verified` TINYINT(1) NOT NULL DEFAULT 0,
-                `created_at` DATETIME DEFAULT NULL,
-                PRIMARY KEY (`id`)
+            $p . 'kesra_layanan' => "CREATE TABLE IF NOT EXISTS `{$p}kesra_layanan` (
+                `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+                `config_id` BIGINT UNSIGNED NOT NULL DEFAULT 1,
+                `kode` VARCHAR(30) NOT NULL,
+                `nama` VARCHAR(120) NOT NULL,
+                `persyaratan_json` TEXT NOT NULL,
+                `aktif` TINYINT(1) NOT NULL DEFAULT 1,
+                `created_at` TIMESTAMP NULL DEFAULT NULL,
+                `updated_at` TIMESTAMP NULL DEFAULT NULL,
+                PRIMARY KEY (`id`),
+                KEY `config_id` (`config_id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
-            $p . 'kesra_foto' => "CREATE TABLE IF NOT EXISTS `{$p}kesra_foto` (
-                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-                `pengajuan_id` INT UNSIGNED NOT NULL,
-                `kind` VARCHAR(32) DEFAULT NULL,
-                `file` VARCHAR(255) DEFAULT NULL,
-                `created_at` DATETIME DEFAULT NULL,
-                PRIMARY KEY (`id`)
+            $p . 'kesra_verifikasi_identitas' => "CREATE TABLE IF NOT EXISTS `{$p}kesra_verifikasi_identitas` (
+                `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+                `config_id` BIGINT UNSIGNED NOT NULL DEFAULT 1,
+                `nik_hash` CHAR(64) NOT NULL,
+                `pengirim_hash` CHAR(64) NOT NULL,
+                `nik_cipher` TEXT NOT NULL,
+                `nomor_cipher` TEXT NOT NULL,
+                `penduduk_id` BIGINT UNSIGNED NOT NULL,
+                `status` VARCHAR(32) NOT NULL DEFAULT 'menunggu_verifikasi',
+                `catatan` TEXT NULL,
+                `aktor_id` BIGINT UNSIGNED NULL,
+                `verified_at` TIMESTAMP NULL DEFAULT NULL,
+                `created_at` TIMESTAMP NULL DEFAULT NULL,
+                `updated_at` TIMESTAMP NULL DEFAULT NULL,
+                PRIMARY KEY (`id`),
+                KEY `config_id` (`config_id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
-            $p . 'kesra_chat' => "CREATE TABLE IF NOT EXISTS `{$p}kesra_chat` (
-                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-                `pengajuan_id` INT UNSIGNED NOT NULL,
-                `message` TEXT DEFAULT NULL,
-                `created_at` DATETIME DEFAULT NULL,
-                PRIMARY KEY (`id`)
+            $p . 'kesra_sesi' => "CREATE TABLE IF NOT EXISTS `{$p}kesra_sesi` (
+                `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+                `config_id` BIGINT UNSIGNED NOT NULL DEFAULT 1,
+                `pengajuan_id` BIGINT UNSIGNED NOT NULL,
+                `sesi_id` BIGINT UNSIGNED NOT NULL,
+                `jenis` VARCHAR(32) NOT NULL,
+                `token_hash` CHAR(64) NOT NULL,
+                `expires_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                `used_at` TIMESTAMP NULL DEFAULT NULL,
+                `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                PRIMARY KEY (`id`),
+                UNIQUE KEY `token_hash` (`token_hash`),
+                KEY `config_id` (`config_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+            $p . 'kesra_berkas' => "CREATE TABLE IF NOT EXISTS `{$p}kesra_berkas` (
+                `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+                `config_id` BIGINT UNSIGNED NOT NULL DEFAULT 1,
+                `pengajuan_id` BIGINT UNSIGNED NOT NULL,
+                `jenis` VARCHAR(32) NOT NULL,
+                `storage_key` CHAR(32) NOT NULL,
+                `mime` VARCHAR(80) NOT NULL,
+                `ukuran` INT UNSIGNED NOT NULL,
+                `sha256` CHAR(64) NOT NULL,
+                `asal` VARCHAR(16) NOT NULL,
+                `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                PRIMARY KEY (`id`),
+                UNIQUE KEY `storage_key` (`storage_key`),
+                KEY `config_id` (`config_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+            $p . 'kesra_riwayat' => "CREATE TABLE IF NOT EXISTS `{$p}kesra_riwayat` (
+                `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+                `config_id` BIGINT UNSIGNED NOT NULL DEFAULT 1,
+                `pengajuan_id` BIGINT UNSIGNED NOT NULL,
+                `aktor_id` BIGINT UNSIGNED NULL,
+                `aksi` VARCHAR(36) NOT NULL,
+                `dari` VARCHAR(32) NULL,
+                `ke` VARCHAR(32) NULL,
+                `ringkasan` VARCHAR(250) NOT NULL,
+                `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                PRIMARY KEY (`id`),
+                KEY `config_id` (`config_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+            $p . 'kesra_wa_state' => "CREATE TABLE IF NOT EXISTS `{$p}kesra_wa_state` (
+                `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+                `config_id` BIGINT UNSIGNED NOT NULL DEFAULT 1,
+                `device_hash` CHAR(64) NOT NULL,
+                `sender_hash` CHAR(64) NOT NULL,
+                `pengajuan_id` BIGINT UNSIGNED NULL,
+                `langkah` VARCHAR(32) NOT NULL,
+                `status` VARCHAR(16) NOT NULL DEFAULT 'aktif',
+                `kesalahan` TINYINT UNSIGNED NOT NULL DEFAULT 0,
+                `expires_at` TIMESTAMP NULL DEFAULT NULL,
+                `created_at` TIMESTAMP NULL DEFAULT NULL,
+                `updated_at` TIMESTAMP NULL DEFAULT NULL,
+                PRIMARY KEY (`id`),
+                KEY `config_id` (`config_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+            $p . 'kesra_wa_pesan_masuk' => "CREATE TABLE IF NOT EXISTS `{$p}kesra_wa_pesan_masuk` (
+                `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+                `config_id` BIGINT UNSIGNED NOT NULL DEFAULT 1,
+                `pengajuan_id` BIGINT UNSIGNED NULL,
+                `message_hash` CHAR(64) NOT NULL,
+                `sender_hash` CHAR(64) NOT NULL,
+                `isi_terenkripsi` TEXT NULL,
+                `jenis` VARCHAR(20) NOT NULL,
+                `tahap` VARCHAR(32) NOT NULL,
+                `hasil` VARCHAR(32) NOT NULL,
+                `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                PRIMARY KEY (`id`),
+                KEY `config_id` (`config_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+            $p . 'kesra_wa_balasan' => "CREATE TABLE IF NOT EXISTS `{$p}kesra_wa_balasan` (
+                `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+                `config_id` BIGINT UNSIGNED NOT NULL DEFAULT 1,
+                `message_hash` CHAR(64) NOT NULL,
+                `balasan_terenkripsi` TEXT NOT NULL,
+                `terkirim` TINYINT(1) NOT NULL DEFAULT 0,
+                `percobaan` TINYINT UNSIGNED NOT NULL DEFAULT 0,
+                `created_at` TIMESTAMP NULL DEFAULT NULL,
+                `updated_at` TIMESTAMP NULL DEFAULT NULL,
+                PRIMARY KEY (`id`),
+                KEY `config_id` (`config_id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
         ];
         foreach ($tables as $name => $sql) {
             try { $db->query($sql); } catch (\Throwable $e) {}
         }
+        // Seed default services if empty.
+        try {
+            $cnt = (int) $db->count_all($p . 'kesra_layanan');
+            if ($cnt === 0) {
+                $now = date('Y-m-d H:i:s');
+                $cfgId = function_exists('config_item') ? (int) config_item('config_id') : 0;
+                $cfgId = $cfgId ?: 1;
+                $db->insert($p . 'kesra_layanan', [
+                    'config_id' => $cfgId,
+                    'kode' => 'bantuan_sosial',
+                    'nama' => 'Bantuan Sosial',
+                    'persyaratan_json' => json_encode(['ktp', 'kk']),
+                    'aktif' => 1,
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ]);
+            }
+        } catch (\Throwable $e) {}
     }
 }
 if (!function_exists('huta_module_public_asset')) {
@@ -906,14 +1026,12 @@ if (!function_exists('huta_module_admin_asset')) {
 /* ------------------------------------------------------------------ */
 /* Gate::schemaMigrate override (no-op, izinkan migrasi)                */
 /* ------------------------------------------------------------------ */
-// Gate::schemaMigrate didefinisikan di Support/Gate.php; fallback di sini
-// agar pemanggilan dari migrasi tidak fatal.
 if (!function_exists('huta_schema_migrate')) {
     function huta_schema_migrate($key): bool { return true; }
 }
 
 /* ------------------------------------------------------------------ */
-/* Kesra / Layanan Sosial — helper functions (scaffolding)             */
+/* Kesra / Layanan Sosial â€” helper functions                           */
 /* ------------------------------------------------------------------ */
 if (!function_exists('huta_kesra_enabled')) {
     function huta_kesra_enabled(): bool { return true; }
@@ -928,9 +1046,7 @@ if (!function_exists('huta_kesra_photo_prepare_schema')) {
         return true;
     }
 }
-if (!function_exists('huta_module_admin_asset')) {
-    function huta_module_admin_asset($screen, $type): string { return ''; }
-}
+
 if (!function_exists('huta_kesra_admin')) {
     function huta_kesra_admin($action, $input = []): array
     {
@@ -940,13 +1056,27 @@ if (!function_exists('huta_kesra_admin')) {
         if (!$db) return ['ok' => false, 'message' => 'Koneksi database tidak tersedia.'];
         $cfgId = function_exists('config_item') ? (int) config_item('config_id') : 0;
         $cfgId = $cfgId ?: 1;
-        $cfgCol = $db->dbprefix ?? '';
-        $cfgCol = $cfgCol . 'config_id';
-        $cfgVal = $cfgId;
+        $cfgCol = $db->dbprefix . 'config_id';
         $table = function ($name) use ($db) { return $db->dbprefix . $name; };
+        $p = $db->dbprefix;
 
-        // Empty defaults agar view admin render tanpa crash (tanpa data nyata).
-        $empty = function () use ($cfgVal, $table) {
+        // Load services from kesra_layanan.
+        $services = [];
+        try {
+            $svcRows = $db->where($cfgCol, $cfgId)->get($table('kesra_layanan'))->result();
+            foreach ($svcRows as $s) {
+                $files = [];
+                $json = json_decode((string) ($s->persyaratan_json ?? ''), true);
+                if (is_array($json)) $files = array_values($json);
+                $services[(string) $s->kode] = [
+                    'name' => (string) $s->nama,
+                    'active' => ((int) $s->aktif === 1),
+                    'files' => $files,
+                ];
+            }
+        } catch (\Throwable $e) {}
+
+        $empty = function () {
             $item = new stdClass();
             $item->id = null;
             $item->uuid = '';
@@ -965,13 +1095,13 @@ if (!function_exists('huta_kesra_admin')) {
             $item->updated_at = null;
             return $item;
         };
-        $defaults = function () use ($empty, $cfgVal, $table, $db) {
+        $defaults = function () use ($empty, $services) {
             return [
                 'ok' => true,
                 'message' => '',
                 'item' => $empty(),
                 'rows' => [],
-                'services' => [],
+                'services' => $services,
                 'allowed_status' => [],
                 'identity_verified' => false,
                 'requester' => [],
@@ -991,43 +1121,86 @@ if (!function_exists('huta_kesra_admin')) {
                 'page' => 1,
                 'chat_page' => 1,
                 'keterangan_admin' => null,
-                'can_reset' => false,
+                'can_reset' => true,
                 'service' => null,
-                'services' => [],
-                'docs' => [],
-                'file' => null,
-                'filesByKind' => [],
-                'kind' => null,
-                'needed' => [],
-                'received' => [],
-                'c' => null,
-                't' => null,
-                'ph' => null,
-                'vp' => null,
-                'allowed_status' => [],
+                'count' => 0,
+                'search' => '',
+                'status_filter' => '',
             ];
         };
 
         switch ($action) {
             case 'index':
-                $q = $db->where($cfgCol, $cfgVal);
-                if (!empty($input['id'])) {
-                    $q->where('id', (int) $input['id']);
-                    $item = $q->get($table('kesra_pengajuan'))->row();
-                    if (!$item) return ['ok' => false, 'message' => 'Pengajuan tidak ditemukan.'];
-                    $d = $defaults();
-                    $d['item'] = $item;
-                    return $d;
+                $search = trim((string) ($input['q'] ?? ''));
+                $statusFilter = trim((string) ($input['status'] ?? ''));
+                $page = max(1, (int) ($input['page'] ?? 1));
+                $perPage = 15;
+
+                $q = $db->where($cfgCol, $cfgId);
+                if ($search !== '') {
+                    $q->group_start()
+                      ->like('nama_snapshot', $search)
+                      ->or_like('nomor', $search)
+                      ->group_end();
                 }
-                $rows = $db->where($cfgCol, $cfgVal)->order_by('id desc')->limit(100)->get($table('kesra_pengajuan'))->result();
+                if ($statusFilter !== '') {
+                    $q->where('status', $statusFilter);
+                }
+                // Count total.
+                $countQ = clone $q;
+                $count = (int) $countQ->count_all_results($table('kesra_pengajuan'), false);
+                // Note: count_all_results resets query builder; re-apply filters.
+                $q2 = $db->where($cfgCol, $cfgId);
+                if ($search !== '') {
+                    $q2->group_start()->like('nama_snapshot', $search)->or_like('nomor', $search)->group_end();
+                }
+                if ($statusFilter !== '') {
+                    $q2->where('status', $statusFilter);
+                }
+                $offset = ($page - 1) * $perPage;
+                $rows = $q2->order_by('id', 'desc')->limit($perPage, $offset)->get($table('kesra_pengajuan'))->result();
+
                 $d = $defaults();
                 $d['rows'] = $rows;
+                $d['count'] = $count;
+                $d['search'] = $search;
+                $d['status_filter'] = $statusFilter;
+                $d['page'] = $page;
+                $d['pages'] = max(1, (int) ceil($count / $perPage));
+
+                if (!empty($input['id'])) {
+                    $item = $db->where($cfgCol, $cfgId)->where('id', (int) $input['id'])->get($table('kesra_pengajuan'))->row();
+                    if (!$item) return ['ok' => false, 'message' => 'Pengajuan tidak ditemukan.'];
+                    $d['item'] = $item;
+                    $d['nik_admin'] = null;
+                    $d['service'] = isset($services[$item->layanan_kode]) ? $services[$item->layanan_kode] : null;
+                    // history
+                    try {
+                        $d['history'] = $db->where('pengajuan_id', (int) $item->id)->order_by('id', 'desc')->limit(50)->get($table('kesra_riwayat'))->result();
+                    } catch (\Throwable $e) {}
+                    // docs
+                    try {
+                        $d['docs'] = $db->where('pengajuan_id', (int) $item->id)->order_by('id', 'desc')->get($table('kesra_berkas'))->result();
+                        $submitted = [];
+                        foreach ($d['docs'] as $doc) { $submitted[] = (string) $doc->jenis; }
+                        $d['submitted_files'] = array_values(array_unique($submitted));
+                    } catch (\Throwable $e) {}
+                    // riwayat count
+                    try {
+                        $d['requester_count'] = (int) $db->where('pengirim_hash', (string) $item->pengirim_hash)->count_all_results($table('kesra_pengajuan'));
+                    } catch (\Throwable $e) {}
+                }
+                // can_reset: true only if no rows with files
+                try {
+                    $hasFiles = (int) $db->count_all($table('kesra_berkas')) > 0;
+                    $d['can_reset'] = !$hasFiles;
+                } catch (\Throwable $e) {}
                 return $d;
+
             case 'baru':
-                // Buat pengajuan kosong (minimal).
                 $now = date('Y-m-d H:i:s');
                 $data = [
-                    $cfgCol => $cfgVal,
+                    $cfgCol => $cfgId,
                     'uuid' => bin2hex(random_bytes(16)),
                     'nomor' => '',
                     'nik_hash' => '',
@@ -1040,6 +1213,7 @@ if (!function_exists('huta_kesra_admin')) {
                 ];
                 $db->insert($table('kesra_pengajuan'), $data);
                 return ['ok' => true, 'id' => $db->insert_id(), 'message' => 'Pengajuan dibuat.'];
+
             default:
                 return ['ok' => false, 'message' => 'Aksi Kesra belum tersedia (stub).'];
         }
