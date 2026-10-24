@@ -930,10 +930,114 @@ if (!function_exists('huta_module_admin_asset')) {
 if (!function_exists('huta_kesra_admin')) {
     function huta_kesra_admin($action, $input = []): array
     {
-        // Stub: Kesra business logic (pengajuan/verifikasi/foto/WA) belum
-        // diimplementasikan. Kembalikan ok=false agar admin menampilkan status
-        // "unavailable" tanpa crash. (ponytail: full engine, add when Denava
-        // ionCube source tersedia / reverse-engineered)
-        return ['ok' => false, 'message' => 'Layanan Kesra belum tersedia (stub).'];
+        $action = (string) $action;
+        $input = is_array($input) ? $input : [];
+        $db = huta_db();
+        if (!$db) return ['ok' => false, 'message' => 'Koneksi database tidak tersedia.'];
+        $cfgId = function_exists('config_item') ? (int) config_item('config_id') : 0;
+        $cfgId = $cfgId ?: 1;
+        $cfgCol = $db->dbprefix ?? '';
+        $cfgCol = $cfgCol . 'config_id';
+        $cfgVal = $cfgId;
+        $table = function ($name) use ($db) { return $db->dbprefix . $name; };
+
+        // Empty defaults agar view admin render tanpa crash (tanpa data nyata).
+        $empty = function () use ($cfgVal, $table) {
+            $item = new stdClass();
+            $item->id = null;
+            $item->uuid = '';
+            $item->nomor = '';
+            $item->nik_hash = '';
+            $item->nik_cipher = null;
+            $item->penduduk_id = null;
+            $item->nama_snapshot = '';
+            $item->layanan_kode = '';
+            $item->pengirim_hash = '';
+            $item->status = 'draft';
+            $item->jawaban_json = null;
+            $item->catatan_petugas = null;
+            $item->submitted_at = null;
+            $item->created_at = null;
+            $item->updated_at = null;
+            return $item;
+        };
+        $defaults = function () use ($empty, $cfgVal, $table, $db) {
+            return [
+                'ok' => true,
+                'message' => '',
+                'item' => $empty(),
+                'rows' => [],
+                'services' => [],
+                'allowed_status' => [],
+                'identity_verified' => false,
+                'requester' => [],
+                'requester_count' => 0,
+                'resident_admin' => [],
+                'nik_admin' => null,
+                'docs' => [],
+                'submitted_files' => [],
+                'filesByKind' => [],
+                'photo_notification' => false,
+                'photo_notification_possible' => false,
+                'pending_phones' => [],
+                'verified_phones' => [],
+                'chat' => [],
+                'history' => [],
+                'pages' => [],
+                'page' => 1,
+                'chat_page' => 1,
+                'keterangan_admin' => null,
+                'can_reset' => false,
+                'service' => null,
+                'services' => [],
+                'docs' => [],
+                'file' => null,
+                'filesByKind' => [],
+                'kind' => null,
+                'needed' => [],
+                'received' => [],
+                'c' => null,
+                't' => null,
+                'ph' => null,
+                'vp' => null,
+                'allowed_status' => [],
+            ];
+        };
+
+        switch ($action) {
+            case 'index':
+                $q = $db->where($cfgCol, $cfgVal);
+                if (!empty($input['id'])) {
+                    $q->where('id', (int) $input['id']);
+                    $item = $q->get($table('kesra_pengajuan'))->row();
+                    if (!$item) return ['ok' => false, 'message' => 'Pengajuan tidak ditemukan.'];
+                    $d = $defaults();
+                    $d['item'] = $item;
+                    return $d;
+                }
+                $rows = $db->where($cfgCol, $cfgVal)->order_by('id desc')->limit(100)->get($table('kesra_pengajuan'))->result();
+                $d = $defaults();
+                $d['rows'] = $rows;
+                return $d;
+            case 'baru':
+                // Buat pengajuan kosong (minimal).
+                $now = date('Y-m-d H:i:s');
+                $data = [
+                    $cfgCol => $cfgVal,
+                    'uuid' => bin2hex(random_bytes(16)),
+                    'nomor' => '',
+                    'nik_hash' => '',
+                    'nama_snapshot' => '',
+                    'layanan_kode' => '',
+                    'pengirim_hash' => '',
+                    'status' => 'draft',
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ];
+                $db->insert($table('kesra_pengajuan'), $data);
+                return ['ok' => true, 'id' => $db->insert_id(), 'message' => 'Pengajuan dibuat.'];
+            default:
+                return ['ok' => false, 'message' => 'Aksi Kesra belum tersedia (stub).'];
+        }
     }
 }
