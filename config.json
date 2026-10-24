@@ -326,7 +326,7 @@
         "key":  "pintu_anggaran_url",
         "value":  "",
         "type":  "input-text",
-        "keterangan":  "Tautan tujuan kartu. Kosongkan untuk rute bawaan (belum ada — wajib diisi)",
+        "keterangan":  "Tautan tujuan kartu. Kosongkan untuk rute bawaan (belum ada â€” wajib diisi)",
         "options":  null,
         "readonly":  false,
         "attributes":  {
@@ -704,7 +704,7 @@
         "key":  "aktif_cuaca",
         "value":  "1",
         "type":  "select",
-        "keterangan":  "Tampilkan halaman \u003ccode\u003ehuta-cuaca\u003c/code\u003e dan tombol Cuaca di Layanan Huta Studio. Widget Cuaca beranda tetap mengikuti \u003ccode\u003eAdmin Web → Widget (Cuaca)\u003c/code\u003e. \u003ca href=\"/arsip?req=huta-cuaca\" target=\"_blank\" rel=\"noopener noreferrer\"\u003e\u003cb\u003eBuka Cuaca \u0026amp; Kondisi Udara\u003c/b\u003e\u003c/a\u003e.\u003chr/\u003e",
+        "keterangan":  "Tampilkan halaman \u003ccode\u003ehuta-cuaca\u003c/code\u003e dan tombol Cuaca di Layanan Huta Studio. Widget Cuaca beranda tetap mengikuti \u003ccode\u003eAdmin Web â†’ Widget (Cuaca)\u003c/code\u003e. \u003ca href=\"/arsip?req=huta-cuaca\" target=\"_blank\" rel=\"noopener noreferrer\"\u003e\u003cb\u003eBuka Cuaca \u0026amp; Kondisi Udara\u003c/b\u003e\u003c/a\u003e.\u003chr/\u003e",
         "options":  {
                         "1":  "Ya - Tampilkan",
                         "0":  "Tidak - Sembunyikan"
@@ -719,7 +719,7 @@
         "key":  "aktif_gempa",
         "value":  "1",
         "type":  "select",
-        "keterangan":  "Tampilkan halaman \u003ccode\u003ehuta-gempa\u003c/code\u003e dan tombol Gempa di Layanan Huta Studio. Widget Gempa beranda tetap mengikuti \u003ccode\u003eAdmin Web → Widget (Gempa)\u003c/code\u003e. \u003ca href=\"/arsip?req=huta-gempa\" target=\"_blank\" rel=\"noopener noreferrer\"\u003e\u003cb\u003eBuka Informasi Gempa Bumi\u003c/b\u003e\u003c/a\u003e.",
+        "keterangan":  "Tampilkan halaman \u003ccode\u003ehuta-gempa\u003c/code\u003e dan tombol Gempa di Layanan Huta Studio. Widget Gempa beranda tetap mengikuti \u003ccode\u003eAdmin Web â†’ Widget (Gempa)\u003c/code\u003e. \u003ca href=\"/arsip?req=huta-gempa\" target=\"_blank\" rel=\"noopener noreferrer\"\u003e\u003cb\u003eBuka Informasi Gempa Bumi\u003c/b\u003e\u003c/a\u003e.",
         "options":  {
                         "1":  "Ya - Tampilkan",
                         "0":  "Tidak - Sembunyikan"
@@ -1009,7 +1009,7 @@
         "key":  "ocr_ai_mode",
         "value":  "0",
         "type":  "select",
-        "keterangan":  "(add-ons) Pilih penggunaan OCR Foto setelah OCR KTP/KK diaktifkan.\u003cstyle\u003e.dnv-ocr-common{margin-top:9px;padding:9px 11px;border-radius:8px;background:#fff8e8;border:1px solid #ead7a2;color:#775900;line-height:1.45}.dnv-ocr-mode-info{margin-top:9px;padding:10px 12px;border-radius:8px;line-height:1.45}.dnv-ocr-mode-info b{display:block;margin-bottom:4px;font-size:13px}.dnv-ocr-mode-info ul{margin:4px 0 0 18px;padding:0}.dnv-ocr-mode-info li{margin:2px 0}.dnv-ocr-mode-paid{background:#eef9f1;border:1px solid #b9dfc3;color:#17612d}.dnv-ocr-mode-note{margin-top:8px;color:#526273;line-height:1.4}\u003c/style\u003e\u003cdiv class=\"dnv-ocr-common\"\u003e\u003cb\u003ePerhatian:\u003c/b\u003e KTP/KK berisi data pribadi. Gunakan hanya untuk layanan desa yang sah dan sesuai tugas/kewenangan desa.\u003c/div\u003e\u003cdiv class=\"dnv-ocr-mode-info dnv-ocr-mode-paid\"\u003e\u003cb\u003eGoogle AI Berbayar\u003c/b\u003e\u003cul\u003e\u003cli\u003eMode ini memerlukan project Paid dengan Cloud Billing aktif dan saldo/kredit yang tersedia.\u003c/li\u003e\u003cli\u003eFoto KTP/KK dikirim ke Google AI setelah pernyataan pemrosesan dicentang.\u003c/li\u003e\u003cli\u003eGoogle menyatakan konten layanan berbayar tidak digunakan untuk meningkatkan produknya.\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e\u003cdiv class=\"dnv-ocr-mode-note\"\u003ePDF KK digital tetap diproses lokal tanpa Google AI. \u003ca href=\"https://peraturan.bpk.go.id/Details/229798/uu-no-27-tahun-2022\" target=\"_blank\" rel=\"noopener noreferrer\"\u003ePelindungan Data Pribadi\u003c/a\u003e · \u003ca href=\"https://ai.google.dev/gemini-api/terms?hl=id\" target=\"_blank\" rel=\"noopener noreferrer\"\u003eKetentuan Google AI\u003c/a\u003e\u003c/div\u003e",
+        "keterangan":  "(add-ons) Pilih penggunaan OCR Foto setelah OCR KTP/KK diaktifkan.\u003cstyle\u003e.dnv-ocr-common{margin-top:9px;padding:9px 11px;border-radius:8px;background:#fff8e8;border:1px solid #ead7a2;color:#775900;line-height:1.45}.dnv-ocr-mode-info{margin-top:9px;padding:10px 12px;border-radius:8px;line-height:1.45}.dnv-ocr-mode-info b{display:block;margin-bottom:4px;font-size:13px}.dnv-ocr-mode-info ul{margin:4px 0 0 18px;padding:0}.dnv-ocr-mode-info li{margin:2px 0}.dnv-ocr-mode-paid{background:#eef9f1;border:1px solid #b9dfc3;color:#17612d}.dnv-ocr-mode-note{margin-top:8px;color:#526273;line-height:1.4}\u003c/style\u003e\u003cdiv class=\"dnv-ocr-common\"\u003e\u003cb\u003ePerhatian:\u003c/b\u003e KTP/KK berisi data pribadi. Gunakan hanya untuk layanan desa yang sah dan sesuai tugas/kewenangan desa.\u003c/div\u003e\u003cdiv class=\"dnv-ocr-mode-info dnv-ocr-mode-paid\"\u003e\u003cb\u003eGoogle AI Berbayar\u003c/b\u003e\u003cul\u003e\u003cli\u003eMode ini memerlukan project Paid dengan Cloud Billing aktif dan saldo/kredit yang tersedia.\u003c/li\u003e\u003cli\u003eFoto KTP/KK dikirim ke Google AI setelah pernyataan pemrosesan dicentang.\u003c/li\u003e\u003cli\u003eGoogle menyatakan konten layanan berbayar tidak digunakan untuk meningkatkan produknya.\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e\u003cdiv class=\"dnv-ocr-mode-note\"\u003ePDF KK digital tetap diproses lokal tanpa Google AI. \u003ca href=\"https://peraturan.bpk.go.id/Details/229798/uu-no-27-tahun-2022\" target=\"_blank\" rel=\"noopener noreferrer\"\u003ePelindungan Data Pribadi\u003c/a\u003e Â· \u003ca href=\"https://ai.google.dev/gemini-api/terms?hl=id\" target=\"_blank\" rel=\"noopener noreferrer\"\u003eKetentuan Google AI\u003c/a\u003e\u003c/div\u003e",
         "options":  {
                         "0":  "Tidak - Nonaktifkan OCR Foto KTP/KK",
                         "2":  "Ya - Google AI Berbayar (Cloud Billing aktif)"
@@ -1024,7 +1024,7 @@
         "key":  "status_whatsapp_ai",
         "value":  "0",
         "type":  "select",
-        "keterangan":  "\u003cdiv class=\"dnv-addon-subtitle\"\u003eWhatsApp — Add-ons + Modul\u003c/div\u003e(add-ons+modul) Aktifkan Layanan Informasi WhatsApp. Memerlukan Kode Aktivasi add-ons dan Modul Huta Studio.\u003cdiv class=\"dnv-module-help\"\u003e\u003cstrong\u003eModul belum terpasang?\u003c/strong\u003e Dapatkan Modul Huta Studio dari penyedia/mitra Huta Studio, pasang sesuai petunjuk paket modul, lalu muat ulang halaman ini.\u003c/div\u003e\u003cdiv id=\"dnv-module-status\" data-kind=\"wait\" role=\"status\" aria-live=\"polite\"\u003eModul Huta Studio belum diperiksa.\u003c/div\u003e",
+        "keterangan":  "\u003cdiv class=\"dnv-addon-subtitle\"\u003eWhatsApp â€” Add-ons + Modul\u003c/div\u003e(add-ons+modul) Aktifkan Layanan Informasi WhatsApp. Memerlukan Kode Aktivasi add-ons dan Modul Huta Studio.\u003cdiv class=\"dnv-module-help\"\u003e\u003cstrong\u003eModul belum terpasang?\u003c/strong\u003e Dapatkan Modul Huta Studio dari penyedia/mitra Huta Studio, pasang sesuai petunjuk paket modul, lalu muat ulang halaman ini.\u003c/div\u003e\u003cdiv id=\"dnv-module-status\" data-kind=\"wait\" role=\"status\" aria-live=\"polite\"\u003eModul Huta Studio belum diperiksa.\u003c/div\u003e",
         "options":  {
                         "1":  "Ya - Aktifkan",
                         "0":  "Tidak - Nonaktifkan"
@@ -1245,7 +1245,7 @@
         "key":  "event_gambar",
         "placeholder":  "Gambar mengikuti pilihan pada pengaturan Gempa.",
         "type":  "input-text",
-        "keterangan":  "Unggah gambar melalui \u003ccode\u003eAdmin Web → Widget (Gempa)\u003c/code\u003e; gambar tersebut digunakan pada Banner Kegiatan.",
+        "keterangan":  "Unggah gambar melalui \u003ccode\u003eAdmin Web â†’ Widget (Gempa)\u003c/code\u003e; gambar tersebut digunakan pada Banner Kegiatan.",
         "options":  null,
         "readonly":  true,
         "attributes":  {
@@ -1340,5 +1340,21 @@
                            "data-lpignore":  "true",
                            "data-1p-ignore":  "true"
                        }
+    },
+    {
+        "judul":  "Survei Kepuasan Masyarakat",
+        "key":  "skm_v2_mode",
+        "value":  "0",
+        "type":  "select",
+        "keterangan":  "Aktifkan Survei Kepuasan Masyarakat (SKM). Jika dimatikan, survei tidak dapat diakses.",
+        "options":  {
+                        "1":  "Ya - Aktifkan",
+                        "0":  "Tidak - Nonaktifkan"
+                    },
+        "readonly":  false,
+        "attributes":  {
+                           "class":  "select2"
+                       },
+        "group":  "Add-ons HutaStudio"
     }
 ]
