@@ -20,15 +20,9 @@
             <h2 class="huta-page-title" style="font-size:1.1rem;">Hasil Pencarian</h2>
             <table class="table table-striped">
               <tbody>
-                <tr><th>NIK</th><td>{{ $result['nik'] }}</td></tr>
                 <tr><th>Nama</th><td>{{ $result['nama'] }}</td></tr>
-                <tr><th>Tempat/Tgl Lahir</th><td>{{ $result['tempat_lahir'] }}, {{ $result['tanggal_lahir'] }} ({{ $result['umur'] }} th)</td></tr>
-                <tr><th>Jenis Kelamin</th><td>{{ $result['sex'] }}</td></tr>
-                <tr><th>Agama</th><td>{{ $result['agama'] }}</td></tr>
                 <tr><th>Alamat</th><td>{{ $result['alamat'] }}</td></tr>
                 <tr><th>Dusun/RT/RW</th><td>{{ $result['dusun'] }} / {{ $result['rt'] }} / {{ $result['rw'] }}</td></tr>
-                <tr><th>Status Perkawinan</th><td>{{ $result['status_kawin'] }}</td></tr>
-                <tr><th>Status Dasar</th><td>{{ $result['status_dasar'] }}</td></tr>
                 <tr><th>Calon Pemilih (17+)</th><td>{{ $result['calon_pemilih'] }}</td></tr>
                 <tr><th>DESIL KEMENSOS</th><td>{{ $result['desil'] }}</td></tr>
                 <tr><th>Bantuan</th><td>
