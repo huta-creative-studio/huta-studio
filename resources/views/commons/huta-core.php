@@ -43,6 +43,7 @@ if (!function_exists('huta_social_image_dispatch')) {
 if (!function_exists('huta_weather_icon_url')) {
     function huta_weather_icon_url($row): string
     {
+        if (is_array($row) && !empty($row['image'])) return (string) $row['image'];
         return function_exists('theme_asset') ? theme_asset('images/weather/default.png') : '';
     }
 }
@@ -50,10 +51,123 @@ if (!function_exists('huta_weather_icon_url')) {
 /* ------------------------------------------------------------------ */
 /* Konteks arsip (cuaca, gempa, indeks, shalat)                       */
 /* ------------------------------------------------------------------ */
+/* ------------------------------------------------------------------ */
+/* Cuaca — fetch BMKG (prakiraan-cuaca) */
+/* ------------------------------------------------------------------ */
+if (!function_exists('huta_cuaca_fetch')) {
+    function huta_cuaca_fetch(array $desa): array
+    {
+        $out = [
+            'ok' => false, 'message' => 'Data cuaca dimuat dari BMKG.',
+            'adm4' => '', 'timezone' => '', 'analysis_label' => '',
+            'current_label' => 'Cuaca Saat Ini', 'forecast' => [],
+            'lokasi' => [],
+            '_current_weather' => [], '_current_temp' => '-', '_current_wind' => '-',
+            '_today_temp' => '-', '_hum_min' => '-', '_hum_max' => '-',
+        ];
+        $kode = trim((string) ($desa['kode_desa'] ?? ''));
+        if ($kode === '') $kode = trim((string) ($desa['kode_desa_bps'] ?? ''));
+        if ($kode === '' && function_exists('huta_db')) {
+            $db = huta_db();
+            if ($db) {
+                try {
+                    $row = $db->query('SELECT kode_desa FROM config LIMIT 1')->row();
+                    if ($row && !empty($row->kode_desa)) $kode = trim((string) $row->kode_desa);
+                } catch (\Throwable $e) {}
+            }
+        }
+        if (strlen($kode) === 10 && ctype_digit($kode)) {
+            $adm4 = substr($kode, 0, 2) . '.' . substr($kode, 2, 2) . '.' . substr($kode, 4, 2) . '.' . substr($kode, 6, 4);
+        } else {
+            $adm4 = '';
+        }
+        if ($adm4 === '') { $out['message'] = 'Kode wilayah desa tidak tersedia.'; return $out; }
+        $out['adm4'] = $adm4;
+        $url = 'https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=' . urlencode($adm4);
+        $raw = '';
+        if (function_exists('curl_init')) {
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 8);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+            $raw = (string) curl_exec($ch);
+            curl_close($ch);
+        } elseif (ini_get('allow_url_fopen')) {
+            $ctx = stream_context_create(['http' => ['timeout' => 8]]);
+            $raw = (string) @file_get_contents($url, false, $ctx);
+        }
+        if ($raw === '') { $out['message'] = 'Gagal mengambil data dari BMKG.'; return $out; }
+        $json = json_decode($raw, true);
+        if (!is_array($json) || empty($json['data'][0]['cuaca'])) {
+            $out['message'] = 'Data BMKG tidak valid.';
+            return $out;
+        }
+        $lok = $json['lokasi'] ?? [];
+        $out['timezone'] = (string) ($lok['timezone'] ?? '');
+        $out['lokasi'] = [
+            'desa' => (string) ($lok['desa'] ?? ''),
+            'kecamatan' => (string) ($lok['kecamatan'] ?? ''),
+            'kotkab' => (string) ($lok['kotkab'] ?? ''),
+            'provinsi' => (string) ($lok['provinsi'] ?? ''),
+        ];
+        $days = $json['data'][0]['cuaca'] ?? [];
+        $forecast = [];
+        $firstSlot = null;
+        $temps = [];
+        $humMin = 100; $humMax = 0;
+        foreach ($days as $daySlots) {
+            if (!is_array($daySlots) || empty($daySlots)) continue;
+            $rows = [];
+            foreach ($daySlots as $slot) {
+                if (!is_array($slot)) continue;
+                if ($firstSlot === null) $firstSlot = $slot;
+                $t = $slot['t'] ?? null;
+                if ($t !== null) $temps[] = (float) $t;
+                $hu = $slot['hu'] ?? null;
+                if ($hu !== null) { $humMin = min($humMin, (float)$hu); $humMax = max($humMax, (float)$hu); }
+                $rows[] = [
+                    'time' => substr((string)($slot['local_datetime'] ?? ''), 11, 5),
+                    'description' => (string) ($slot['weather_desc'] ?? '-'),
+                    'temperature' => $t,
+                    'humidity' => $hu,
+                    'wind_speed' => $slot['ws'] ?? null,
+                    'wind_direction' => (string) ($slot['wd'] ?? '-'),
+                    'cloud_cover' => $slot['tcc'] ?? null,
+                    'visibility' => ($slot['vs_text'] ?? null) ?: (($slot['vs'] ?? null) !== null ? $slot['vs'] . ' m' : '-'),
+                    'image' => (string) ($slot['image'] ?? ''),
+                ];
+            }
+            $first = $daySlots[0] ?? [];
+            $dateLabel = substr((string)($first['local_datetime'] ?? ''), 0, 10);
+            $forecast[] = ['label' => $dateLabel, 'date_label' => $dateLabel, 'rows' => $rows];
+        }
+        $out['forecast'] = $forecast;
+        $out['analysis_label'] = (string) ($firstSlot['analysis_date'] ?? '');
+        $out['ok'] = ($firstSlot !== null);
+        $out['_current_weather'] = $firstSlot ? [
+            'description' => (string) ($firstSlot['weather_desc'] ?? '-'),
+            'time' => substr((string)($firstSlot['local_datetime'] ?? ''), 11, 5),
+            'wind_direction' => (string) ($firstSlot['wd'] ?? '-'),
+            'image' => (string) ($firstSlot['image'] ?? ''),
+        ] : [];
+        $out['_current_temp'] = $firstSlot ? (($firstSlot['t'] ?? '-') . '°C') : '-';
+        $out['_current_wind'] = $firstSlot ? (($firstSlot['ws'] ?? '-') . ' km/jam') : '-';
+        $out['_today_temp'] = !empty($temps) ? (min($temps) . '°C - ' . max($temps) . '°C') : '-';
+        $out['_hum_min'] = $humMin === 100 ? '-' : $humMin;
+        $out['_hum_max'] = $humMax === 0 ? '-' : $humMax;
+        $out['message'] = '';
+        return $out;
+    }
+}
+
 if (!function_exists('huta_view_arsip_context')) {
     function huta_view_arsip_context($desa = [], $config = null, $menu = null): array
     {
         $desa = is_array($desa) ? $desa : [];
+        $routeReq = (string) ($GLOBALS['HUTA_PUBLIC_ROUTE_REQ'] ?? '');
+        $isCuaca = ($routeReq === 'huta-cuaca');
+        $isGempa = ($routeReq === 'huta-gempa');
+        $hutaCuaca = ($isCuaca && function_exists('huta_cuaca_fetch')) ? huta_cuaca_fetch($desa) : ['ok' => false, 'message' => 'Data cuaca dimuat dari BMKG.', 'forecast' => [], 'adm4' => '', 'timezone' => '', 'analysis_label' => '', 'current_label' => 'Cuaca Saat Ini', '_current_weather' => [], '_current_temp' => '-', '_current_wind' => '-', '_today_temp' => '-', '_hum_min' => '-', '_hum_max' => '-'];
         $ctx = [
             // penduduk
             'hutaPencarianPendudukEnabled' => false,
@@ -70,33 +184,33 @@ if (!function_exists('huta_view_arsip_context')) {
             'hutaIndeksBoot'               => [],
             'hutaIndeksDesa'               => [],
             // cuaca
-            'hutaArsipCuaca'               => true,
+            'hutaArsipCuaca'               => $isCuaca,
             'hutaCuacaEnabled'             => true,
-            'hutaCuacaData'                => ['ok' => false, 'message' => 'Data cuaca dimuat dari BMKG.'],
+            'hutaCuacaData'                => $hutaCuaca,
             'hutaPreviousUrl'              => '',
             'hutaLocation'                 => [
-                'desa'      => $desa['nama_desa'] ?? '',
-                'kecamatan' => $desa['nama_kecamatan'] ?? '',
-                'kabupaten' => $desa['nama_kabupaten'] ?? '',
-                'provinsi'  => $desa['nama_provinsi'] ?? '',
+                'desa'      => ($desa['nama_desa'] ?? '') ?: ($hutaCuaca['lokasi']['desa'] ?? ''),
+                'kecamatan' => ($desa['nama_kecamatan'] ?? '') ?: ($hutaCuaca['lokasi']['kecamatan'] ?? ''),
+                'kabupaten' => ($desa['nama_kabupaten'] ?? '') ?: ($hutaCuaca['lokasi']['kotkab'] ?? ''),
+                'provinsi'  => ($desa['nama_provinsi'] ?? '') ?: ($hutaCuaca['lokasi']['provinsi'] ?? ''),
             ],
-            'hutaTimezoneLabel'            => '',
-            'hutaCurrentWeather'           => [],
-            'hutaCurrentTemperature'       => '-',
-            'hutaCurrentWind'              => '-',
-            'hutaTodayTemperature'         => '-',
-            'hutaTodaySummary'             => [],
+            'hutaTimezoneLabel'            => $hutaCuaca['timezone'] ?? '',
+            'hutaCurrentWeather'           => $hutaCuaca['_current_weather'] ?? [],
+            'hutaCurrentTemperature'       => $hutaCuaca['_current_temp'] ?? '-',
+            'hutaCurrentWind'              => $hutaCuaca['_current_wind'] ?? '-',
+            'hutaTodayTemperature'         => $hutaCuaca['_today_temp'] ?? '-',
+            'hutaTodaySummary'             => ['humidity_min' => $hutaCuaca['_hum_min'] ?? '-', 'humidity_max' => $hutaCuaca['_hum_max'] ?? '-'],
             'hutaAir'                      => [],
             'hutaAirClass'                 => 'unknown',
             'hutaAirPm25'                  => '-',
             'hutaAirScale'                 => [],
             // gempa
-            'hutaArsipGempa'               => true,
+            'hutaArsipGempa'               => $isGempa,
             'hutaGempaEnabled'             => true,
             'hutaGempaBoot'                => [
-                'endpoint' => '',
+                'endpoint' => 'https://data.bmkg.go.id/DataMKG/TEWS/autogempa.json',
                 'token'    => '',
-                'scope'    => '',
+                'scope'    => 'autogempa',
                 'village'  => trim(ucwords((string)(function_exists('setting') ? setting('sebutan_desa') : 'Desa')) . ' ' . ($desa['nama_desa'] ?? '')),
             ],
             // shalat (dinonaktifkan default — user tidak memilih)
