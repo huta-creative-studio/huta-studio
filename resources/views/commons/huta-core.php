@@ -173,9 +173,9 @@ if (!function_exists('huta_view_arsip_context')) {
         $hutaCuaca = ($isCuaca && function_exists('huta_cuaca_fetch')) ? huta_cuaca_fetch($desa) : ['ok' => false, 'message' => 'Data cuaca dimuat dari BMKG.', 'forecast' => [], 'adm4' => '', 'timezone' => '', 'analysis_label' => '', 'current_label' => 'Cuaca Saat Ini', '_current_weather' => [], '_current_temp' => '-', '_current_wind' => '-', '_today_temp' => '-', '_hum_min' => '-', '_hum_max' => '-'];
         $ctx = [
             // penduduk
-            'hutaPencarianPendudukEnabled' => false,
+            'hutaPencarianPendudukEnabled' => true,
             'hutaCekPendudukLocked'        => false,
-            'hutaCekPendudukVisible'       => false,
+            'hutaCekPendudukVisible'       => true,
             'hutaArsipPenduduk'            => $isPenduduk,
             // indeks desa
             'hutaArsipIndeks'              => $isIndeks,
@@ -1043,5 +1043,103 @@ if (!function_exists('huta_kesra_admin')) {
             default:
                 return ['ok' => false, 'message' => 'Aksi Kesra belum tersedia (stub).'];
         }
+    }
+}
+if (!function_exists('huta_penduduk_search')) {
+    function huta_penduduk_search(string $nik): array
+    {
+        $db = function_exists('huta_db') ? huta_db() : null;
+        if (!$db) return ['ok' => false, 'message' => 'Database tidak tersedia.'];
+        $nik = trim($nik);
+        if (!preg_match('/^[0-9]{16}$/D', $nik)) return ['ok' => false, 'message' => 'NIK harus 16 digit.'];
+        if (!huta_table_exists($db, 'tweb_penduduk')) return ['ok' => false, 'message' => 'Data penduduk tidak tersedia.'];
+        try {
+            $row = $db->where('nik', $nik)->get('tweb_penduduk')->row_array();
+        } catch (\Throwable $e) { return ['ok' => false, 'message' => 'Gagal membaca data penduduk.']; }
+        if (empty($row)) return ['ok' => false, 'message' => 'NIK tidak ditemukan.'];
+        $umur = 0;
+        try {
+            $bday = new \DateTime($row['tanggallahir'] ?? '');
+            $now = new \DateTime('today');
+            $umur = (int) $bday->diff($now)->y;
+        } catch (\Throwable $ignored) {}
+        $dusun = '-'; $rt = '-'; $rw = '-';
+        if (!empty($row['id_cluster']) && huta_table_exists($db, 'tweb_wil_clusterdesa')) {
+            try {
+                $c = $db->where('id', (int)$row['id_cluster'])->get('tweb_wil_clusterdesa')->row_array();
+                if ($c) { $dusun = $c['dusun'] ?? '-'; $rt = $c['rt'] ?? '-'; $rw = $c['rw'] ?? '-'; }
+            } catch (\Throwable $ignored) {}
+        }
+        $agama = '-';
+        if (!empty($row['agama_id']) && huta_table_exists($db, 'tweb_penduduk_agama')) {
+            try {
+                $a = $db->where('id', (int)$row['agama_id'])->get('tweb_penduduk_agama')->row_array();
+                if ($a) $agama = $a['nama'] ?? '-';
+            } catch (\Throwable $ignored) {}
+        }
+        $statusKawin = '-';
+        $skMap = [1 => 'Belum Kawin', 2 => 'Kawin', 3 => 'Cerai Hidup', 4 => 'Cerai Mati'];
+        if (isset($skMap[(int)($row['status_kawin'] ?? 0)])) $statusKawin = $skMap[(int)$row['status_kawin']];
+        $statusDasar = '-';
+        $sdMap = [1 => 'Hidup', 2 => 'Mati', 3 => 'Pindah', 4 => 'Pindah Datang'];
+        if (isset($sdMap[(int)($row['status_dasar'] ?? 0)])) $statusDasar = $sdMap[(int)$row['status_dasar']];
+        $sex = ((int)($row['sex'] ?? 0) === 1) ? 'Laki-laki' : 'Perempuan';
+        $desil = '-';
+        if (huta_table_exists($db, 'dtsen_impor_desil_sikng')) {
+            try {
+                $d = $db->where('nik', $nik)->get('dtsen_impor_desil_sikng')->row_array();
+                if ($d && !empty($d['desil'])) $desil = $d['desil'];
+            } catch (\Throwable $ignored) {}
+        }
+        $bantuan = [];
+        if (huta_table_exists($db, 'program_peserta') && huta_table_exists($db, 'program')) {
+            try {
+                $pp = $db->where('kartu_nik', $nik)->get('program_peserta')->result_array();
+                foreach ($pp as $p) {
+                    $prog = null;
+                    if (!empty($p['program_id'])) {
+                        try { $prog = $db->where('id', (int)$p['program_id'])->get('program')->row_array(); } catch (\Throwable $ignored) {}
+                    }
+                    $bantuan[] = [
+                        'program' => $prog['nama'] ?? ('Program #' . ($p['program_id'] ?? '')),
+                        'no_kartu' => $p['no_id_kartu'] ?? '-',
+                    ];
+                }
+            } catch (\Throwable $ignored) {}
+        }
+        if (empty($bantuan) && !empty($row['id']) && huta_table_exists($db, 'program_peserta') && huta_table_exists($db, 'program')) {
+            try {
+                $pp = $db->where('kartu_id_pend', (int)$row['id'])->get('program_peserta')->result_array();
+                foreach ($pp as $p) {
+                    $prog = null;
+                    if (!empty($p['program_id'])) {
+                        try { $prog = $db->where('id', (int)$p['program_id'])->get('program')->row_array(); } catch (\Throwable $ignored) {}
+                    }
+                    $bantuan[] = [
+                        'program' => $prog['nama'] ?? ('Program #' . ($p['program_id'] ?? '')),
+                        'no_kartu' => $p['no_id_kartu'] ?? '-',
+                    ];
+                }
+            } catch (\Throwable $ignored) {}
+        }
+        return [
+            'ok' => true,
+            'nik' => $nik,
+            'nama' => $row['nama'] ?? '-',
+            'tempat_lahir' => $row['tempatlahir'] ?? '-',
+            'tanggal_lahir' => $row['tanggallahir'] ?? '-',
+            'umur' => $umur,
+            'sex' => $sex,
+            'agama' => $agama,
+            'dusun' => $dusun,
+            'rt' => $rt,
+            'rw' => $rw,
+            'alamat' => $row['alamat_sekarang'] ?? '-',
+            'status_kawin' => $statusKawin,
+            'status_dasar' => $statusDasar,
+            'calon_pemilih' => ($umur >= 17) ? 'Ya' : 'Tidak',
+            'desil' => $desil,
+            'bantuan' => $bantuan,
+        ];
     }
 }
