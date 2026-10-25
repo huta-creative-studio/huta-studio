@@ -284,8 +284,6 @@
     </div>
 </div>
 @endif
-@elseif($hutaArsipJdih)
-<section class="huta-cek-standalone" aria-label="JDIH"><div class="huta-cek-status" role="status"><strong>JDIH Belum Tersedia</strong><span>Layanan JDIH untuk wilayah ini belum dapat ditampilkan saat ini.</span><a href="{{ site_url() }}">Kembali ke Beranda</a></div></section>
 @elseif($hutaArsipShalat)
 <div class="article-single huta-shalat-page" data-page="huta-shalat">
 <div class="container-page mb-20">

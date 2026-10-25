@@ -169,7 +169,6 @@ if (!function_exists('huta_view_arsip_context')) {
         $isIndeks = ($routeReq === 'huta-indeks');
         $isCuaca = ($routeReq === 'huta-cuaca');
         $isGempa = ($routeReq === 'huta-gempa');
-        $isJdih = ($routeReq === 'jdih-tubaba');
         $hutaCuaca = ($isCuaca && function_exists('huta_cuaca_fetch')) ? huta_cuaca_fetch($desa) : ['ok' => false, 'message' => 'Data cuaca dimuat dari BMKG.', 'forecast' => [], 'adm4' => '', 'timezone' => '', 'analysis_label' => '', 'current_label' => 'Cuaca Saat Ini', '_current_weather' => [], '_current_temp' => '-', '_current_wind' => '-', '_today_temp' => '-', '_hum_min' => '-', '_hum_max' => '-'];
         $ctx = [
             // penduduk
@@ -209,7 +208,6 @@ if (!function_exists('huta_view_arsip_context')) {
             'hutaAirScale'                 => [],
             // gempa
             'hutaArsipGempa'               => $isGempa,
-            'hutaArsipJdih'                => $isJdih,
             'hutaGempaEnabled'             => (function_exists('theme_config') ? theme_config('aktif_gempa') !== '0' : true),
             'hutaGempaBoot'                => [
                 'endpoint' => 'https://data.bmkg.go.id/DataMKG/TEWS/autogempa.json',
