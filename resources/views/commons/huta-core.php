@@ -188,7 +188,7 @@ if (!function_exists('huta_view_arsip_context')) {
             'hutaIndeksDesa'               => [],
             // cuaca
             'hutaArsipCuaca'               => $isCuaca,
-            'hutaCuacaEnabled'             => true,
+            'hutaCuacaEnabled'             => (function_exists('theme_config') ? theme_config('aktif_cuaca') !== '0' : true),
             'hutaCuacaData'                => $hutaCuaca,
             'hutaPreviousUrl'              => '',
             'hutaLocation'                 => [
@@ -210,7 +210,7 @@ if (!function_exists('huta_view_arsip_context')) {
             // gempa
             'hutaArsipGempa'               => $isGempa,
             'hutaArsipJdih'                => $isJdih,
-            'hutaGempaEnabled'             => true,
+            'hutaGempaEnabled'             => (function_exists('theme_config') ? theme_config('aktif_gempa') !== '0' : true),
             'hutaGempaBoot'                => [
                 'endpoint' => 'https://data.bmkg.go.id/DataMKG/TEWS/autogempa.json',
                 'token'    => '',

@@ -1,1360 +1,756 @@
 [
     {
-        "judul":  "Jumlah Pembangunan Perhalaman",
-        "key":  "jumlah_pembangunan_perhalaman",
-        "value":  10,
-        "type":  "input-number",
-        "keterangan":  "Jumlah pembangunan yang ditampilkan dalam satu halaman",
-        "options":  null,
-        "attributes":  {
-                           "min":  1,
-                           "max":  50,
-                           "step":  1
-                       },
-        "readonly":  false,
-        "link":  true,
-        "group":  "Pembangunan"
-    },
-    {
-        "judul":  "Jumlah Pengaduan Perhalaman",
-        "key":  "jumlah_pengaduan_perhalaman",
-        "value":  10,
-        "type":  "input-number",
-        "keterangan":  "Jumlah pengaduan yang ditampilkan dalam satu halaman",
-        "options":  null,
-        "attributes":  {
-                           "min":  1,
-                           "max":  50,
-                           "step":  1
-                       },
-        "readonly":  false,
-        "link":  true,
-        "group":  "Pengaduan"
-    },
-    {
-        "judul":  "Tampilkan Tombol WA",
-        "key":  "wa_enable",
-        "value":  "1",
-        "type":  "select",
-        "keterangan":  "Tombol mengambang WhatsApp di semua halaman.",
-        "options":  {
-                        "1":  "Ya - Tampilkan",
-                        "0":  "Tidak - Sembunyikan"
-                    },
-        "readonly":  false,
-        "attributes":  {
-                           "class":  "select2"
-                       },
-        "group":  "Kontak WhatsApp"
-    },
-    {
-        "judul":  "Nomor WhatsApp",
-        "key":  "wa_number",
-        "value":  "",
-        "type":  "input-text",
-        "keterangan":  "Format internasional tanpa tanda +, contoh: 628123456789.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "Kontak WhatsApp",
-        "placeholder":  "628123456789"
-    },
-    {
-        "judul":  "Pesan Awal Chat",
-        "key":  "wa_message",
-        "value":  "Assalamualaikum, saya warga ingin bertanya soal layanan desa.",
-        "type":  "textarea",
-        "keterangan":  "Teks yang sudah terisi saat warga membuka chat.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "Kontak WhatsApp"
-    },
-    {
-        "judul":  "Label Tombol",
-        "key":  "wa_label",
-        "value":  "Chat Desa",
-        "type":  "input-text",
-        "keterangan":  "Teks yang tampil di samping/atas tombol.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "Kontak WhatsApp",
-        "placeholder":  "Chat Desa"
-    },
-    {
-        "judul":  "Bagian Hero",
-        "key":  "home_hero_enable",
-        "value":  "1",
-        "type":  "select",
-        "keterangan":  "Bagian pembuka beranda. Jika dimatikan, hero tidak tampil sama sekali.",
-        "options":  {
-                        "1":  "Ya - Tampilkan",
-                        "0":  "Tidak - Sembunyikan"
-                    },
-        "readonly":  false,
-        "attributes":  {
-                           "class":  "select2"
-                       },
-        "group":  "Bagian Beranda"
-    },
-    {
-        "judul":  "Bagian Berita",
-        "key":  "home_berita_enable",
-        "value":  "1",
-        "type":  "select",
-        "keterangan":  "Kabar terbaru. Otomatis tersembunyi jika belum ada artikel.",
-        "options":  {
-                        "1":  "Ya - Tampilkan",
-                        "0":  "Tidak - Sembunyikan"
-                    },
-        "readonly":  false,
-        "attributes":  {
-                           "class":  "select2"
-                       },
-        "group":  "Bagian Beranda"
-    },
-    {
-        "judul":  "Bagian Statistik Penduduk",
-        "key":  "home_statistik_enable",
-        "value":  "1",
-        "type":  "select",
-        "keterangan":  "Ringkasan jumlah penduduk. Otomatis tersembunyi jika data penduduk belum ada.",
-        "options":  {
-                        "1":  "Ya - Tampilkan",
-                        "0":  "Tidak - Sembunyikan"
-                    },
-        "readonly":  false,
-        "attributes":  {
-                           "class":  "select2"
-                       },
-        "group":  "Bagian Beranda"
-    },
-    {
-        "judul":  "Bagian Aparatur",
-        "key":  "home_pamong_enable",
-        "value":  "1",
-        "type":  "select",
-        "keterangan":  "Perangkat desa beserta status kehadiran. Otomatis tersembunyi jika belum ada data aparatur.",
-        "options":  {
-                        "1":  "Ya - Tampilkan",
-                        "0":  "Tidak - Sembunyikan"
-                    },
-        "readonly":  false,
-        "attributes":  {
-                           "class":  "select2"
-                       },
-        "group":  "Bagian Beranda"
-    },
-    {
-        "judul":  "Bagian Pembangunan",
-        "key":  "home_pembangunan_enable",
-        "value":  "1",
-        "type":  "select",
-        "keterangan":  "Progres kegiatan pembangunan. Otomatis tersembunyi jika belum ada data pembangunan.",
-        "options":  {
-                        "1":  "Ya - Tampilkan",
-                        "0":  "Tidak - Sembunyikan"
-                    },
-        "readonly":  false,
-        "attributes":  {
-                           "class":  "select2"
-                       },
-        "group":  "Bagian Beranda"
-    },
-    {
-        "judul":  "Bagian Galeri",
-        "key":  "home_galeri_enable",
-        "value":  "1",
-        "type":  "select",
-        "keterangan":  "Galeri foto kegiatan. Otomatis tersembunyi jika belum ada foto galeri.",
-        "options":  {
-                        "1":  "Ya - Tampilkan",
-                        "0":  "Tidak - Sembunyikan"
-                    },
-        "readonly":  false,
-        "attributes":  {
-                           "class":  "select2"
-                       },
-        "group":  "Bagian Beranda"
-    },
-    {
-        "judul":  "Bagian APBDes",
-        "key":  "home_apbdes_enable",
-        "value":  "1",
-        "type":  "select",
-        "keterangan":  "Ringkasan anggaran dan realisasi. Otomatis tersembunyi jika belum ada data keuangan.",
-        "options":  {
-                        "1":  "Ya - Tampilkan",
-                        "0":  "Tidak - Sembunyikan"
-                    },
-        "readonly":  false,
-        "attributes":  {
-                           "class":  "select2"
-                       },
-        "group":  "Bagian Beranda"
-    },
-    {
-        "judul":  "Judul Hero",
-        "key":  "judul_hero",
-        "value":  "Selamat Datang",
-        "type":  "input-text",
-        "keterangan":  "Teks besar di bagian atas beranda.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "Hero Beranda"
-    },
-    {
-        "key":  "hero_greeting",
-        "type":  "text",
-        "group":  "Hero Beranda",
-        "judul":  "Sapaan Hero",
-        "value":  "Selamat Datang",
-        "keterangan":  "Teks sapaan di atas judul pada hero beranda.",
-        "options":  null,
-        "attributes":  null,
-        "readonly":  false,
-        "link":  false
-    },
-    {
-        "key":  "hero_sub",
-        "type":  "text",
-        "group":  "Hero Beranda",
-        "judul":  "Teks Bawah Hero",
-        "value":  "",
-        "keterangan":  "Teks kecil di bawah judul hero (kosong = motto desa).",
-        "options":  null,
-        "attributes":  null,
-        "readonly":  false,
-        "link":  false
-    },
-    {
-        "judul":  "Subjudul Hero",
-        "key":  "subjudul_hero",
-        "value":  "Informasi terbuka untuk warga",
-        "type":  "textarea",
-        "keterangan":  "Teks pendamping di bawah judul hero.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "Hero Beranda"
-    },
-    {
-        "judul":  "Foto Hero",
-        "key":  "foto_hero",
-        "value":  "",
-        "type":  "unggah",
-        "keterangan":  "Foto latar hero (opsional). Kosongkan untuk tanpa gambar.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "Hero Beranda"
-    },
-    {
-        "judul":  "Warna Aksen",
-        "key":  "warna_aksen",
-        "value":  "#0f766e",
-        "placeholder":  "Ketik atau pilih warna",
-        "type":  "color-picker",
-        "keterangan":  "Warna tombol, aksen, dan sorotan situs.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "Tampilan"
-    },
-    {
-        "judul":  "Text Kehadiran di Kantor",
-        "key":  "kehadiran_text_hadir",
-        "value":  "Hadir di Kantor",
-        "placeholder":  "mis. Hadir di Kantor",
-        "type":  "input-text",
-        "keterangan":  "Teks lencana untuk aparatur yang hari ini berada di kantor.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "Aparatur"
-    },
-    {
-        "judul":  "Text Ketidakhadiran di Kantor",
-        "key":  "kehadiran_text_tidak",
-        "value":  "Tidak di Kantor",
-        "placeholder":  "mis. Tidak di Kantor",
-        "type":  "input-text",
-        "keterangan":  "Teks lencana untuk aparatur yang hari ini tidak berada di kantor.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "Aparatur"
-    },
-    {
-        "judul":  "Kartu Realisasi Anggaran",
-        "key":  "pintu_anggaran_enable",
-        "value":  "1",
-        "type":  "select",
-        "keterangan":  "Tampilkan kartu Realisasi Anggaran di beranda.",
-        "options":  {
-                        "1":  "Ya - Tampilkan",
-                        "0":  "Tidak - Sembunyikan"
-                    },
-        "readonly":  false,
-        "attributes":  {
-                           "class":  "select2"
-                       },
-        "group":  "Pintu Transparansi"
-    },
-    {
-        "judul":  "URL Realisasi Anggaran",
-        "key":  "pintu_anggaran_url",
-        "value":  "",
-        "type":  "input-text",
-        "keterangan":  "Tautan tujuan kartu. Kosongkan untuk rute bawaan (belum ada â€” wajib diisi)",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "Pintu Transparansi",
-        "placeholder":  "https://..."
-    },
-    {
-        "judul":  "Angka Realisasi Anggaran",
-        "key":  "pintu_anggaran_angka",
-        "value":  "",
-        "type":  "input-text",
-        "keterangan":  "Angka terkini yang ditampilkan (mis. \"72%\" atau \"4.312 jiwa\"). Kosongkan untuk angka otomatis dari data / status belum diisi.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "Pintu Transparansi"
-    },
-    {
-        "judul":  "Tanggal Diperbarui Realisasi Anggaran",
-        "key":  "pintu_anggaran_updated",
-        "value":  "",
-        "type":  "input-text",
-        "keterangan":  "Contoh: 5 Okt 2026. Kosongkan untuk tanggal otomatis dari data.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "Pintu Transparansi"
-    },
-    {
-        "judul":  "Kartu Statistik Penduduk",
-        "key":  "pintu_penduduk_enable",
-        "value":  "1",
-        "type":  "select",
-        "keterangan":  "Tampilkan kartu Statistik Penduduk di beranda.",
-        "options":  {
-                        "1":  "Ya - Tampilkan",
-                        "0":  "Tidak - Sembunyikan"
-                    },
-        "readonly":  false,
-        "attributes":  {
-                           "class":  "select2"
-                       },
-        "group":  "Pintu Transparansi"
-    },
-    {
-        "judul":  "URL Statistik Penduduk",
-        "key":  "pintu_penduduk_url",
-        "value":  "/data-statistik",
-        "type":  "input-text",
-        "keterangan":  "Tautan tujuan kartu. Kosongkan untuk rute bawaan (/data-statistik)",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "Pintu Transparansi",
-        "placeholder":  "/data-statistik"
-    },
-    {
-        "judul":  "Angka Statistik Penduduk",
-        "key":  "pintu_penduduk_angka",
-        "value":  "",
-        "type":  "input-text",
-        "keterangan":  "Angka terkini yang ditampilkan (mis. \"72%\" atau \"4.312 jiwa\"). Kosongkan untuk angka otomatis dari data / status belum diisi.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "Pintu Transparansi"
-    },
-    {
-        "judul":  "Tanggal Diperbarui Statistik Penduduk",
-        "key":  "pintu_penduduk_updated",
-        "value":  "",
-        "type":  "input-text",
-        "keterangan":  "Contoh: 5 Okt 2026. Kosongkan untuk tanggal otomatis dari data.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "Pintu Transparansi"
-    },
-    {
-        "judul":  "Kartu Bantuan Sosial",
-        "key":  "pintu_bantuan_enable",
-        "value":  "1",
-        "type":  "select",
-        "keterangan":  "Tampilkan kartu Bantuan Sosial di beranda.",
-        "options":  {
-                        "1":  "Ya - Tampilkan",
-                        "0":  "Tidak - Sembunyikan"
-                    },
-        "readonly":  false,
-        "attributes":  {
-                           "class":  "select2"
-                       },
-        "group":  "Pintu Transparansi"
-    },
-    {
-        "judul":  "URL Bantuan Sosial",
-        "key":  "pintu_bantuan_url",
-        "value":  "/data-statistik/bantuan_penduduk",
-        "type":  "input-text",
-        "keterangan":  "Tautan tujuan kartu. Kosongkan untuk rute bawaan (/data-statistik/bantuan_penduduk)",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "Pintu Transparansi",
-        "placeholder":  "/data-statistik/bantuan_penduduk"
-    },
-    {
-        "judul":  "Angka Bantuan Sosial",
-        "key":  "pintu_bantuan_angka",
-        "value":  "",
-        "type":  "input-text",
-        "keterangan":  "Angka terkini yang ditampilkan (mis. \"72%\" atau \"4.312 jiwa\"). Kosongkan untuk angka otomatis dari data / status belum diisi.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "Pintu Transparansi"
-    },
-    {
-        "judul":  "Tanggal Diperbarui Bantuan Sosial",
-        "key":  "pintu_bantuan_updated",
-        "value":  "",
-        "type":  "input-text",
-        "keterangan":  "Contoh: 5 Okt 2026. Kosongkan untuk tanggal otomatis dari data.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "Pintu Transparansi"
-    },
-    {
-        "judul":  "Kartu Pembangunan",
-        "key":  "pintu_pembangunan_enable",
-        "value":  "1",
-        "type":  "select",
-        "keterangan":  "Tampilkan kartu Pembangunan di beranda.",
-        "options":  {
-                        "1":  "Ya - Tampilkan",
-                        "0":  "Tidak - Sembunyikan"
-                    },
-        "readonly":  false,
-        "attributes":  {
-                           "class":  "select2"
-                       },
-        "group":  "Pintu Transparansi"
-    },
-    {
-        "judul":  "URL Pembangunan",
-        "key":  "pintu_pembangunan_url",
-        "value":  "/pembangunan",
-        "type":  "input-text",
-        "keterangan":  "Tautan tujuan kartu. Kosongkan untuk rute bawaan (/pembangunan)",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "Pintu Transparansi",
-        "placeholder":  "/pembangunan"
-    },
-    {
-        "judul":  "Angka Pembangunan",
-        "key":  "pintu_pembangunan_angka",
-        "value":  "",
-        "type":  "input-text",
-        "keterangan":  "Angka terkini yang ditampilkan (mis. \"72%\" atau \"4.312 jiwa\"). Kosongkan untuk angka otomatis dari data / status belum diisi.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "Pintu Transparansi"
-    },
-    {
-        "judul":  "Tanggal Diperbarui Pembangunan",
-        "key":  "pintu_pembangunan_updated",
-        "value":  "",
-        "type":  "input-text",
-        "keterangan":  "Contoh: 5 Okt 2026. Kosongkan untuk tanggal otomatis dari data.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "Pintu Transparansi"
-    },
-    {
-        "judul":  "Kartu Dokumen Publik (PPID)",
-        "key":  "pintu_dokumen_enable",
-        "value":  "1",
-        "type":  "select",
-        "keterangan":  "Tampilkan kartu Dokumen Publik (PPID) di beranda.",
-        "options":  {
-                        "1":  "Ya - Tampilkan",
-                        "0":  "Tidak - Sembunyikan"
-                    },
-        "readonly":  false,
-        "attributes":  {
-                           "class":  "select2"
-                       },
-        "group":  "Pintu Transparansi"
-    },
-    {
-        "judul":  "URL Dokumen Publik (PPID)",
-        "key":  "pintu_dokumen_url",
-        "value":  "/ppid",
-        "type":  "input-text",
-        "keterangan":  "Tautan tujuan kartu. Kosongkan untuk rute bawaan (/ppid)",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "Pintu Transparansi",
-        "placeholder":  "/ppid"
-    },
-    {
-        "judul":  "Angka Dokumen Publik (PPID)",
-        "key":  "pintu_dokumen_angka",
-        "value":  "",
-        "type":  "input-text",
-        "keterangan":  "Angka terkini yang ditampilkan (mis. \"72%\" atau \"4.312 jiwa\"). Kosongkan untuk angka otomatis dari data / status belum diisi.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "Pintu Transparansi"
-    },
-    {
-        "judul":  "Tanggal Diperbarui Dokumen Publik (PPID)",
-        "key":  "pintu_dokumen_updated",
-        "value":  "",
-        "type":  "input-text",
-        "keterangan":  "Contoh: 5 Okt 2026. Kosongkan untuk tanggal otomatis dari data.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "Pintu Transparansi"
-    },
-    {
-        "judul":  "ID Google Analytics 4",
-        "key":  "google_analytics_id",
-        "value":  "",
-        "type":  "input-text",
-        "keterangan":  "Kosongkan jika belum dipakai. Contoh: \u003ccode\u003eG-XXXXXXXXXX\u003c/code\u003e. Skrip hanya dimuat jika formatnya benar.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "SEO \u0026 Analitik",
-        "placeholder":  "G-XXXXXXXXXX"
-    },
-    {
-        "judul":  "Verifikasi Google Search Console",
-        "key":  "google_site_verification",
-        "value":  "",
-        "type":  "input-text",
-        "keterangan":  "Tempel hanya nilai tokennya (bukan seluruh tag meta). Ditemukan pada metode verifikasi \"Tag HTML\".",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "SEO \u0026 Analitik",
-        "placeholder":  "contoh: AbC123..."
-    },
-    {
-        "judul":  "Verifikasi Bing Webmaster",
-        "key":  "bing_site_verification_id",
-        "value":  "",
-        "type":  "input-text",
-        "keterangan":  "Tempel hanya nilai \u003ccode\u003econtent\u003c/code\u003e-nya. Ditemukan pada metode verifikasi \"Meta tag\".",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "SEO \u0026 Analitik",
-        "placeholder":  "contoh: 1234ABCD..."
-    },
-    {
-        "judul":  "Schema SEO (Data Terstruktur)",
-        "key":  "seo_schema_aktif",
-        "value":  "1",
-        "type":  "select",
-        "keterangan":  "Tambahkan data terstruktur JSON-LD untuk situs dan artikel. Disarankan tetap aktif. \u003ca href=\"https://validator.schema.org/\" target=\"_blank\" rel=\"noopener noreferrer\"\u003e\u003cb\u003ePeriksa Schema.org\u003c/b\u003e\u003c/a\u003e.",
-        "options":  {
-                        "1":  "Aktif",
-                        "0":  "Nonaktif"
-                    },
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "SEO \u0026 Analitik"
-    },
-    {
-        "judul":  "Publisher ID Google AdSense",
-        "key":  "google_adsense_id",
-        "value":  "",
-        "type":  "input-text",
-        "keterangan":  "Isi untuk menampilkan iklan AdSense (Auto Ads). Kosongkan jika belum dipakai. Contoh: \u003ccode\u003eca-pub-1234567890123456\u003c/code\u003e. Skrip hanya dimuat jika formatnya benar.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "SEO \u0026 Analitik",
-        "placeholder":  "ca-pub-XXXXXXXXXXXXXXXX"
-    },
-    {
-        "judul":  "Facebook App ID",
-        "key":  "facebook_app_id",
-        "value":  "",
-        "type":  "input-text",
-        "keterangan":  "Digunakan untuk metadata \u003ccode\u003efb:app_id\u003c/code\u003e agar Facebook mengenali situs saat tautan dibagikan. \u003ca href=\"https://developers.facebook.com/apps/\" target=\"_blank\" rel=\"noopener noreferrer\"\u003e\u003cb\u003eBuka Meta for Developers\u003c/b\u003e\u003c/a\u003e, pilih/buat aplikasi lalu salin App ID. Jangan masukkan App Secret.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "SEO \u0026 Analitik",
-        "placeholder":  "Masukkan App ID Facebook"
-    },
-    {
-        "judul":  "Facebook Admin ID",
-        "key":  "facebook_admin_id",
-        "value":  "",
-        "type":  "input-text",
-        "keterangan":  "Opsional untuk metadata \u003ccode\u003efb:admins\u003c/code\u003e. Isi hanya ID numerik akun Facebook yang menjadi admin situs. Jika tidak mengetahui ID ini, biarkan kosong; \u003ccode\u003efb:app_id\u003c/code\u003e tetap dapat digunakan.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "SEO \u0026 Analitik",
-        "placeholder":  "Masukkan Admin ID Facebook (opsional)"
-    },
-    {
-        "judul":  "Judul Halaman Pengaduan",
-        "key":  "judul_pengaduan",
-        "value":  "Pengaduan",
-        "type":  "input-text",
-        "keterangan":  "Nama menu dan judul halaman pengaduan warga. Kosongkan untuk \"Pengaduan\".",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-
-                       },
-        "group":  "Pengaduan",
-        "placeholder":  "Pengaduan"
-    },
-    {
-        "judul":  "Tampilkan Halaman Cuaca",
-        "key":  "aktif_cuaca",
-        "value":  "1",
-        "type":  "select",
-        "keterangan":  "Tampilkan halaman \u003ccode\u003ehuta-cuaca\u003c/code\u003e dan tombol Cuaca di Layanan Huta Studio. Widget Cuaca beranda tetap mengikuti \u003ccode\u003eAdmin Web â†’ Widget (Cuaca)\u003c/code\u003e. \u003ca href=\"/arsip?req=huta-cuaca\" target=\"_blank\" rel=\"noopener noreferrer\"\u003e\u003cb\u003eBuka Cuaca \u0026amp; Kondisi Udara\u003c/b\u003e\u003c/a\u003e.\u003chr/\u003e",
-        "options":  {
-                        "1":  "Ya - Tampilkan",
-                        "0":  "Tidak - Sembunyikan"
-                    },
-        "attributes":  {
-                           "class":  "select2"
-                       },
-        "readonly":  false
-    },
-    {
-        "judul":  "Tampilkan Halaman Gempa",
-        "key":  "aktif_gempa",
-        "value":  "1",
-        "type":  "select",
-        "keterangan":  "Tampilkan halaman \u003ccode\u003ehuta-gempa\u003c/code\u003e dan tombol Gempa di Layanan Huta Studio. Widget Gempa beranda tetap mengikuti \u003ccode\u003eAdmin Web â†’ Widget (Gempa)\u003c/code\u003e. \u003ca href=\"/arsip?req=huta-gempa\" target=\"_blank\" rel=\"noopener noreferrer\"\u003e\u003cb\u003eBuka Informasi Gempa Bumi\u003c/b\u003e\u003c/a\u003e.",
-        "options":  {
-                        "1":  "Ya - Tampilkan",
-                        "0":  "Tidak - Sembunyikan"
-                    },
-        "attributes":  {
-                           "class":  "select2"
-                       },
-        "readonly":  false
-    },
-    {
-        "judul":  "Buku Tamu",
-        "key":  "buku_tamu",
-        "value":  "0",
-        "type":  "select",
-        "keterangan":  "(add-ons) Tampilkan Buku Tamu pada \u003ca href=\"/pengaduan\" target=\"_blank\" rel=\"noopener noreferrer\"\u003ehalaman Pengaduan\u003c/a\u003e.",
-        "options":  {
-                        "1":  "Ya - Tampilkan",
-                        "0":  "Tidak - Sembunyikan"
-                    },
-        "attributes":  {
-                           "class":  "select2 dnv-addon-required"
-                       },
-        "readonly":  false
-    },
-    {
-        "judul":  "Status Buku Tamu",
-        "key":  "status_buku_tamu",
-        "value":  "0",
-        "type":  "select",
-        "keterangan":  "(add-ons) Pilih semua data atau hanya data Buku Tamu yang sudah dibaca.",
-        "options":  {
-                        "1":  "Tampilkan Semua Data",
-                        "0":  "Tampilkan Hanya yang Sudah Dibaca"
-                    },
-        "attributes":  {
-                           "class":  "select2 dnv-addon-required"
-                       },
-        "readonly":  false
-    },
-    {
-        "judul":  "Unduh Buku Tamu",
-        "key":  "unduh_buku_tamu",
-        "value":  "0",
-        "type":  "select",
-        "keterangan":  "(add-ons) Tampilkan atau sembunyikan tombol Unduh Buku Tamu.\u003chr/\u003e",
-        "options":  {
-                        "1":  "Tampilkan Tombol Unduh",
-                        "0":  "Sembunyikan Tombol Unduh"
-                    },
-        "attributes":  {
-                           "class":  "select2 dnv-addon-required"
-                       },
-        "readonly":  false
-    },
-    {
-        "judul":  "Informasi Program Bantuan",
-        "key":  "data_bantuan",
-        "value":  "0",
-        "type":  "select",
-        "keterangan":  "(add-ons) Tampilkan Program Bantuan pada hasil Pencarian Penduduk.\u003chr/\u003e",
-        "options":  {
-                        "1":  "Ya - Tampilkan",
-                        "0":  "Tidak - Sembunyikan"
-                    },
-        "attributes":  {
-                           "class":  "select2 dnv-addon-required"
-                       },
-        "readonly":  false
-    },
-    {
-        "judul":  "Perkembangan Penduduk",
-        "key":  "hide_banner_laporan",
-        "value":  "0",
-        "type":  "select",
-        "keterangan":  "\u003cdiv class=\"dnv-addon-subtitle\"\u003eInformasi \u0026amp; Layanan\u003c/div\u003e(add-ons) Tampilkan Perkembangan Penduduk di website.",
-        "options":  {
-                        "1":  "Ya - Tampilkan",
-                        "0":  "Tidak - Sembunyikan"
-                    },
-        "attributes":  {
-                           "class":  "select2 dnv-addon-required"
-                       },
-        "readonly":  false
-    },
-    {
-        "judul":  "Tampilkan Tanggal Lapor",
-        "key":  "hide_tgl_lapor",
-        "value":  "0",
-        "type":  "select",
-        "keterangan":  "(add-ons) Tampilkan tanggal laporan pada informasi Perkembangan Penduduk.",
-        "options":  {
-                        "1":  "Ya - Tampilkan",
-                        "0":  "Tidak - Sembunyikan"
-                    },
-        "attributes":  {
-                           "class":  "select2 dnv-addon-required"
-                       },
-        "readonly":  false
-    },
-    {
-        "judul":  "Layanan Surat Pengantar",
-        "key":  "hide_banner_layanan",
-        "value":  "0",
-        "type":  "select",
-        "keterangan":  "(add-ons) Tampilkan Layanan Surat Pengantar pada Smart Insight.",
-        "options":  {
-                        "1":  "Ya - Tampilkan",
-                        "0":  "Tidak - Sembunyikan"
-                    },
-        "attributes":  {
-                           "class":  "select2 dnv-addon-required"
-                       },
-        "readonly":  false
-    },
-    {
-        "judul":  "Pengguna Aktif Memperbarui Data",
-        "key":  "hide_top_inputer",
-        "value":  "0",
-        "type":  "select",
-        "keterangan":  "(add-ons) Tampilkan informasi pengguna aktif yang memperbarui data.",
-        "options":  {
-                        "1":  "Ya - Tampilkan",
-                        "0":  "Tidak - Sembunyikan"
-                    },
-        "attributes":  {
-                           "class":  "select2 dnv-addon-required"
-                       },
-        "readonly":  false
-    },
-    {
-        "judul":  "Tampilkan Popup Berita Duka",
-        "key":  "hide_tgl_meninggal",
-        "value":  "0",
-        "type":  "select",
-        "keterangan":  "(add-ons) Tampilkan Popup Berita Duka di website.",
-        "options":  {
-                        "1":  "Ya - Tampilkan",
-                        "0":  "Tidak - Sembunyikan"
-                    },
-        "attributes":  {
-                           "class":  "select2 dnv-addon-required"
-                       },
-        "readonly":  false
-    },
-    {
-        "judul":  "Kalimat berita duka",
-        "key":  "berita_duka",
-        "value":  "Sesungguhnya kita berasal dari Allah, dan kepada-Nya kita pasti akan kembali.",
-        "placeholder":  "Ketik kalimat Duka di Sini",
-        "type":  "input-text",
-        "keterangan":  "(add-ons) Kalimat yang ditampilkan pada Popup Berita Duka di website.\u003chr/\u003e",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-                           "class":  "dnv-addon-required",
-                           "autocomplete":  "off",
-                           "spellcheck":  "false",
-                           "autocapitalize":  "off",
-                           "data-form-type":  "other",
-                           "data-lpignore":  "true",
-                           "data-1p-ignore":  "true"
-                       }
-    },
-    {
-        "judul":  "URL Feed RSS / Atom",
-        "key":  "feed_url",
-        "value":  "",
-        "placeholder":  "https://contoh.go.id/feed",
-        "type":  "input-text",
-        "keterangan":  "Opsional. Isi URL \u003cb\u003eHTTPS\u003c/b\u003e Feed RSS/Atom yang ingin ditampilkan pada widget Feed. Jika kosong, Huta Studio tetap menggunakan Feed yang disediakan OpenSID bila tersedia. URL diperiksa agar tidak mengakses IP lokal/pribadi.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-                           "autocomplete":  "off",
-                           "spellcheck":  "false",
-                           "maxlength":  "500",
-                           "inputmode":  "url",
-                           "autocapitalize":  "off",
-                           "data-form-type":  "other",
-                           "data-lpignore":  "true",
-                           "data-1p-ignore":  "true"
-                       }
-    },
-    {
-        "judul":  "Video YouTube",
-        "key":  "link_youtube",
-        "value":  "0",
-        "type":  "select",
-        "keterangan":  "Tampilkan atau sembunyikan Galeri Video YouTube di halaman utama.",
-        "options":  {
-                        "1":  "Ya - Tampilkan",
-                        "0":  "Tidak - Sembunyikan"
-                    },
-        "attributes":  {
-                           "class":  "select2"
-                       },
-        "readonly":  false
-    },
-    {
-        "judul":  "Link Video YouTube",
-        "key":  "link_youtube_video",
-        "value":  "https://youtu.be/8H3wmfaS7Lc , https://youtu.be/z6DqMn1dcj4 , https://youtu.be/5M6IrrcqTCM",
-        "placeholder":  "Ketik di Sini",
-        "type":  "input-text",
-        "keterangan":  "Masukkan tautan video YouTube. Jika lebih dari satu, pisahkan dengan koma. \u003ccode\u003e(kosongkan jika tidak ingin tampil)\u003c/code\u003e\u003chr/\u003e",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-                           "autocomplete":  "off",
-                           "spellcheck":  "false",
-                           "autocapitalize":  "off",
-                           "data-form-type":  "other",
-                           "data-lpignore":  "true",
-                           "data-1p-ignore":  "true"
-                       }
-    },
-    {
-        "judul":  "Aksesibilitas UserWay",
-        "key":  "userway",
-        "value":  "",
-        "placeholder":  "Masukkan Account ID UserWay",
-        "type":  "input-text",
-        "keterangan":  "Masukkan \u003cb\u003eAccount ID publik\u003c/b\u003e UserWay dari atribut \u003ccode\u003edata-account\u003c/code\u003e untuk menu aksesibilitas. Jangan masukkan API Key, secret, atau token rahasia. \u003ca href=\"https://manage.userway.org/\" target=\"_blank\" rel=\"noopener noreferrer\"\u003e\u003cb\u003eBuka Dashboard UserWay\u003c/b\u003e\u003c/a\u003e. \u003ccode\u003e(kosongkan jika tidak digunakan)\u003c/code\u003e\u003chr/\u003e",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-                           "autocomplete":  "off",
-                           "spellcheck":  "false",
-                           "maxlength":  "48",
-                           "autocapitalize":  "off",
-                           "data-form-type":  "other",
-                           "data-lpignore":  "true",
-                           "data-1p-ignore":  "true"
-                       }
-    },
-    {
-        "judul":  "Kunci Google AI (Gemini API)",
-        "key":  "gemini_api_key",
-        "placeholder":  "Tempel Kunci API dari Google AI Studio",
-        "type":  "input-text",
-        "keterangan":  "\u003cdiv class=\"dnv-addon-subtitle\"\u003eGoogle AI \u0026amp; OCR\u003c/div\u003e(add-ons) Kunci untuk Generate Artikel dan OCR Foto KTP/KK. Status OCR Foto diverifikasi sesuai mode Free/Paid yang dipilih. \u003ca href=\"https://aistudio.google.com/app/apikey\" target=\"_blank\" rel=\"noopener noreferrer\"\u003eBuat / salin kunci di Google AI Studio\u003c/a\u003e.\u003cstyle\u003e#huta-gemini-status{display:flex;align-items:center;gap:8px;margin-top:8px;padding:7px 10px;border:1px solid #cad8e1;border-radius:8px;background:#f4f8fa;color:#486273;font-size:12px;font-weight:700;line-height:1.35}#huta-gemini-status[data-kind=ok]{color:#087b20;border-color:#b9dfc3;background:#eef9f1}#huta-gemini-status[data-kind=wait]{color:#9a6700;border-color:#ead6a0;background:#fff9e8}#huta-gemini-status[data-kind=bad]{color:#b42318;border-color:#efc2bd;background:#fff3f2}\u003c/style\u003e\u003cdiv id=\"huta-gemini-status\" data-kind=\"wait\" role=\"status\" aria-live=\"polite\"\u003eKunci Google AI belum diperiksa.\u003c/div\u003e\u003cscript\u003e(function(){if(window.__dnvGeminiProd)return;window.__dnvGeminiProd=1;var initial=\"\",running=false,ready=false,paid=false;function q(k){return document.querySelector(\"[name=\\\"\"+k+\"\\\"],[name$=\\\"[\"+k+\"]\\\"],#\"+k)}function v(k){var e=q(k);return e?String(e.value||\"\").trim():\"\"}function st(t,k){var e=document.getElementById(\"huta-gemini-status\");if(e){e.textContent=t;e.dataset.kind=k||\"wait\"}}function root(){try{var u=new URL(location.href),p=u.pathname||\"/\",l=p.toLowerCase(),i=l.indexOf(\"/index.php/\");if(i\u003e=0)return u.origin+p.slice(0,i+10).replace(/\\/$/,\"\");for(var a=[\"/siteman/\",\"/theme/\",\"/tema/\"],j=0;j\u003ca.length;j++){i=l.indexOf(a[j]);if(i\u003e=0)return u.origin+p.slice(0,i).replace(/\\/$/,\"\")}return u.origin+p.replace(/\\/[^/]*$/,\"\" ).replace(/\\/$/,\"\")}catch(e){return\"\"}}function text(){var m=v(\"ocr_ai_mode\");if(!ready)return\"Kunci Google AI belum siap digunakan.\";if(v(\"status_ocr\")!==\"1\")return\"Kunci Google AI siap. OCR Foto dinonaktifkan.\";if(m===\"2\")return paid?\"Google AI Berbayar terverifikasi.\":\"Kunci aktif, tetapi Google AI Berbayar belum terverifikasi.\";return\"Kunci Google AI siap. OCR Foto dinonaktifkan.\"}function run(){if(running)return;var e=q(\"gemini_api_key\"),key=v(\"gemini_api_key\"),m=v(\"ocr_ai_mode\"),r=root();if(!e||e.disabled){st(\"Aktifkan add-ons terlebih dahulu.\",\"wait\");return}if(!key){ready=false;paid=false;st(\"Masukkan Kunci Google AI terlebih dahulu.\",\"bad\");return}if(key!==initial){ready=false;paid=false;st(\"Simpan Pengaturan Tema untuk memeriksa kunci baru.\",\"wait\");return}if(!r){st(\"Kunci Google AI belum dapat diperiksa. Silakan muat ulang halaman.\",\"bad\");return}running=true;st(m===\"2\"?\"Memeriksa Kunci Google AI dan Google AI Berbayar...\":\"Memeriksa Kunci Google AI...\",\"wait\");var b=new URLSearchParams();b.set(\"huta_action\",\"gemini-key-check\");b.set(\"ocr_mode\",m);fetch(r+\"/internal_api/huta?req=theme\",{method:\"POST\",credentials:\"same-origin\",cache:\"no-store\",headers:{\"Accept\":\"application/json\",\"Content-Type\":\"application/x-www-form-urlencoded;charset=UTF-8\",\"X-Requested-With\":\"XMLHttpRequest\",\"X-Denava-Action\":\"gemini-key-check\"},body:b.toString()}).then(function(res){return res.text().then(function(t){var d={};try{d=JSON.parse(t)}catch(x){}if(!res.ok||!d||typeof d.ready!==\"boolean\")throw new Error(\"request\");return d})}).then(function(d){ready=!!d.ready;paid=d.paid_ready===true;st(d.message||text(),ready\u0026\u0026(m!==\"2\"||paid)?\"ok\":ready?\"bad\":\"bad\")}).catch(function(){ready=false;paid=false;st(\"Kunci Google AI belum dapat diperiksa saat ini. Silakan coba kembali.\",\"wait\")}).finally(function(){running=false})}function start(){var e=q(\"gemini_api_key\"),m=q(\"ocr_ai_mode\"),o=q(\"status_ocr\");initial=v(\"gemini_api_key\");if(e){e.addEventListener(\"input\",run,true);e.addEventListener(\"change\",run,true);new MutationObserver(run).observe(e,{attributes:true,attributeFilter:[\"disabled\"]})}if(m)m.addEventListener(\"change\",run,true);if(o)o.addEventListener(\"change\",run,true);run()}document.readyState===\"loading\"?document.addEventListener(\"DOMContentLoaded\",start,{once:true}):start()})();\u003c/script\u003e",
-        "caption":  "Kunci diperiksa dari sisi server.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-                           "class":  "dnv-addon-required",
-                           "autocomplete":  "off",
-                           "spellcheck":  "false",
-                           "autocapitalize":  "off",
-                           "data-form-type":  "other",
-                           "data-lpignore":  "true",
-                           "data-1p-ignore":  "true"
-                       }
-    },
-    {
-        "judul":  "Generate Artikel",
-        "key":  "status_generate",
-        "value":  "0",
-        "type":  "select",
-        "keterangan":  "(add-ons) Gunakan Google AI untuk membantu menyusun artikel pada \u003ca href=\"/arsip\" target=\"_blank\" rel=\"noopener noreferrer\"\u003ehalaman Arsip\u003c/a\u003e. Dapat memakai Google AI Gratis. Jangan masukkan data pribadi atau informasi rahasia.",
-        "options":  {
-                        "1":  "Ya - Aktifkan",
-                        "0":  "Tidak - Nonaktifkan"
-                    },
-        "attributes":  {
-                           "class":  "select2 dnv-addon-required"
-                       },
-        "readonly":  false
-    },
-    {
-        "judul":  "OCR KTP/KK",
-        "key":  "status_ocr",
-        "value":  "0",
-        "type":  "select",
-        "keterangan":  "(add-ons) Aktifkan OCR KTP/KK untuk operator desa. PDF KK digital tetap diproses lokal tanpa dikirim ke Google AI.",
-        "options":  {
-                        "1":  "Ya - Aktifkan",
-                        "0":  "Tidak - Nonaktifkan"
-                    },
-        "attributes":  {
-                           "class":  "select2 dnv-addon-required"
-                       },
-        "readonly":  false
-    },
-    {
-        "judul":  "OCR Foto KTP/KK",
-        "key":  "ocr_ai_mode",
-        "value":  "0",
-        "type":  "select",
-        "keterangan":  "(add-ons) Pilih penggunaan OCR Foto setelah OCR KTP/KK diaktifkan.\u003cstyle\u003e.dnv-ocr-common{margin-top:9px;padding:9px 11px;border-radius:8px;background:#fff8e8;border:1px solid #ead7a2;color:#775900;line-height:1.45}.dnv-ocr-mode-info{margin-top:9px;padding:10px 12px;border-radius:8px;line-height:1.45}.dnv-ocr-mode-info b{display:block;margin-bottom:4px;font-size:13px}.dnv-ocr-mode-info ul{margin:4px 0 0 18px;padding:0}.dnv-ocr-mode-info li{margin:2px 0}.dnv-ocr-mode-paid{background:#eef9f1;border:1px solid #b9dfc3;color:#17612d}.dnv-ocr-mode-note{margin-top:8px;color:#526273;line-height:1.4}\u003c/style\u003e\u003cdiv class=\"dnv-ocr-common\"\u003e\u003cb\u003ePerhatian:\u003c/b\u003e KTP/KK berisi data pribadi. Gunakan hanya untuk layanan desa yang sah dan sesuai tugas/kewenangan desa.\u003c/div\u003e\u003cdiv class=\"dnv-ocr-mode-info dnv-ocr-mode-paid\"\u003e\u003cb\u003eGoogle AI Berbayar\u003c/b\u003e\u003cul\u003e\u003cli\u003eMode ini memerlukan project Paid dengan Cloud Billing aktif dan saldo/kredit yang tersedia.\u003c/li\u003e\u003cli\u003eFoto KTP/KK dikirim ke Google AI setelah pernyataan pemrosesan dicentang.\u003c/li\u003e\u003cli\u003eGoogle menyatakan konten layanan berbayar tidak digunakan untuk meningkatkan produknya.\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e\u003cdiv class=\"dnv-ocr-mode-note\"\u003ePDF KK digital tetap diproses lokal tanpa Google AI. \u003ca href=\"https://peraturan.bpk.go.id/Details/229798/uu-no-27-tahun-2022\" target=\"_blank\" rel=\"noopener noreferrer\"\u003ePelindungan Data Pribadi\u003c/a\u003e Â· \u003ca href=\"https://ai.google.dev/gemini-api/terms?hl=id\" target=\"_blank\" rel=\"noopener noreferrer\"\u003eKetentuan Google AI\u003c/a\u003e\u003c/div\u003e",
-        "options":  {
-                        "0":  "Tidak - Nonaktifkan OCR Foto KTP/KK",
-                        "2":  "Ya - Google AI Berbayar (Cloud Billing aktif)"
-                    },
-        "attributes":  {
-                           "class":  "select2 dnv-addon-required"
-                       },
-        "readonly":  false
-    },
-    {
-        "judul":  "Layanan Informasi WhatsApp",
-        "key":  "status_whatsapp_ai",
-        "value":  "0",
-        "type":  "select",
-        "keterangan":  "\u003cdiv class=\"dnv-addon-subtitle\"\u003eWhatsApp â€” Add-ons + Modul\u003c/div\u003e(add-ons+modul) Aktifkan Layanan Informasi WhatsApp. Memerlukan Kode Aktivasi add-ons dan Modul Huta Studio.\u003cdiv class=\"dnv-module-help\"\u003e\u003cstrong\u003eModul belum terpasang?\u003c/strong\u003e Dapatkan Modul Huta Studio dari penyedia/mitra Huta Studio, pasang sesuai petunjuk paket modul, lalu muat ulang halaman ini.\u003c/div\u003e\u003cdiv id=\"dnv-module-status\" data-kind=\"wait\" role=\"status\" aria-live=\"polite\"\u003eModul Huta Studio belum diperiksa.\u003c/div\u003e",
-        "options":  {
-                        "1":  "Ya - Aktifkan",
-                        "0":  "Tidak - Nonaktifkan"
-                    },
-        "attributes":  {
-                           "class":  "select2 dnv-addon-required dnv-addon-module-required"
-                       },
-        "readonly":  false
-    },
-    {
-        "judul":  "Token Fonnte",
-        "key":  "fonnte_token",
-        "placeholder":  "Masukkan Token Fonnte",
-        "type":  "input-text",
-        "keterangan":  "(add-ons+modul) Masukkan Token Fonnte untuk nomor WhatsApp layanan desa. \u003ca href=\"https://md.fonnte.com/new/register.php?ref=222\" target=\"_blank\" rel=\"noopener noreferrer\"\u003eDaftar di Sini\u003c/a\u003e.",
-        "caption":  "Kosongkan token untuk menonaktifkan URL layanan.",
-        "options":  null,
-        "attributes":  {
-                           "autocomplete":  "off",
-                           "spellcheck":  "false",
-                           "class":  "dnv-addon-required dnv-addon-module-required",
-                           "autocapitalize":  "off",
-                           "data-form-type":  "other",
-                           "data-lpignore":  "true",
-                           "data-1p-ignore":  "true"
-                       },
-        "readonly":  false
-    },
-    {
-        "judul":  "URL Layanan WhatsApp",
-        "key":  "huta_webhook_url",
-        "placeholder":  "Terisi otomatis setelah layanan WhatsApp aktif",
-        "type":  "input-text",
-        "keterangan":  "(add-ons+modul) URL dibuat otomatis setelah layanan WhatsApp aktif.\u003cstyle\u003e#huta-wa-sync-status{display:flex;align-items:center;gap:8px;margin-top:9px;padding:8px 11px;border:1px solid #d7e1dc;border-radius:9px;background:#f7faf8;color:#526759;font-size:12px;font-weight:700;line-height:1.35}#huta-wa-sync-status .dnv-wa-dot{width:8px;height:8px;border-radius:50%;background:currentColor;box-shadow:0 0 0 3px rgba(82,103,89,.12);flex:0 0 auto}#huta-wa-sync-status[data-kind=ok]{color:#087b20;border-color:#b9dfc3;background:#eef9f1}#huta-wa-sync-status[data-kind=wait]{color:#9a6700;border-color:#ead6a0;background:#fff9e8}#huta-wa-sync-status[data-kind=bad]{color:#b42318;border-color:#efc2bd;background:#fff3f2}#huta-wa-sync-status[data-kind=info]{color:#38566b;border-color:#c8d8e2;background:#f2f7fa}\u003c/style\u003e\u003cdiv id=\"huta-wa-sync-status\" data-kind=\"info\" role=\"status\" aria-live=\"polite\"\u003e\u003cspan class=\"dnv-wa-dot\" aria-hidden=\"true\"\u003e\u003c/span\u003e\u003cspan class=\"dnv-wa-text\"\u003eLayanan WhatsApp belum diperiksa.\u003c/span\u003e\u003c/div\u003e\u003cscript\u003e(function(){if(window.__dnvWaProd)return;window.__dnvWaProd=1;var running=false,initial={},keys=[\"Huta Studio\",\"CekPenduduk\",\"status_whatsapp_ai\",\"fonnte_token\"];function q(k){return\"[name=\\\"\"+k+\"\\\"],[name$=\\\"[\"+k+\"]\\\"],[name*=\\\"[\"+k+\"]\\\"],#\"+k}function one(k){return document.querySelector(q(k))}function val(k){var e=one(k);return e?String(e.value||\"\").trim():\"\"}function put(k,v){var x=String(v==null?\"\":v);document.querySelectorAll(q(k)).forEach(function(e){e.disabled=false;e.value=x;e.setAttribute(\"value\",x);if(e.tagName===\"TEXTAREA\")e.textContent=x})}function st(t,k){var e=document.getElementById(\"huta-wa-sync-status\");if(!e)return;e.dataset.kind=k||\"info\";var x=e.querySelector(\".dnv-wa-text\");if(x)x.textContent=t||\"\"}function root(){try{var u=new URL(location.href),p=u.pathname||\"/\",l=p.toLowerCase(),i=l.indexOf(\"/index.php/\");if(i\u003e=0)return u.origin+p.slice(0,i+10).replace(/\\/$/,\"\");for(var a=[\"/siteman/\",\"/theme/\",\"/tema/\"],j=0;j\u003ca.length;j++){i=l.indexOf(a[j]);if(i\u003e=0)return u.origin+p.slice(0,i).replace(/\\/$/,\"\")}return u.origin+p.replace(/\\/[^/]*$/,\"\" ).replace(/\\/$/,\"\")}catch(e){return\"\"}}function clear(t,k){put(\"huta_webhook_url\",\"\");put(\"huta_wa_state_blob\",\"\");st(t,k||\"info\")}function label(r){r=String(r||\"\").replace(/_/g,\" \");if(/not available|activation invalid/.test(r))return\"Kode Aktivasi add-ons belum sesuai.\";if(/whatsapp disabled|disabled/.test(r))return\"Layanan Informasi WhatsApp belum diaktifkan.\";if(/fonnte token missing|token missing/.test(r))return\"Token Fonnte belum diisi.\";if(/token invalid|device missing/.test(r))return\"Token Fonnte belum dapat digunakan. Pastikan nomor WhatsApp pada Fonnte sudah terhubung.\";if(/provider temporary/.test(r))return\"Layanan WhatsApp belum dapat diaktifkan. Silakan coba kembali.\";if(/save failed/.test(r))return\"Layanan WhatsApp belum dapat disimpan. Silakan coba kembali.\";return\"Layanan WhatsApp belum dapat diaktifkan. Silakan coba kembali.\"}function prereq(){if(!val(\"CekPenduduk\"))return[\"Isi Kode Aktivasi add-ons terlebih dahulu.\",\"info\"];if(val(\"status_whatsapp_ai\")!==\"1\")return[\"Aktifkan Layanan Informasi WhatsApp untuk menggunakan layanan ini.\",\"info\"];if(!val(\"fonnte_token\"))return[\"Isi Token Fonnte terlebih dahulu.\",\"info\"];return[\"\",\"\"]}function changed(){for(var i=0;i\u003ckeys.length;i++)if(val(keys[i])!==initial[keys[i]])return true;return false}function pending(){var p=prereq();return p[0]?p:[\"Simpan perubahan terlebih dahulu.\",\"wait\"]}function run(){if(running)return;var p=prereq();if(p[0]){clear(p[0],p[1]);return}var r=root();if(!r){clear(\"Layanan WhatsApp belum dapat diperiksa. Muat ulang halaman lalu coba kembali.\",\"bad\");return}running=true;st(\"Memeriksa layanan WhatsApp...\",\"wait\");fetch(r+\"/internal_api/huta?req=sync\",{method:\"POST\",credentials:\"same-origin\",cache:\"no-store\",headers:{\"Accept\":\"application/json\",\"Content-Type\":\"application/x-www-form-urlencoded;charset=UTF-8\",\"X-Requested-With\":\"XMLHttpRequest\",\"X-Denava-Settings\":\"1\"},body:\"\"}).then(function(res){return res.text().then(function(t){var d={};try{d=JSON.parse(t)}catch(e){}if(res.status===404)throw new Error(\"module\");if(!res.ok||!d||d.type!==\"huta-wa-sync\")throw new Error(\"request\");return d})}).then(function(d){if(d.ready\u0026\u0026d.url){put(\"huta_webhook_url\",d.url);if(d.state_blob)put(\"huta_wa_state_blob\",d.state_blob);st(\"Layanan WhatsApp aktif dan siap digunakan.\",\"ok\")}else clear(label(d.reason),/provider_temporary/.test(String(d.reason||\"\"))?\"wait\":\"bad\")}).catch(function(e){if(e\u0026\u0026e.message===\"module\"){clear(\"Modul Huta Studio belum terpasang. Dapatkan dari penyedia/mitra Huta Studio, pasang sesuai petunjuk paket modul, lalu muat ulang halaman ini.\",\"info\");return}clear(\"Layanan WhatsApp belum dapat diperiksa. Muat ulang halaman lalu coba kembali.\",\"bad\")}).finally(function(){running=false})}function watch(k){var e=one(k);if(!e||e.__dnvProd)return;e.__dnvProd=1;[\"input\",\"change\"].forEach(function(n){e.addEventListener(n,function(){if(!changed()){run();return}var p=pending();clear(p[0],p[1])},true)})}function start(){keys.forEach(function(k){initial[k]=val(k)});keys.forEach(watch);var p=prereq();if(p[0]){clear(p[0],p[1]);return}run()}document.readyState===\"loading\"?document.addEventListener(\"DOMContentLoaded\",start,{once:true}):start()})();\u003c/script\u003e",
-        "caption":  "Terisi otomatis dan tidak perlu diubah manual.",
-        "options":  null,
-        "attributes":  {
-                           "autocomplete":  "off",
-                           "spellcheck":  "false",
-                           "class":  "dnv-addon-required dnv-addon-module-required",
-                           "autocapitalize":  "off",
-                           "data-form-type":  "other",
-                           "data-lpignore":  "true",
-                           "data-1p-ignore":  "true"
-                       },
-        "readonly":  true,
-        "value":  ""
-    },
-    {
-        "judul":  "",
-        "key":  "huta_wa_state_blob",
-        "placeholder":  "",
-        "type":  "input-text",
-        "keterangan":  "\u003cstyle\u003e#huta_wa_state_blob,[name=\u0027huta_wa_state_blob\u0027],label[for=\u0027huta_wa_state_blob\u0027]{display:none!important}\u003c/style\u003e\u003cscript\u003e(function(){function h(){var e=document.querySelector(\"[name=\u0027huta_wa_state_blob\u0027],#huta_wa_state_blob\");if(!e)return;var f=e.form||(e.closest?e.closest(\u0027form\u0027):null);if(f){f.setAttribute(\u0027autocomplete\u0027,\u0027off\u0027);f.setAttribute(\u0027data-form-type\u0027,\u0027other\u0027);f.querySelectorAll(\"input[type=\u0027text\u0027],input:not([type]),textarea\").forEach(function(x){if(x.type===\u0027hidden\u0027)return;x.setAttribute(\u0027autocomplete\u0027,\u0027off\u0027);x.setAttribute(\u0027spellcheck\u0027,\u0027false\u0027);x.setAttribute(\u0027autocapitalize\u0027,\u0027off\u0027);x.setAttribute(\u0027data-form-type\u0027,\u0027other\u0027);x.setAttribute(\u0027data-lpignore\u0027,\u0027true\u0027);x.setAttribute(\u0027data-1p-ignore\u0027,\u0027true\u0027)})}var n=e;for(var i=0;i\u003c7\u0026\u0026n;i++,n=n.parentElement){if(n.matches\u0026\u0026n.matches(\u0027tr,.form-group,.mb-3,.row,[class*=form-group]\u0027)){n.style.setProperty(\u0027display\u0027,\u0027none\u0027,\u0027important\u0027);break}}}if(document.readyState===\u0027loading\u0027)document.addEventListener(\u0027DOMContentLoaded\u0027,h,{once:true});else h();setTimeout(h,50);setTimeout(h,300)})();\u003c/script\u003e",
-        "caption":  "",
-        "options":  null,
-        "attributes":  {
-                           "maxlength":  "4096",
-                           "autocomplete":  "off",
-                           "spellcheck":  "false",
-                           "tabindex":  "-1",
-                           "aria-hidden":  "true",
-                           "style":  "display:none!important",
-                           "readonly":  "readonly",
-                           "autocapitalize":  "off",
-                           "data-form-type":  "other",
-                           "data-lpignore":  "true",
-                           "data-1p-ignore":  "true"
-                       },
-        "readonly":  true
-    },
-    {
-        "judul":  "Footer Chat WhatsApp",
-        "key":  "huta_wa_footer",
-        "value":  "",
-        "placeholder":  "Contoh: https://website-desa.id",
-        "type":  "input-text",
-        "keterangan":  "(add-ons+modul) Teks tambahan di bawah setiap jawaban WhatsApp.\u003cscript\u003e(function(){function p(){var e=document.querySelector(\"[name=\\\"huta_wa_footer\\\"],[name$=\\\"[huta_wa_footer]\\\"],#huta_wa_footer\");if(e)e.placeholder=location.origin}if(document.readyState===\"loading\")document.addEventListener(\"DOMContentLoaded\",p,{once:true});else p()})();\u003c/script\u003e\u003chr/\u003e",
-        "caption":  "Maksimal 200 karakter. Kosongkan jika tidak diperlukan.",
-        "options":  null,
-        "attributes":  {
-                           "maxlength":  "200",
-                           "autocomplete":  "off",
-                           "spellcheck":  "false",
-                           "class":  "dnv-addon-required dnv-addon-module-required",
-                           "autocapitalize":  "off",
-                           "data-form-type":  "other",
-                           "data-lpignore":  "true",
-                           "data-1p-ignore":  "true"
-                       },
-        "readonly":  false
-    },
-    {
-        "judul":  "Banner Kegiatan",
-        "key":  "defaultevent",
-        "value":  "false",
-        "type":  "select",
-        "keterangan":  "Tampilkan atau sembunyikan Banner Kegiatan.",
-        "options":  {
-                        "true":  "Ya - Tampilkan",
-                        "false":  "Tidak - Sembunyikan"
-                    },
-        "attributes":  {
-                           "class":  "select2"
-                       },
-        "readonly":  false
-    },
-    {
-        "judul":  "Tanggal Mulai Kegiatan",
-        "key":  "event_mulai",
-        "value":  "01-08-2026",
-        "placeholder":  "Format Tanggal : DD-MM-YYYY",
-        "type":  "input-text",
-        "keterangan":  "Tentukan tanggal mulai dengan format \u003ccode\u003eDD-MM-YYYY\u003c/code\u003e.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-                           "autocomplete":  "off",
-                           "spellcheck":  "false",
-                           "autocapitalize":  "off",
-                           "data-form-type":  "other",
-                           "data-lpignore":  "true",
-                           "data-1p-ignore":  "true"
-                       }
-    },
-    {
-        "judul":  "Tanggal Berakhir Kegiatan",
-        "key":  "event_akhir",
-        "value":  "31-08-2026",
-        "placeholder":  "Format Tanggal : DD-MM-YYYY",
-        "type":  "input-text",
-        "keterangan":  "Tentukan tanggal berakhir dengan format \u003ccode\u003eDD-MM-YYYY\u003c/code\u003e.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-                           "autocomplete":  "off",
-                           "spellcheck":  "false",
-                           "autocapitalize":  "off",
-                           "data-form-type":  "other",
-                           "data-lpignore":  "true",
-                           "data-1p-ignore":  "true"
-                       }
-    },
-    {
-        "judul":  "Judul Utama",
-        "key":  "event_toptitle",
-        "value":  "Hari Kemerdekaan RI",
-        "placeholder":  "Ketik di Sini",
-        "type":  "input-text",
-        "keterangan":  "Tentukan judul utama pada Banner Kegiatan.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-                           "autocomplete":  "off",
-                           "spellcheck":  "false",
-                           "autocapitalize":  "off",
-                           "data-form-type":  "other",
-                           "data-lpignore":  "true",
-                           "data-1p-ignore":  "true"
-                       }
-    },
-    {
-        "judul":  "Tulisan Bergaya Arab",
-        "key":  "event_titlearab",
-        "value":  "Dirgahayu Republik Indonesia",
-        "placeholder":  "Ketik di Sini",
-        "type":  "input-text",
-        "keterangan":  "Tentukan tulisan bergaya Arab pada Banner Kegiatan.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-                           "autocomplete":  "off",
-                           "spellcheck":  "false",
-                           "autocapitalize":  "off",
-                           "data-form-type":  "other",
-                           "data-lpignore":  "true",
-                           "data-1p-ignore":  "true"
-                       }
-    },
-    {
-        "judul":  "Judul Tambahan",
-        "key":  "event_subtitle",
-        "value":  "",
-        "placeholder":  "Ketik di Sini",
-        "type":  "input-text",
-        "keterangan":  "Tentukan judul tambahan pada Banner Kegiatan.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-                           "autocomplete":  "off",
-                           "spellcheck":  "false",
-                           "autocapitalize":  "off",
-                           "data-form-type":  "other",
-                           "data-lpignore":  "true",
-                           "data-1p-ignore":  "true"
-                       }
-    },
-    {
-        "judul":  "Keterangan",
-        "key":  "event_desktitle",
-        "value":  "17 Agustus 1945 - 17 Agustus 2026",
-        "placeholder":  "Ketik di Sini",
-        "type":  "input-text",
-        "keterangan":  "Tentukan keterangan singkat pada Banner Kegiatan.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-                           "autocomplete":  "off",
-                           "spellcheck":  "false",
-                           "autocapitalize":  "off",
-                           "data-form-type":  "other",
-                           "data-lpignore":  "true",
-                           "data-1p-ignore":  "true"
-                       }
-    },
-    {
-        "judul":  "Gambar Banner Kegiatan",
-        "key":  "event_gambar",
-        "placeholder":  "Gambar mengikuti pilihan pada pengaturan Gempa.",
-        "type":  "input-text",
-        "keterangan":  "Unggah gambar melalui \u003ccode\u003eAdmin Web â†’ Widget (Gempa)\u003c/code\u003e; gambar tersebut digunakan pada Banner Kegiatan.",
-        "options":  null,
-        "readonly":  true,
-        "attributes":  {
-                           "autocomplete":  "off",
-                           "spellcheck":  "false",
-                           "autocapitalize":  "off",
-                           "data-form-type":  "other",
-                           "data-lpignore":  "true",
-                           "data-1p-ignore":  "true"
-                       }
-    },
-    {
-        "judul":  "Posisi Gambar Banner",
-        "key":  "posisi_gambar_event",
-        "value":  "0",
-        "type":  "select",
-        "keterangan":  "Pilih posisi gambar di sisi kiri atau kanan.\u003chr/\u003e",
-        "options":  {
-                        "1":  "Sisi Kanan",
-                        "0":  "Sisi Kiri"
-                    },
-        "attributes":  {
-                           "class":  "select2"
-                       },
-        "readonly":  false
-    },
-    {
-        "judul":  "Hitung Mundur Kegiatan",
-        "key":  "countdown",
-        "value":  "0",
-        "type":  "select",
-        "keterangan":  "Aktifkan atau nonaktifkan Hitung Mundur Kegiatan.",
-        "options":  {
-                        "1":  "Ya - Gunakan Pengaturan Ini",
-                        "0":  "Tidak - Gunakan Pengaturan Otomatis"
-                    },
-        "attributes":  {
-                           "class":  "select2"
-                       },
-        "readonly":  false
-    },
-    {
-        "judul":  "Tanggal Kegiatan",
-        "key":  "event_tgl",
-        "value":  "17-08-2026",
-        "placeholder":  "Format Tanggal : DD-MM-YYYY",
-        "type":  "input-text",
-        "keterangan":  "Tentukan tanggal kegiatan dengan format \u003ccode\u003eDD-MM-YYYY\u003c/code\u003e.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-                           "autocomplete":  "off",
-                           "spellcheck":  "false",
-                           "autocapitalize":  "off",
-                           "data-form-type":  "other",
-                           "data-lpignore":  "true",
-                           "data-1p-ignore":  "true"
-                       }
-    },
-    {
-        "judul":  "Judul Kegiatan",
-        "key":  "event_summary",
-        "value":  "Dirgahayu Republik Indonesia",
-        "placeholder":  "Ketik di Sini",
-        "type":  "input-text",
-        "keterangan":  "Tentukan judul kegiatan untuk Hitung Mundur.",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-                           "autocomplete":  "off",
-                           "spellcheck":  "false",
-                           "autocapitalize":  "off",
-                           "data-form-type":  "other",
-                           "data-lpignore":  "true",
-                           "data-1p-ignore":  "true"
-                       }
-    },
-    {
-        "judul":  "Keterangan Kegiatan",
-        "key":  "event_description",
-        "value":  "Hari Kemerdekaan Republik Indonesia",
-        "placeholder":  "Ketik di Sini",
-        "type":  "input-text",
-        "keterangan":  "Tentukan keterangan kegiatan untuk Hitung Mundur.\u003chr/\u003e",
-        "options":  null,
-        "readonly":  false,
-        "attributes":  {
-                           "autocomplete":  "off",
-                           "spellcheck":  "false",
-                           "autocapitalize":  "off",
-                           "data-form-type":  "other",
-                           "data-lpignore":  "true",
-                           "data-1p-ignore":  "true"
-                       }
-    },
-    {
-        "judul":  "Survei Kepuasan Masyarakat",
-        "key":  "skm_v2_mode",
-        "value":  "0",
-        "type":  "select",
-        "keterangan":  "Aktifkan Survei Kepuasan Masyarakat (SKM). Jika dimatikan, survei tidak dapat diakses.",
-        "options":  {
-                        "1":  "Ya - Aktifkan",
-                        "0":  "Tidak - Nonaktifkan"
-                    },
-        "readonly":  false,
-        "attributes":  {
-                           "class":  "select2"
-                       },
-        "group":  "Add-ons HutaStudio"
+        "judul": "Jumlah Pembangunan Perhalaman",
+        "key": "jumlah_pembangunan_perhalaman",
+        "value": 10,
+        "type": "input-number",
+        "keterangan": "Jumlah pembangunan yang ditampilkan dalam satu halaman",
+        "options": null,
+        "attributes": {
+            "min": 1,
+            "max": 50,
+            "step": 1
+        },
+        "readonly": false,
+        "link": true,
+        "group": "Pembangunan"
+    },
+    {
+        "judul": "Jumlah Pengaduan Perhalaman",
+        "key": "jumlah_pengaduan_perhalaman",
+        "value": 10,
+        "type": "input-number",
+        "keterangan": "Jumlah pengaduan yang ditampilkan dalam satu halaman",
+        "options": null,
+        "attributes": {
+            "min": 1,
+            "max": 50,
+            "step": 1
+        },
+        "readonly": false,
+        "link": true,
+        "group": "Pengaduan"
+    },
+    {
+        "judul": "Tampilkan Tombol WA",
+        "key": "wa_enable",
+        "value": "1",
+        "type": "select",
+        "keterangan": "Tombol mengambang WhatsApp di semua halaman.",
+        "options": {
+            "1": "Ya - Tampilkan",
+            "0": "Tidak - Sembunyikan"
+        },
+        "readonly": false,
+        "attributes": {
+            "class": "select2"
+        },
+        "group": "Kontak WhatsApp"
+    },
+    {
+        "judul": "Nomor WhatsApp",
+        "key": "wa_number",
+        "value": "",
+        "type": "input-text",
+        "keterangan": "Format internasional tanpa tanda +, contoh: 628123456789.",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "Kontak WhatsApp",
+        "placeholder": "628123456789"
+    },
+    {
+        "judul": "Pesan Awal Chat",
+        "key": "wa_message",
+        "value": "Assalamualaikum, saya warga ingin bertanya soal layanan desa.",
+        "type": "textarea",
+        "keterangan": "Teks yang sudah terisi saat warga membuka chat.",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "Kontak WhatsApp"
+    },
+    {
+        "judul": "Label Tombol",
+        "key": "wa_label",
+        "value": "Chat Desa",
+        "type": "input-text",
+        "keterangan": "Teks yang tampil di samping/atas tombol.",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "Kontak WhatsApp",
+        "placeholder": "Chat Desa"
+    },
+    {
+        "judul": "Bagian Hero",
+        "key": "home_hero_enable",
+        "value": "1",
+        "type": "select",
+        "keterangan": "Bagian pembuka beranda. Jika dimatikan, hero tidak tampil sama sekali.",
+        "options": {
+            "1": "Ya - Tampilkan",
+            "0": "Tidak - Sembunyikan"
+        },
+        "readonly": false,
+        "attributes": {
+            "class": "select2"
+        },
+        "group": "Bagian Beranda"
+    },
+    {
+        "judul": "Bagian Berita",
+        "key": "home_berita_enable",
+        "value": "1",
+        "type": "select",
+        "keterangan": "Kabar terbaru. Otomatis tersembunyi jika belum ada artikel.",
+        "options": {
+            "1": "Ya - Tampilkan",
+            "0": "Tidak - Sembunyikan"
+        },
+        "readonly": false,
+        "attributes": {
+            "class": "select2"
+        },
+        "group": "Bagian Beranda"
+    },
+    {
+        "judul": "Bagian Statistik Penduduk",
+        "key": "home_statistik_enable",
+        "value": "1",
+        "type": "select",
+        "keterangan": "Ringkasan jumlah penduduk. Otomatis tersembunyi jika data penduduk belum ada.",
+        "options": {
+            "1": "Ya - Tampilkan",
+            "0": "Tidak - Sembunyikan"
+        },
+        "readonly": false,
+        "attributes": {
+            "class": "select2"
+        },
+        "group": "Bagian Beranda"
+    },
+    {
+        "judul": "Bagian Aparatur",
+        "key": "home_pamong_enable",
+        "value": "1",
+        "type": "select",
+        "keterangan": "Perangkat desa beserta status kehadiran. Otomatis tersembunyi jika belum ada data aparatur.",
+        "options": {
+            "1": "Ya - Tampilkan",
+            "0": "Tidak - Sembunyikan"
+        },
+        "readonly": false,
+        "attributes": {
+            "class": "select2"
+        },
+        "group": "Bagian Beranda"
+    },
+    {
+        "judul": "Bagian Pembangunan",
+        "key": "home_pembangunan_enable",
+        "value": "1",
+        "type": "select",
+        "keterangan": "Progres kegiatan pembangunan. Otomatis tersembunyi jika belum ada data pembangunan.",
+        "options": {
+            "1": "Ya - Tampilkan",
+            "0": "Tidak - Sembunyikan"
+        },
+        "readonly": false,
+        "attributes": {
+            "class": "select2"
+        },
+        "group": "Bagian Beranda"
+    },
+    {
+        "judul": "Bagian Galeri",
+        "key": "home_galeri_enable",
+        "value": "1",
+        "type": "select",
+        "keterangan": "Galeri foto kegiatan. Otomatis tersembunyi jika belum ada foto galeri.",
+        "options": {
+            "1": "Ya - Tampilkan",
+            "0": "Tidak - Sembunyikan"
+        },
+        "readonly": false,
+        "attributes": {
+            "class": "select2"
+        },
+        "group": "Bagian Beranda"
+    },
+    {
+        "judul": "Bagian APBDes",
+        "key": "home_apbdes_enable",
+        "value": "1",
+        "type": "select",
+        "keterangan": "Ringkasan anggaran dan realisasi. Otomatis tersembunyi jika belum ada data keuangan.",
+        "options": {
+            "1": "Ya - Tampilkan",
+            "0": "Tidak - Sembunyikan"
+        },
+        "readonly": false,
+        "attributes": {
+            "class": "select2"
+        },
+        "group": "Bagian Beranda"
+    },
+    {
+        "judul": "Judul Hero",
+        "key": "judul_hero",
+        "value": "Selamat Datang",
+        "type": "input-text",
+        "keterangan": "Teks besar di bagian atas beranda.",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "Hero Beranda"
+    },
+    {
+        "key": "hero_greeting",
+        "type": "text",
+        "group": "Hero Beranda",
+        "judul": "Sapaan Hero",
+        "value": "Selamat Datang",
+        "keterangan": "Teks sapaan di atas judul pada hero beranda.",
+        "options": null,
+        "attributes": null,
+        "readonly": false,
+        "link": false
+    },
+    {
+        "key": "hero_sub",
+        "type": "text",
+        "group": "Hero Beranda",
+        "judul": "Teks Bawah Hero",
+        "value": "",
+        "keterangan": "Teks kecil di bawah judul hero (kosong = motto desa).",
+        "options": null,
+        "attributes": null,
+        "readonly": false,
+        "link": false
+    },
+    {
+        "judul": "Subjudul Hero",
+        "key": "subjudul_hero",
+        "value": "Informasi terbuka untuk warga",
+        "type": "textarea",
+        "keterangan": "Teks pendamping di bawah judul hero.",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "Hero Beranda"
+    },
+    {
+        "judul": "Foto Hero",
+        "key": "foto_hero",
+        "value": "",
+        "type": "unggah",
+        "keterangan": "Foto latar hero (opsional). Kosongkan untuk tanpa gambar.",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "Hero Beranda"
+    },
+    {
+        "judul": "Warna Aksen",
+        "key": "warna_aksen",
+        "value": "#0f766e",
+        "placeholder": "Ketik atau pilih warna",
+        "type": "color-picker",
+        "keterangan": "Warna tombol, aksen, dan sorotan situs.",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "Tampilan"
+    },
+    {
+        "judul": "Text Kehadiran di Kantor",
+        "key": "kehadiran_text_hadir",
+        "value": "Hadir di Kantor",
+        "placeholder": "mis. Hadir di Kantor",
+        "type": "input-text",
+        "keterangan": "Teks lencana untuk aparatur yang hari ini berada di kantor.",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "Aparatur"
+    },
+    {
+        "judul": "Text Ketidakhadiran di Kantor",
+        "key": "kehadiran_text_tidak",
+        "value": "Tidak di Kantor",
+        "placeholder": "mis. Tidak di Kantor",
+        "type": "input-text",
+        "keterangan": "Teks lencana untuk aparatur yang hari ini tidak berada di kantor.",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "Aparatur"
+    },
+    {
+        "judul": "Kartu Realisasi Anggaran",
+        "key": "pintu_anggaran_enable",
+        "value": "1",
+        "type": "select",
+        "keterangan": "Tampilkan kartu Realisasi Anggaran di beranda.",
+        "options": {
+            "1": "Ya - Tampilkan",
+            "0": "Tidak - Sembunyikan"
+        },
+        "readonly": false,
+        "attributes": {
+            "class": "select2"
+        },
+        "group": "Pintu Transparansi"
+    },
+    {
+        "judul": "URL Realisasi Anggaran",
+        "key": "pintu_anggaran_url",
+        "value": "",
+        "type": "input-text",
+        "keterangan": "Tautan tujuan kartu. Kosongkan untuk rute bawaan (belum ada â€” wajib diisi)",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "Pintu Transparansi",
+        "placeholder": "https://..."
+    },
+    {
+        "judul": "Angka Realisasi Anggaran",
+        "key": "pintu_anggaran_angka",
+        "value": "",
+        "type": "input-text",
+        "keterangan": "Angka terkini yang ditampilkan (mis. \"72%\" atau \"4.312 jiwa\"). Kosongkan untuk angka otomatis dari data / status belum diisi.",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "Pintu Transparansi"
+    },
+    {
+        "judul": "Tanggal Diperbarui Realisasi Anggaran",
+        "key": "pintu_anggaran_updated",
+        "value": "",
+        "type": "input-text",
+        "keterangan": "Contoh: 5 Okt 2026. Kosongkan untuk tanggal otomatis dari data.",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "Pintu Transparansi"
+    },
+    {
+        "judul": "Kartu Statistik Penduduk",
+        "key": "pintu_penduduk_enable",
+        "value": "1",
+        "type": "select",
+        "keterangan": "Tampilkan kartu Statistik Penduduk di beranda.",
+        "options": {
+            "1": "Ya - Tampilkan",
+            "0": "Tidak - Sembunyikan"
+        },
+        "readonly": false,
+        "attributes": {
+            "class": "select2"
+        },
+        "group": "Pintu Transparansi"
+    },
+    {
+        "judul": "URL Statistik Penduduk",
+        "key": "pintu_penduduk_url",
+        "value": "/data-statistik",
+        "type": "input-text",
+        "keterangan": "Tautan tujuan kartu. Kosongkan untuk rute bawaan (/data-statistik)",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "Pintu Transparansi",
+        "placeholder": "/data-statistik"
+    },
+    {
+        "judul": "Angka Statistik Penduduk",
+        "key": "pintu_penduduk_angka",
+        "value": "",
+        "type": "input-text",
+        "keterangan": "Angka terkini yang ditampilkan (mis. \"72%\" atau \"4.312 jiwa\"). Kosongkan untuk angka otomatis dari data / status belum diisi.",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "Pintu Transparansi"
+    },
+    {
+        "judul": "Tanggal Diperbarui Statistik Penduduk",
+        "key": "pintu_penduduk_updated",
+        "value": "",
+        "type": "input-text",
+        "keterangan": "Contoh: 5 Okt 2026. Kosongkan untuk tanggal otomatis dari data.",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "Pintu Transparansi"
+    },
+    {
+        "judul": "Kartu Bantuan Sosial",
+        "key": "pintu_bantuan_enable",
+        "value": "1",
+        "type": "select",
+        "keterangan": "Tampilkan kartu Bantuan Sosial di beranda.",
+        "options": {
+            "1": "Ya - Tampilkan",
+            "0": "Tidak - Sembunyikan"
+        },
+        "readonly": false,
+        "attributes": {
+            "class": "select2"
+        },
+        "group": "Pintu Transparansi"
+    },
+    {
+        "judul": "URL Bantuan Sosial",
+        "key": "pintu_bantuan_url",
+        "value": "/data-statistik/bantuan_penduduk",
+        "type": "input-text",
+        "keterangan": "Tautan tujuan kartu. Kosongkan untuk rute bawaan (/data-statistik/bantuan_penduduk)",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "Pintu Transparansi",
+        "placeholder": "/data-statistik/bantuan_penduduk"
+    },
+    {
+        "judul": "Angka Bantuan Sosial",
+        "key": "pintu_bantuan_angka",
+        "value": "",
+        "type": "input-text",
+        "keterangan": "Angka terkini yang ditampilkan (mis. \"72%\" atau \"4.312 jiwa\"). Kosongkan untuk angka otomatis dari data / status belum diisi.",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "Pintu Transparansi"
+    },
+    {
+        "judul": "Tanggal Diperbarui Bantuan Sosial",
+        "key": "pintu_bantuan_updated",
+        "value": "",
+        "type": "input-text",
+        "keterangan": "Contoh: 5 Okt 2026. Kosongkan untuk tanggal otomatis dari data.",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "Pintu Transparansi"
+    },
+    {
+        "judul": "Kartu Pembangunan",
+        "key": "pintu_pembangunan_enable",
+        "value": "1",
+        "type": "select",
+        "keterangan": "Tampilkan kartu Pembangunan di beranda.",
+        "options": {
+            "1": "Ya - Tampilkan",
+            "0": "Tidak - Sembunyikan"
+        },
+        "readonly": false,
+        "attributes": {
+            "class": "select2"
+        },
+        "group": "Pintu Transparansi"
+    },
+    {
+        "judul": "URL Pembangunan",
+        "key": "pintu_pembangunan_url",
+        "value": "/pembangunan",
+        "type": "input-text",
+        "keterangan": "Tautan tujuan kartu. Kosongkan untuk rute bawaan (/pembangunan)",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "Pintu Transparansi",
+        "placeholder": "/pembangunan"
+    },
+    {
+        "judul": "Angka Pembangunan",
+        "key": "pintu_pembangunan_angka",
+        "value": "",
+        "type": "input-text",
+        "keterangan": "Angka terkini yang ditampilkan (mis. \"72%\" atau \"4.312 jiwa\"). Kosongkan untuk angka otomatis dari data / status belum diisi.",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "Pintu Transparansi"
+    },
+    {
+        "judul": "Tanggal Diperbarui Pembangunan",
+        "key": "pintu_pembangunan_updated",
+        "value": "",
+        "type": "input-text",
+        "keterangan": "Contoh: 5 Okt 2026. Kosongkan untuk tanggal otomatis dari data.",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "Pintu Transparansi"
+    },
+    {
+        "judul": "Kartu Dokumen Publik (PPID)",
+        "key": "pintu_dokumen_enable",
+        "value": "1",
+        "type": "select",
+        "keterangan": "Tampilkan kartu Dokumen Publik (PPID) di beranda.",
+        "options": {
+            "1": "Ya - Tampilkan",
+            "0": "Tidak - Sembunyikan"
+        },
+        "readonly": false,
+        "attributes": {
+            "class": "select2"
+        },
+        "group": "Pintu Transparansi"
+    },
+    {
+        "judul": "URL Dokumen Publik (PPID)",
+        "key": "pintu_dokumen_url",
+        "value": "/ppid",
+        "type": "input-text",
+        "keterangan": "Tautan tujuan kartu. Kosongkan untuk rute bawaan (/ppid)",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "Pintu Transparansi",
+        "placeholder": "/ppid"
+    },
+    {
+        "judul": "Angka Dokumen Publik (PPID)",
+        "key": "pintu_dokumen_angka",
+        "value": "",
+        "type": "input-text",
+        "keterangan": "Angka terkini yang ditampilkan (mis. \"72%\" atau \"4.312 jiwa\"). Kosongkan untuk angka otomatis dari data / status belum diisi.",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "Pintu Transparansi"
+    },
+    {
+        "judul": "Tanggal Diperbarui Dokumen Publik (PPID)",
+        "key": "pintu_dokumen_updated",
+        "value": "",
+        "type": "input-text",
+        "keterangan": "Contoh: 5 Okt 2026. Kosongkan untuk tanggal otomatis dari data.",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "Pintu Transparansi"
+    },
+    {
+        "judul": "ID Google Analytics 4",
+        "key": "google_analytics_id",
+        "value": "",
+        "type": "input-text",
+        "keterangan": "Kosongkan jika belum dipakai. Contoh: <code>G-XXXXXXXXXX</code>. Skrip hanya dimuat jika formatnya benar.",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "SEO & Analitik",
+        "placeholder": "G-XXXXXXXXXX"
+    },
+    {
+        "judul": "Verifikasi Google Search Console",
+        "key": "google_site_verification",
+        "value": "",
+        "type": "input-text",
+        "keterangan": "Tempel hanya nilai tokennya (bukan seluruh tag meta). Ditemukan pada metode verifikasi \"Tag HTML\".",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "SEO & Analitik",
+        "placeholder": "contoh: AbC123..."
+    },
+    {
+        "judul": "Verifikasi Bing Webmaster",
+        "key": "bing_site_verification_id",
+        "value": "",
+        "type": "input-text",
+        "keterangan": "Tempel hanya nilai <code>content</code>-nya. Ditemukan pada metode verifikasi \"Meta tag\".",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "SEO & Analitik",
+        "placeholder": "contoh: 1234ABCD..."
+    },
+    {
+        "judul": "Schema SEO (Data Terstruktur)",
+        "key": "seo_schema_aktif",
+        "value": "1",
+        "type": "select",
+        "keterangan": "Tambahkan data terstruktur JSON-LD untuk situs dan artikel. Disarankan tetap aktif. <a href=\"https://validator.schema.org/\" target=\"_blank\" rel=\"noopener noreferrer\"><b>Periksa Schema.org</b></a>.",
+        "options": {
+            "1": "Aktif",
+            "0": "Nonaktif"
+        },
+        "readonly": false,
+        "attributes": {},
+        "group": "SEO & Analitik"
+    },
+    {
+        "judul": "Publisher ID Google AdSense",
+        "key": "google_adsense_id",
+        "value": "",
+        "type": "input-text",
+        "keterangan": "Isi untuk menampilkan iklan AdSense (Auto Ads). Kosongkan jika belum dipakai. Contoh: <code>ca-pub-1234567890123456</code>. Skrip hanya dimuat jika formatnya benar.",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "SEO & Analitik",
+        "placeholder": "ca-pub-XXXXXXXXXXXXXXXX"
+    },
+    {
+        "judul": "Facebook App ID",
+        "key": "facebook_app_id",
+        "value": "",
+        "type": "input-text",
+        "keterangan": "Digunakan untuk metadata <code>fb:app_id</code> agar Facebook mengenali situs saat tautan dibagikan. <a href=\"https://developers.facebook.com/apps/\" target=\"_blank\" rel=\"noopener noreferrer\"><b>Buka Meta for Developers</b></a>, pilih/buat aplikasi lalu salin App ID. Jangan masukkan App Secret.",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "SEO & Analitik",
+        "placeholder": "Masukkan App ID Facebook"
+    },
+    {
+        "judul": "Facebook Admin ID",
+        "key": "facebook_admin_id",
+        "value": "",
+        "type": "input-text",
+        "keterangan": "Opsional untuk metadata <code>fb:admins</code>. Isi hanya ID numerik akun Facebook yang menjadi admin situs. Jika tidak mengetahui ID ini, biarkan kosong; <code>fb:app_id</code> tetap dapat digunakan.",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "SEO & Analitik",
+        "placeholder": "Masukkan Admin ID Facebook (opsional)"
+    },
+    {
+        "judul": "Judul Halaman Pengaduan",
+        "key": "judul_pengaduan",
+        "value": "Pengaduan",
+        "type": "input-text",
+        "keterangan": "Nama menu dan judul halaman pengaduan warga. Kosongkan untuk \"Pengaduan\".",
+        "options": null,
+        "readonly": false,
+        "attributes": {},
+        "group": "Pengaduan",
+        "placeholder": "Pengaduan"
+    },
+    {
+        "judul": "Tampilkan Halaman Cuaca",
+        "key": "aktif_cuaca",
+        "value": "1",
+        "type": "select",
+        "keterangan": "Tampilkan halaman <code>huta-cuaca</code> dan tombol Cuaca di Layanan Huta Studio. Widget Cuaca beranda tetap mengikuti <code>Admin Web â†’ Widget (Cuaca)</code>. <a href=\"/arsip?req=huta-cuaca\" target=\"_blank\" rel=\"noopener noreferrer\"><b>Buka Cuaca &amp; Kondisi Udara</b></a>.<hr/>",
+        "options": {
+            "1": "Ya - Tampilkan",
+            "0": "Tidak - Sembunyikan"
+        },
+        "attributes": {
+            "class": "select2"
+        },
+        "readonly": false
+    },
+    {
+        "judul": "Tampilkan Halaman Gempa",
+        "key": "aktif_gempa",
+        "value": "1",
+        "type": "select",
+        "keterangan": "Tampilkan halaman <code>huta-gempa</code> dan tombol Gempa di Layanan Huta Studio. Widget Gempa beranda tetap mengikuti <code>Admin Web â†’ Widget (Gempa)</code>. <a href=\"/arsip?req=huta-gempa\" target=\"_blank\" rel=\"noopener noreferrer\"><b>Buka Informasi Gempa Bumi</b></a>.",
+        "options": {
+            "1": "Ya - Tampilkan",
+            "0": "Tidak - Sembunyikan"
+        },
+        "attributes": {
+            "class": "select2"
+        },
+        "readonly": false
+    },
+    {
+        "judul": "URL Feed RSS / Atom",
+        "key": "feed_url",
+        "value": "",
+        "placeholder": "https://contoh.go.id/feed",
+        "type": "input-text",
+        "keterangan": "Opsional. Isi URL <b>HTTPS</b> Feed RSS/Atom yang ingin ditampilkan pada widget Feed. Jika kosong, Huta Studio tetap menggunakan Feed yang disediakan OpenSID bila tersedia. URL diperiksa agar tidak mengakses IP lokal/pribadi.",
+        "options": null,
+        "readonly": false,
+        "attributes": {
+            "autocomplete": "off",
+            "spellcheck": "false",
+            "maxlength": "500",
+            "inputmode": "url",
+            "autocapitalize": "off",
+            "data-form-type": "other",
+            "data-lpignore": "true",
+            "data-1p-ignore": "true"
+        }
+    },
+    {
+        "judul": "Video YouTube",
+        "key": "link_youtube",
+        "value": "0",
+        "type": "select",
+        "keterangan": "Tampilkan atau sembunyikan Galeri Video YouTube di halaman utama.",
+        "options": {
+            "1": "Ya - Tampilkan",
+            "0": "Tidak - Sembunyikan"
+        },
+        "attributes": {
+            "class": "select2"
+        },
+        "readonly": false
+    },
+    {
+        "judul": "Link Video YouTube",
+        "key": "link_youtube_video",
+        "value": "https://youtu.be/8H3wmfaS7Lc , https://youtu.be/z6DqMn1dcj4 , https://youtu.be/5M6IrrcqTCM",
+        "placeholder": "Ketik di Sini",
+        "type": "input-text",
+        "keterangan": "Masukkan tautan video YouTube. Jika lebih dari satu, pisahkan dengan koma. <code>(kosongkan jika tidak ingin tampil)</code><hr/>",
+        "options": null,
+        "readonly": false,
+        "attributes": {
+            "autocomplete": "off",
+            "spellcheck": "false",
+            "autocapitalize": "off",
+            "data-form-type": "other",
+            "data-lpignore": "true",
+            "data-1p-ignore": "true"
+        }
+    },
+    {
+        "judul": "Aksesibilitas UserWay",
+        "key": "userway",
+        "value": "",
+        "placeholder": "Masukkan Account ID UserWay",
+        "type": "input-text",
+        "keterangan": "Masukkan <b>Account ID publik</b> UserWay dari atribut <code>data-account</code> untuk menu aksesibilitas. Jangan masukkan API Key, secret, atau token rahasia. <a href=\"https://manage.userway.org/\" target=\"_blank\" rel=\"noopener noreferrer\"><b>Buka Dashboard UserWay</b></a>. <code>(kosongkan jika tidak digunakan)</code><hr/>",
+        "options": null,
+        "readonly": false,
+        "attributes": {
+            "autocomplete": "off",
+            "spellcheck": "false",
+            "maxlength": "48",
+            "autocapitalize": "off",
+            "data-form-type": "other",
+            "data-lpignore": "true",
+            "data-1p-ignore": "true"
+        }
+    },
+    {
+        "judul": "Survei Kepuasan Masyarakat",
+        "key": "skm_v2_mode",
+        "value": "0",
+        "type": "select",
+        "keterangan": "Aktifkan Survei Kepuasan Masyarakat (SKM). Jika dimatikan, survei tidak dapat diakses.",
+        "options": {
+            "1": "Ya - Aktifkan",
+            "0": "Tidak - Nonaktifkan"
+        },
+        "readonly": false,
+        "attributes": {
+            "class": "select2"
+        },
+        "group": "Add-ons HutaStudio"
     }
 ]
