@@ -44,7 +44,7 @@ if (!function_exists('huta_weather_icon_url')) {
     function huta_weather_icon_url($row): string
     {
         if (is_array($row) && !empty($row['image'])) return (string) $row['image'];
-        return function_exists('theme_asset') ? theme_asset('images/weather/default.png') : '';
+        return function_exists('theme_asset') ? theme_asset('images/weather/default.svg') : '';
     }
 }
 

@@ -1,5 +1,5 @@
-/* Huta Studio V2 — design tokens & base (vanilla CSS) */
-/* Huta Studio V3 — token warna gaya Simalungun (emerald+amber+tinta hijau) */
+/* Huta Studio V2 â€” design tokens & base (vanilla CSS) */
+/* Huta Studio V3 â€” token warna gaya Simalungun (emerald+amber+tinta hijau) */
 :root {
   --hv-primary: var(--huta-aksen, #15803d);
   --hv-primary-dark: #166534;
@@ -344,7 +344,7 @@ html.dark .hv-hero { background-color: #0f172a; }
 html.dark .hv-marquee { background: rgba(2, 6, 23, 0.75); }
 
 /* ===== Fix pass V2 (review) ===== */
-/* (a) Navbar beranda selalu fixed — hilangkan lompat 56px */
+/* (a) Navbar beranda selalu fixed â€” hilangkan lompat 56px */
 .hv-nav-home { position: fixed; left: 0; right: 0; }
 .hv-nav-home.scrolled { position: fixed; }
 .hv-hero { margin-top: 0; }
@@ -357,8 +357,8 @@ html.dark .bg-white { background-color: var(--hv-card) !important; color: var(--
 html.dark .text-gray-600, html.dark .text-gray-500, html.dark .text-gray-700 { color: var(--hv-text) !important; }
 html.dark .bg-zinc-700 { background: #1e293b !important; }
 html.dark .shadow { box-shadow: var(--hv-shadow) !important; }
-/* ═══════════════════════════════════════════════════════════════════════
-   (e) DARK MODE — TABEL & KOMPONEN BAWAAN OPENSID
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   (e) DARK MODE â€” TABEL & KOMPONEN BAWAAN OPENSID
    V4.8 (2026-10-21).
 
    Latar masalah: mode gelap sebelumnya hanya punya 4 baris override
@@ -377,9 +377,9 @@ html.dark .shadow { box-shadow: var(--hv-shadow) !important; }
    langsung + !important untuk memastikan menang di semua konteks.
    Berlaku utk 30 file blade bertabel: statistik, DPT, inventaris,
    wilayah, analisis, IDM, suplemen, vaksin, kesehatan, produk hukum, dll.
-   ═══════════════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
-/* — A. TABEL — */
+/* â€” A. TABEL â€” */
 html.dark table { background-color: transparent; }
 html.dark table, html.dark tbody, html.dark thead, html.dark tr { background-color: transparent; }
 
@@ -468,7 +468,7 @@ html.dark .dataTables_wrapper .dataTables_paginate .paginate_button.current:hove
     color: #fff !important;
 }
 
-/* — B. KOMPONEN PENDUKUNG — */
+/* â€” B. KOMPONEN PENDUKUNG â€” */
 html.dark .badge {
     border-color: #475569;
     background-color: rgba(148, 163, 184, 0.12);
@@ -490,7 +490,7 @@ html.dark .breadcrumb a:hover { color: var(--hv-text-strong); }
 
 html.dark .alert { background-color: rgba(148, 163, 184, 0.12); color: #e2e8f0; border-color: #475569; }
 
-/* — C. TIRAI PENGAMAN: kelas latar Tailwind generik —
+/* â€” C. TIRAI PENGAMAN: kelas latar Tailwind generik â€”
    Strategi "daftar hitam": lebih tahan lama daripada daftar putih,
    karena kelas terang yang belum terduga tetap ikut diredam. */
 html.dark .bg-gray-50, html.dark .bg-gray-100, html.dark .bg-gray-200,
@@ -504,7 +504,7 @@ html.dark .border, html.dark [class*="border-gray"], html.dark [class*="border-s
 html.dark .divide-y > * + * { border-color: var(--hv-border) !important; }
 html.dark .shadow, html.dark .shadow-sm, html.dark .shadow-md, html.dark .shadow-lg { box-shadow: var(--hv-shadow) !important; }
 
-/* — D. CELAH YANG DITEMUKAN SAAT VERIFIKASI (V4.8.1) —
+/* â€” D. CELAH YANG DITEMUKAN SAAT VERIFIKASI (V4.8.1) â€”
    Diuji dgn warna terkomposit nyata (alpha blending):
    - .alert-info.text-primary-100 : teks hijau rgb(21,128,61) di atas latar
      gelap -> 2.6:1 (GAGAL WCAG AA). Warna teks harus ikut diredam.
@@ -541,7 +541,7 @@ html.dark .bg-slate-50, html.dark .bg-slate-100 { background-color: #0b3a22 !imp
 /* Gambar berplaceholder abu terang agar tidak menyilaukan */
 html.dark img.bg-gray-300 { background-color: #334155 !important; }
 
-/* — E. TEKS & TAUTAN (V4.8.2) —
+/* â€” E. TEKS & TAUTAN (V4.8.2) â€”
    Hasil penyisiran seluruh halaman: tabel sudah beres, tapi teks biasa
    masih memakai warna KERAS dari style.min.css yg tak terbaca di gelap.
    Diukur dgn warna terkomposit nyata:
@@ -584,7 +584,7 @@ html.dark .text-muted, html.dark .text-description { color: #94a3b8 !important; 
 html.dark .content a:not(.btn):not(.hv-btn), html.dark article a:not(.btn):not(.hv-btn) { color: #5eead4; }
 html.dark .content a:not(.btn):not(.hv-btn):hover { color: #99f6e4; }
 
-/* — F. TAUTAN SIDEBAR & WIDGET (V4.8.3) —
+/* â€” F. TAUTAN SIDEBAR & WIDGET (V4.8.3) â€”
    Sisa temuan: tautan daftar samping (arsip, kebijakan, statistik) memakai
    teal keras #0f766e -> 2.9:1. Teks .wow (animate.css lama) #555 -> 1.71:1.
    Badge status masih berlatar abu terang #f3f4f6 -> harus ikut digelapkan. */
@@ -614,9 +614,9 @@ html.dark .hv-badge--alfa   { background-color: rgba(239, 68, 68, 0.22) !importa
 /* Tanggal & meta yg redup */
 html.dark .before\:content-\[\'-\'\]::before { color: #94a3b8; }
 
-/* — G. KARTU & BADGE BERLATAR PUTIH (V4.8.4) —
+/* â€” G. KARTU & BADGE BERLATAR PUTIH (V4.8.4) â€”
    Penyisiran CSS tema sendiri menemukan kelas hv-* yg latarnya DIKERASKAN
-   putih terang tanpa override gelap. Paling parah: .hv-pm-card (#fff) —
+   putih terang tanpa override gelap. Paling parah: .hv-pm-card (#fff) â€”
    kartu aparatur di halaman pemerintah; badge di dalamnya jadi 1.1:1. */
 html.dark .hv-pm-card { background: var(--hv-card) !important; box-shadow: var(--hv-shadow) !important; }
 html.dark .hv-pm-media { background: #0b3a22 !important; }
@@ -635,7 +635,7 @@ html.dark .hv-badge--libur { background: rgba(148, 163, 184, 0.12) !important; c
 html.dark .hv-badge-hadir { background: rgba(22, 163, 74, 0.22) !important; color: #86efac !important; }
 html.dark .hv-badge-lain { background: rgba(234, 179, 8, 0.20) !important; color: #fde68a !important; }
 
-/* — H. TEKS WARNA KERAS SISA (V4.8.5) —
+/* â€” H. TEKS WARNA KERAS SISA (V4.8.5) â€”
    .text-primary / .text-primary-100 = hijau tua #15803d keras (!important)
    -> tidak terbaca di latar gelap. Begitu pula teks redup & meta tanggal. */
 html.dark .text-primary,
@@ -648,7 +648,7 @@ html.dark .text-muted,
 html.dark .text-description,
 html.dark .text-h6 { color: var(--hv-text) !important; }
 
-/* — I. JARING PENGAMAN TERAKHIR (V4.8.5) —
+/* â€” I. JARING PENGAMAN TERAKHIR (V4.8.5) â€”
    Beberapa teks memakai warna yg ditulis di markah/JS (bukan kelas CSS),
    mis. meta artikel rgb(0,150,109) -> 4.22:1 dan penanda wajib merah
    rgb(255,0,0) -> 3.97:1. Keduanya justru muncul di tema TERANG, jadi
@@ -673,7 +673,7 @@ html.dark .text-red { color: #f87171 !important; }
 /* Teks yg mewarisi warna gelap dari markah pihak ketiga */
 html.dark .content p, html.dark .content span:not([class]), html.dark article p { color: var(--hv-text); }
 
-/* — J. AKSEN & META (V4.8.6) —
+/* â€” J. AKSEN & META (V4.8.6) â€”
    .text-accent-200 memakai --accent-darken-color (teal gelap) yg diwarisi
    ke meta artikel -> 4.22:1. Penanda wajib merah ditulis di markah PHP
    (bukan kelas), jadi dibidik lewat induknya (.dataTables_info dsb). */
@@ -694,7 +694,7 @@ html.dark h5:not([class]),
 html.dark td:not([class]),
 html.dark li:not([class]) { color: var(--hv-text); }
 
-/* — K. WARNA BAWAAN BOOTSTRAP (V4.8.6) —
+/* â€” K. WARNA BAWAAN BOOTSTRAP (V4.8.6) â€”
    Bootstrap 3 mendefinisikan $text-muted = #6c757d (rgb(108,117,125)) yg
    diwarisi ke beberapa elemen tanpa kelas -> 4.45:1, tepat di bawah AA. */
 html.dark .text-muted,
@@ -706,7 +706,7 @@ html.dark .text-secondary { color: #94a3b8 !important; }
 html.dark .content .text-muted,
 html.dark .content .help-block { color: #94a3b8 !important; }
 
-/* — L. BOOTSTRAP 5 (halaman PPID) (V4.8.7) —
+/* â€” L. BOOTSTRAP 5 (halaman PPID) (V4.8.7) â€”
    Halaman PPID dibangun dgn kelas Bootstrap 5 (.card, .bg-light, .form-control)
    bukan Tailwind. .bg-light = #f8f9fa dan .card = #fff TIDAK tertangani
    oleh aturan .bg-gray-* -> muncul kotak putih di mode gelap. */
@@ -758,7 +758,7 @@ html.dark { color-scheme: dark; }
   border: 1px solid var(--hv-border); background: var(--hv-bg); color: var(--hv-text-strong);
 }
 
-/* ===== Override warna primer tema → emerald Simalungun ===== */
+/* ===== Override warna primer tema â†’ emerald Simalungun ===== */
 .bg-primary-100 { background-color: #d1fae5 !important; }
 .bg-primary-200 { background-color: #a7f3d0 !important; }
 .text-primary { color: #15803d !important; }
@@ -767,7 +767,7 @@ html.dark { color-scheme: dark; }
 a.text-primary:hover, .text-primary:hover { color: #166534 !important; }
 
 /* ===== Task 5 / Task 8: Aparatur (kartu ala desaciater.id, Opsi D: bingkai 3:4 + foto utuh) ===== */
-/* Gerak: OwlCarousel — 1 kartu di HP s/d 5 kartu di desktop, geser otomatis tiap 4 detik. */
+/* Gerak: OwlCarousel â€” 1 kartu di HP s/d 5 kartu di desktop, geser otomatis tiap 4 detik. */
 .hv-pamong-owl { padding: .25rem .25rem .5rem; }
 /* Stage & item dibuat flex supaya semua kartu setinggi yang paling tinggi
    (owl sudah menyetel lebar tiap item secara inline, jadi lebar aman). */
@@ -799,7 +799,7 @@ a.text-primary:hover, .text-primary:hover { color: #166534 !important; }
 html.dark .hv-badge-hadir { color: #6ee7b7; }
 html.dark .hv-badge-lain { color: #fcd34d; }
 
-/* Titik navigasi carousel (owl.theme bawaan tidak dimuat tema → distyle sendiri) */
+/* Titik navigasi carousel (owl.theme bawaan tidak dimuat tema â†’ distyle sendiri) */
 .hv-pamong-owl .owl-dots { text-align: center; margin-top: .9rem; }
 .hv-pamong-owl .owl-dots .owl-dot { display: inline-block; }
 .hv-pamong-owl .owl-dots .owl-dot span { display: inline-block; width: 10px; height: 10px; margin: 3px; border-radius: 50%; background: var(--hv-border); transition: all .3s ease; }
@@ -850,7 +850,7 @@ html.dark .hv-badge-lain { color: #fcd34d; }
 .hv-select:hover { border-color: var(--hv-primary); }
 .hv-select:focus-visible { outline: none; border-color: var(--hv-primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--hv-primary) 25%, transparent); }
 .hv-btn-sm { padding: .4rem .95rem; font-size: .85rem; }
-/* ===== Loading screen Variant A — cincin ganda (V4) ===== */
+/* ===== Loading screen Variant A â€” cincin ganda (V4) ===== */
 .hv-loading-modern { position: fixed; inset: 0; z-index: 10999; display: flex; align-items: center; justify-content: center;
   background: linear-gradient(135deg, #04150d 0%, #0a2f1c 50%, #04150d 100%);
   transition: opacity .6s cubic-bezier(.4, 0, .2, 1), transform .6s cubic-bezier(.4, 0, .2, 1), visibility .6s linear; }
@@ -880,7 +880,7 @@ html.dark .hv-badge-lain { color: #fcd34d; }
   .hv-loading-modern-progress-bar, .hv-loading-modern-dots::after { animation: none; }
 }
 
-/* ===== Kartu Pemerintah /pemerintah — foto utuh + strip geser HP ===== */
+/* ===== Kartu Pemerintah /pemerintah â€” foto utuh + strip geser HP ===== */
 .hv-pm-gridwrap { position: relative; }
 .hv-pm-grid { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
 .hv-pm-grid > * { flex: 0 0 calc((100% - 10px) / 2 * 0.85); scroll-snap-align: start; }
@@ -966,18 +966,18 @@ html.dark .hv-badge--libur { background: rgba(148, 163, 184, .12); color: #cbd5e
 }
 
 /* ==========================================================================
-   Sentuhan Akhir 2026-10-20 — font seragam + aksesibilitas (WCAG 2.2 AA)
+   Sentuhan Akhir 2026-10-20 â€” font seragam + aksesibilitas (WCAG 2.2 AA)
    ========================================================================== */
 
-/* — Font: aktifkan Plus Jakarta Sans yang sudah dimuat dari Google Fonts.
+/* â€” Font: aktifkan Plus Jakarta Sans yang sudah dimuat dari Google Fonts.
    `.font-primary` di style.css menarget Poppins; selektor sama, berkas ini
    dimuat belakankan sehingga menang tanpa menyentuh berkas minified.
-   Poppins & font sistem tetap sebagai cadangan bila Google Fonts gagal. — */
+   Poppins & font sistem tetap sebagai cadangan bila Google Fonts gagal. â€” */
 .font-primary {
   font-family: 'Plus Jakarta Sans', 'Poppins', 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
 
-/* — Kontrol utama: target sentuh 44×44 px (WCAG 2.5.8 s.d. rekomendasi AAA) — */
+/* â€” Kontrol utama: target sentuh 44Ã—44 px (WCAG 2.5.8 s.d. rekomendasi AAA) â€” */
 .hv-nav-menu > li > a,
 .hv-dark-toggle,
 .hv-nav-login,
@@ -992,7 +992,7 @@ html.dark .hv-badge--libur { background: rgba(148, 163, 184, .12); color: #cbd5e
   justify-content: center;
 }
 
-/* — Tautan menu & daftar padat: minimum 24×24 px (WCAG 2.5.8 Level AA) — */
+/* â€” Tautan menu & daftar padat: minimum 24Ã—24 px (WCAG 2.5.8 Level AA) â€” */
 .hv-drawer-list a,
 .hv-drawer-list summary,
 .hv-dropdown a,
@@ -1009,7 +1009,7 @@ html.dark .hv-badge--libur { background: rgba(148, 163, 184, .12); color: #cbd5e
   padding-block: 3px;
 }
 
-/* — Titik navigasi karusel Owl: area sentuh 24 px tanpa mengubah ukuran titik — */
+/* â€” Titik navigasi karusel Owl: area sentuh 24 px tanpa mengubah ukuran titik â€” */
 .owl-carousel .owl-dot {
   min-width: 24px;
   min-height: 24px;
@@ -1018,7 +1018,7 @@ html.dark .hv-badge--libur { background: rgba(148, 163, 184, .12); color: #cbd5e
   justify-content: center;
 }
 
-/* — Tautan teks marquee pengumuman: minimum 24 px tinggi (WCAG 2.5.8) —
+/* â€” Tautan teks marquee pengumuman: minimum 24 px tinggi (WCAG 2.5.8) â€”
    Salinan kedua di dalam track sudah `aria-hidden` + `tabindex="-1"`. */
 .hv-marquee-track a {
   display: inline-flex;
@@ -1026,10 +1026,10 @@ html.dark .hv-badge--libur { background: rgba(148, 163, 184, .12); color: #cbd5e
   min-height: 24px;
 }
 
-/* ══════════════════════════════════════════════════════════════════════
-   V4.11 — Mode gelap: paket inti perbaikan
-   P1-1 grafik Highcharts · P1-2 peta Leaflet · P1-4 badge IDM
-   ══════════════════════════════════════════════════════════════════════ */
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   V4.11 â€” Mode gelap: paket inti perbaikan
+   P1-1 grafik Highcharts Â· P1-2 peta Leaflet Â· P1-4 badge IDM
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
 /* ---- P1-1: Grafik Highcharts -------------------------------------------
    Highcharts tidak punya tema gelap bawaan yang bisa dipakai di sini
@@ -1113,3 +1113,30 @@ html.dark #status-idm .bg-blue-500 { background-color: #1d4ed8 !important; }
 html.dark #status-idm .bg-yellow-500 { background-color: #b45309 !important; }
 html.dark #status-idm .bg-green-500 { background-color: #15803d !important; }
 html.dark #status-idm .bg-red-500 { background-color: #b91c1c !important; }
+
+/* ==========================================================================
+   Polish â€” aksesibilitas & dark mode (2026-10-26)
+   ========================================================================== */
+
+/* â€” Focus-visible global: semua elemen interaktif punya outline â€” */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--hv-primary, #15803d);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* â€” Tombol: feedback saat klik â€” */
+.hv-btn:active, .hv-ft-btn:active { transform: scale(0.97); }
+
+/* â€” prefers-reduced-motion global â€” */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

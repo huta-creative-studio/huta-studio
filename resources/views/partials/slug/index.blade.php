@@ -232,11 +232,11 @@
 @if(!$hutaGempaEnabled)
 <section class="huta-cek-standalone" aria-label="Informasi Gempa"><div class="huta-cek-status" role="status"><strong>Halaman Gempa Tidak Ditampilkan</strong><span>Halaman Informasi Gempa Bumi saat ini disembunyikan oleh pengelola website. Widget Gempa di beranda tetap mengikuti pengaturan Widget OpenSID.</span><a href="{{ site_url() }}">Kembali ke Beranda</a></div></section>
 @else
-<div class="article-single huta-earthquake-page" data-page="huta-gempa" data-huta-earthquake-page="1" data-endpoint="{{ $hutaGempaBoot['endpoint'] ?? site_url() }}" data-token="{{ $hutaGempaBoot['token'] ?? '' }}" data-scope="{{ $hutaGempaBoot['scope'] ?? '' }}" data-village="{{ $hutaGempaBoot['village'] ?? trim(ucwords(setting('sebutan_desa')).' '.($desa['nama_desa'] ?? '')) }}" data-distance-label="{{ 'Jarak dari '.($hutaGempaBoot['village'] ?? trim(ucwords(setting('sebutan_desa')).' '.($desa['nama_desa'] ?? ''))) }}" data-fallback-image="{{ theme_asset('images/nodata.png') }}">
+<div class="article-single huta-earthquake-page" data-page="huta-gempa" data-huta-earthquake-page="1" data-endpoint="{{ $hutaGempaBoot['endpoint'] ?? site_url() }}" data-token="{{ $hutaGempaBoot['token'] ?? '' }}" data-scope="{{ $hutaGempaBoot['scope'] ?? '' }}" data-village="{{ $hutaGempaBoot['village'] ?? trim(ucwords(setting('sebutan_desa')).' '.($desa['nama_desa'] ?? '')) }}" data-distance-label="{{ 'Jarak dari '.($hutaGempaBoot['village'] ?? trim(ucwords(setting('sebutan_desa')).' '.($desa['nama_desa'] ?? ''))) }}" data-fallback-image="{{ theme_asset('images/nodata.svg') }}">
     <div class="container-page mb-20">
         <div class="huta-page-card huta-earthquake-card">
             <div class="huta-page-title huta-earthquake-title">
-                <div class="huta-title-icon huta-tone-blue" aria-hidden="true"><img class="huta-earthquake-source-icon" src="{{ theme_asset('images/mag.png') }}" alt=""></div>
+                <div class="huta-title-icon huta-tone-blue" aria-hidden="true"><i class="fas fa-globe-americas"></i></div>
                 <div class="huta-earthquake-title-copy"><h2>Informasi Gempa Bumi</h2><p>Data resmi BMKG, ringkasan kejadian terbaru, gempa dirasakan, dan gempa M 5,0+.</p></div>
                 <div class="huta-page-actions huta-no-print">
                     <button class="huta-print-action" type="button" data-huta-print="gempa" aria-label="Cetak informasi gempa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10v4H7V3Zm8 2H9v2h6V5Zm4 4a3 3 0 0 1 3 3v5h-4v4H6v-4H2v-5a3 3 0 0 1 3-3h14Zm-3 10v-5H8v5h8Zm3-4h1v-3a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v3h2v-3h12v3h1Z"/></svg><span>Cetak</span></button>
@@ -247,15 +247,15 @@
             <div class="huta-empty-state huta-earthquake-error" data-quake-error hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 7h2v6h-2V7Zm0 8h2v2h-2v-2Zm1-13a10 10 0 1 1 0 20 10 10 0 0 1 0-20Zm0 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16Z"/></svg><strong>Data gempa belum dapat dimuat</strong><span>Informasi dari BMKG sedang tidak tersedia. Silakan coba kembali beberapa saat lagi.</span></div>
             <div class="huta-earthquake-content" data-quake-content hidden>
                 <section class="huta-earthquake-metrics" aria-label="Ringkasan gempa terbaru">
-                    <article class="huta-earthquake-metric"><span class="huta-earthquake-metric-icon"><img class="huta-earthquake-source-icon" src="{{ theme_asset('images/mag.png') }}" alt=""></span><div><small>Magnitudo</small><strong data-q-mag>-</strong><em>Gempa terbaru BMKG</em></div></article>
-                    <article class="huta-earthquake-metric"><span class="huta-earthquake-metric-icon"><img class="huta-earthquake-source-icon" src="{{ theme_asset('images/dep.png') }}" alt=""></span><div><small>Kedalaman</small><strong data-q-depth>-</strong><em>Di bawah permukaan</em></div></article>
-                    <article class="huta-earthquake-metric is-location"><span class="huta-earthquake-metric-icon"><img class="huta-earthquake-source-icon" src="{{ theme_asset('images/pos.png') }}" alt=""></span><div><small>Lokasi</small><strong data-q-region-short>-</strong><em><span data-q-date>-</span> · <span data-q-time>-</span></em></div></article>
-                    <article class="huta-earthquake-metric"><span class="huta-earthquake-metric-icon"><img class="huta-earthquake-source-icon" src="{{ theme_asset('images/loc.png') }}" alt=""></span><div><small>Dirasakan</small><strong data-q-felt-short>-</strong><em>Skala MMI bila tersedia</em></div></article>
+                    <article class="huta-earthquake-metric"><span class="huta-earthquake-metric-icon"><i class="fas fa-bolt" aria-hidden="true"></i></span><div><small>Magnitudo</small><strong data-q-mag>-</strong><em>Gempa terbaru BMKG</em></div></article>
+                    <article class="huta-earthquake-metric"><span class="huta-earthquake-metric-icon"><i class="fas fa-arrows-alt-v" aria-hidden="true"></i></span><div><small>Kedalaman</small><strong data-q-depth>-</strong><em>Di bawah permukaan</em></div></article>
+                    <article class="huta-earthquake-metric is-location"><span class="huta-earthquake-metric-icon"><i class="fas fa-map-marker-alt" aria-hidden="true"></i></span><div><small>Lokasi</small><strong data-q-region-short>-</strong><em><span data-q-date>-</span> · <span data-q-time>-</span></em></div></article>
+                    <article class="huta-earthquake-metric"><span class="huta-earthquake-metric-icon"><i class="fas fa-wave-square" aria-hidden="true"></i></span><div><small>Dirasakan</small><strong data-q-felt-short>-</strong><em>Skala MMI bila tersedia</em></div></article>
                 </section>
                 <div class="huta-earthquake-topgrid">
                     <section class="huta-panel huta-earthquake-shakemap-panel">
                         <div class="huta-panel-heading"><div><h3>Peta Guncangan BMKG</h3><p>Shakemap resmi untuk kejadian gempa terbaru, bila tersedia.</p></div></div>
-                        <a class="huta-earthquake-shakemap" data-q-shakemap-link data-fancybox="huta-gempa" href="" hidden><img data-q-shakemap src="{{ theme_asset('images/nodata.png') }}" alt="Peta guncangan gempa BMKG" loading="lazy" decoding="async"></a>
+                        <a class="huta-earthquake-shakemap" data-q-shakemap-link data-fancybox="huta-gempa" href="" hidden><img data-q-shakemap src="{{ theme_asset('images/nodata.svg') }}" alt="Peta guncangan gempa BMKG" loading="lazy" decoding="async"></a>
                         <div class="huta-remote-status" data-q-shakemap-empty>Peta guncangan belum tersedia untuk kejadian ini.</div>
                     </section>
                     <section class="huta-panel huta-earthquake-detail-panel">
@@ -263,7 +263,7 @@
                         <div class="huta-earthquake-detail">
                             <div><span>Lokasi Episenter</span><strong data-q-region>-</strong></div>
                             <div><span>Koordinat</span><strong data-q-coordinates>-</strong></div>
-                            <div class="huta-earthquake-detail-potential"><span class="huta-earthquake-detail-label"><img class="huta-earthquake-detail-icon" src="{{ theme_asset('images/tsu.png') }}" alt="">Potensi</span><strong data-q-potential>-</strong></div>
+                            <div class="huta-earthquake-detail-potential"><span class="huta-earthquake-detail-label"><i class="fas fa-water" aria-hidden="true"></i> Potensi</span><strong data-q-potential>-</strong></div>
                             <div><span>Wilayah Dirasakan</span><strong data-q-felt>-</strong></div>
                         </div>
                         <div class="huta-earthquake-local" data-q-local hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 2a5 5 0 0 1 5 5c0 2.9-3 7.5-5 10.1C10 16.5 7 11.9 7 9a5 5 0 0 1 5-5Z"/></svg><div><span>Perkiraan Jarak dari <strong data-q-village>-</strong></span><b data-q-distance>-</b><small data-q-distance-note>Jarak dihitung dari titik acuan desa yang tersedia. Bukan parameter dampak resmi BMKG.</small></div></div>
@@ -458,7 +458,7 @@
 		const arsipList = document.getElementById('arsip-list');
 		arsipList.innerHTML = '';
 		if (!dataArsip.data.length) {
-			var imgNotFound = '{{ theme_asset('images/nodata.png') }}';
+			var imgNotFound = '{{ theme_asset('images/nodata.svg') }}';
 			arsipList.innerHTML = `<div class="no-found">
 					<div class="margin-min10 flexcenter">
 						<div class="no-found-title">
