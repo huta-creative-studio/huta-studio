@@ -2,7 +2,7 @@
     "name": "Huta Studio",
     "description": "Tema portal transparansi desa Huta Studio",
     "price": "Rp. 0",
-    "version": "2610.5.2",
+    "version": "2610.5.3",
     "package": "huta-studio",
     "require": {
         "opensid-core": ">=2610.0.0"

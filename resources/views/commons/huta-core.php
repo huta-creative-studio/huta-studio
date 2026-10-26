@@ -32,6 +32,41 @@ if (!function_exists('huta_resolve_desa_data')) {
         if (!isset($desa['nama_desa']) && function_exists('setting')) {
             try { $desa['nama_desa'] = (string) setting('nama_desa'); } catch (\Throwable $e) {}
         }
+        // Koordinat desa (untuk jarak gempa): identitas() sering tidak memuatnya.
+        foreach (['lat', 'lng'] as $hutaKey) {
+            if (!empty($desa[$hutaKey])) {
+                continue;
+            }
+            if (function_exists('setting')) {
+                try {
+                    $hutaVal = setting($hutaKey);
+                    if ($hutaVal !== null && $hutaVal !== '') {
+                        $desa[$hutaKey] = $hutaVal;
+                    }
+                } catch (\Throwable $e) {}
+            }
+        }
+        // Fallback terakhir: baca identitas lengkap dari tabel config.
+        // SlugController menyetel $vars['desa'] = hasil fungsi ini, sehingga
+        // header/footer/meta/JSON-LD halaman slug memakai daftar kolom di bawah.
+        if (empty($desa['nama_desa']) || empty($desa['lat']) || empty($desa['lng'])
+            || empty($desa['nama_kecamatan']) || empty($desa['nama_kabupaten']) || empty($desa['nama_propinsi'])) {
+            try {
+                if (class_exists('\Illuminate\Support\Facades\DB')) {
+                    $hutaCfg = \Illuminate\Support\Facades\DB::table('config')->first([
+                        'nama_desa', 'lat', 'lng',
+                        'nama_kecamatan', 'nama_kabupaten', 'nama_propinsi',
+                        'kode_desa', 'kode_kecamatan', 'kode_kabupaten', 'kode_propinsi', 'kode_pos',
+                        'alamat_kantor', 'telepon', 'email_desa', 'logo',
+                    ]);
+                    foreach ((array) $hutaCfg as $hutaK => $hutaV) {
+                        if ($hutaV !== null && $hutaV !== '' && empty($desa[$hutaK])) {
+                            $desa[$hutaK] = $hutaV;
+                        }
+                    }
+                }
+            } catch (\Throwable $e) {}
+        }
         return $desa;
     }
 }
@@ -164,6 +199,16 @@ if (!function_exists('huta_view_arsip_context')) {
     function huta_view_arsip_context($desa = [], $config = null, $menu = null): array
     {
         $desa = is_array($desa) ? $desa : [];
+        // View slug tidak menerima $desa dari controller (nama_desa/lat/lng kosong),
+        // jadi lengkapi dengan identitas() + setting() + tabel config.
+        foreach (huta_resolve_desa_data() as $hutaK => $hutaV) {
+            if ($hutaV === null || $hutaV === '') {
+                continue;
+            }
+            if (!isset($desa[$hutaK]) || $desa[$hutaK] === '' || $desa[$hutaK] === null) {
+                $desa[$hutaK] = $hutaV;
+            }
+        }
         $routeReq = (string) ($GLOBALS['HUTA_PUBLIC_ROUTE_REQ'] ?? '');
         $isPenduduk = ($routeReq === 'huta-penduduk');
         $isIndeks = ($routeReq === 'huta-indeks');
@@ -214,6 +259,8 @@ if (!function_exists('huta_view_arsip_context')) {
                 'token'    => '',
                 'scope'    => 'autogempa',
                 'village'  => trim(ucwords((string)(function_exists('setting') ? setting('sebutan_desa') : 'Desa')) . ' ' . ($desa['nama_desa'] ?? '')),
+                'lat'      => $desa['lat'] ?? '',
+                'lng'      => $desa['lng'] ?? '',
             ],
             // shalat (dinonaktifkan default â€” user tidak memilih)
             'hutaArsipShalat'              => false,

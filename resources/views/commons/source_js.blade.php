@@ -15,6 +15,9 @@
      Dimuat di sini supaya siap sebelum widget peta di body berjalan. --}}
 <script src="{{ theme_asset('js/huta-mode-gelap.js', ['themeVersion' => $themeVersion]) }}"></script>
 
+{{-- Pemuat data halaman Gempa (BMKG) + tombol Cetak halaman cuaca/gempa. --}}
+<script src="{{ theme_asset('js/huta-gempa.js', ['themeVersion' => $themeVersion]) }}" defer></script>
+
 @include('core::admin.layouts.components.token')
 <script src="{{ asset('js/peta.js') }}"></script>
 <script>
