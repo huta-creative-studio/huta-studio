@@ -150,9 +150,9 @@ if (!function_exists('huta_cuaca_fetch')) {
             'wind_direction' => (string) ($firstSlot['wd'] ?? '-'),
             'image' => (string) ($firstSlot['image'] ?? ''),
         ] : [];
-        $out['_current_temp'] = $firstSlot ? (($firstSlot['t'] ?? '-') . 'Â°C') : '-';
+        $out['_current_temp'] = $firstSlot ? (($firstSlot['t'] ?? '-') . '°C') : '-';
         $out['_current_wind'] = $firstSlot ? (($firstSlot['ws'] ?? '-') . ' km/jam') : '-';
-        $out['_today_temp'] = !empty($temps) ? (min($temps) . 'Â°C - ' . max($temps) . 'Â°C') : '-';
+        $out['_today_temp'] = !empty($temps) ? (min($temps) . '°C - ' . max($temps) . '°C') : '-';
         $out['_hum_min'] = $humMin === 100 ? '-' : $humMin;
         $out['_hum_max'] = $humMax === 0 ? '-' : $humMax;
         $out['message'] = '';

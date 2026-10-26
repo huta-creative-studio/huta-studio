@@ -1140,3 +1140,305 @@ textarea:focus-visible {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ==========================================================================
+   Slug pages — tata letak halaman cuaca / gempa / cek-penduduk / arsip
+   Kelas huta-* sebelumnya tidak punya CSS sama sekali (2026-10-26)
+   ========================================================================== */
+
+/* — Kerangka halaman — */
+.article-single { display: block; }
+.container-page { width: 100%; max-width: 1160px; margin-inline: auto; padding-inline: 16px; }
+.mb-20 { margin-bottom: 20px; }
+
+.huta-page-card {
+  background: var(--hv-card, #fff);
+  border: 1px solid var(--hv-border, #e7e5e4);
+  border-radius: var(--hv-radius, 1rem);
+  box-shadow: var(--hv-shadow, 0 4px 16px rgba(5, 37, 22, .06));
+  padding: clamp(16px, 2.5vw, 28px);
+  margin-bottom: 24px;
+}
+
+/* — Judul halaman: ikon + teks + aksi — */
+.huta-page-title { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.huta-title-icon {
+  width: 56px; height: 56px; flex: 0 0 56px;
+  display: grid; place-items: center;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--hv-primary, #15803d) 12%, var(--hv-card, #fff));
+  color: var(--hv-primary-ink, #15803d);
+}
+.huta-title-icon svg { width: 28px; height: 28px; fill: currentColor; }
+.huta-title-icon i { font-size: 26px; }
+.huta-title-icon-blue,
+.huta-tone-blue {
+  background: color-mix(in srgb, #2563eb 12%, var(--hv-card, #fff));
+  color: #2563eb;
+}
+.huta-title-icon-green { color: var(--hv-primary-ink, #15803d); }
+.huta-environment-title-copy { flex: 1 1 260px; min-width: 0; }
+.huta-page-title h2 { margin: 0; font-size: clamp(1.15rem, 2vw, 1.5rem); color: var(--hv-text-strong, #0f172a); }
+.huta-page-title p { margin: 4px 0 0; font-size: .9rem; color: var(--hv-text, #57534e); }
+.huta-page-actions { display: flex; gap: 8px; margin-left: auto; }
+.huta-print-action,
+.huta-page-back {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 8px 14px;
+  font: inherit; font-size: .85rem; font-weight: 600;
+  border-radius: 10px;
+  border: 1px solid var(--hv-border, #e7e5e4);
+  background: var(--hv-card, #fff);
+  color: var(--hv-primary-ink, #15803d);
+  text-decoration: none; cursor: pointer;
+  transition: background-color .15s ease, border-color .15s ease;
+}
+.huta-print-action:hover,
+.huta-page-back:hover { background: color-mix(in srgb, var(--hv-primary, #15803d) 8%, var(--hv-card, #fff)); }
+.huta-print-action svg, .huta-page-back svg { width: 17px; height: 17px; fill: currentColor; }
+
+/* — Kartu metrik (cuaca) — */
+.huta-environment-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 14px;
+  margin-top: 22px;
+}
+.huta-environment-metric {
+  display: flex; align-items: center; gap: 13px;
+  padding: 16px;
+  border: 1px solid var(--hv-border, #e7e5e4);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--hv-primary, #15803d) 4%, var(--hv-card, #fff));
+  min-width: 0;
+}
+.huta-environment-metric-icon {
+  width: 54px; height: 54px; flex: 0 0 54px;
+  display: grid; place-items: center;
+  border-radius: 13px;
+  background: color-mix(in srgb, var(--hv-primary, #15803d) 12%, var(--hv-card, #fff));
+  color: var(--hv-primary-ink, #15803d);
+}
+.huta-environment-metric-icon svg { width: 30px; height: 30px; fill: currentColor; }
+.huta-environment-metric-icon img { width: 54px; height: 54px; object-fit: contain; }
+.huta-environment-metric div { min-width: 0; }
+.huta-environment-metric small {
+  display: block;
+  font-size: .72rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .05em;
+  color: var(--hv-text, #57534e);
+}
+.huta-environment-metric strong {
+  display: block;
+  font-size: clamp(1.15rem, 1.6vw, 1.4rem);
+  color: var(--hv-text-strong, #0f172a);
+  line-height: 1.3;
+}
+.huta-environment-metric em {
+  display: block; font-style: normal;
+  font-size: .8rem; color: var(--hv-text, #57534e);
+  overflow-wrap: anywhere;
+}
+.huta-weather-now { background: color-mix(in srgb, var(--hv-primary, #15803d) 10%, var(--hv-card, #fff)); }
+.huta-air-unknown .huta-environment-metric-icon { opacity: .75; }
+.huta-air-category-text { font-weight: 600; color: var(--hv-primary-ink, #15803d) !important; }
+
+/* — Dua panel atas (wilayah + kualitas udara) — */
+.huta-environment-topgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+.huta-panel {
+  background: var(--hv-card, #fff);
+  border: 1px solid var(--hv-border, #e7e5e4);
+  border-radius: 14px;
+  padding: clamp(14px, 2vw, 20px);
+  min-width: 0;
+}
+.huta-panel-heading {
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--hv-border, #e7e5e4);
+}
+.huta-panel-heading h3 { margin: 0; font-size: 1.02rem; color: var(--hv-text-strong, #0f172a); }
+.huta-panel-heading p { margin: 4px 0 0; font-size: .83rem; color: var(--hv-text, #57534e); }
+
+/* — Identitas wilayah — */
+.huta-environment-identity {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px 18px;
+}
+.huta-environment-identity div { min-width: 0; }
+.huta-environment-identity span {
+  display: block;
+  font-size: .72rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .05em;
+  color: var(--hv-text, #57534e);
+}
+.huta-environment-identity strong {
+  display: block; margin-top: 2px;
+  font-size: .96rem;
+  color: var(--hv-text-strong, #0f172a);
+  overflow-wrap: anywhere;
+}
+.huta-environment-update {
+  display: flex; align-items: center; gap: 9px;
+  margin-top: 16px;
+  padding: 10px 13px;
+  border-radius: 11px;
+  background: color-mix(in srgb, var(--hv-primary, #15803d) 8%, var(--hv-card, #fff));
+  font-size: .85rem;
+  color: var(--hv-text, #57534e);
+}
+.huta-environment-update svg { width: 18px; height: 18px; flex: none; fill: var(--hv-primary-ink, #15803d); }
+
+/* — Panel kualitas udara — */
+.huta-air-status {
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--hv-primary, #15803d) 30%, transparent);
+  background: color-mix(in srgb, var(--hv-primary, #15803d) 8%, var(--hv-card, #fff));
+}
+.huta-air-status span {
+  display: inline-block;
+  font-size: .74rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .06em;
+  color: var(--hv-primary-ink, #15803d);
+}
+.huta-air-status strong { display: block; font-size: 1.3rem; color: var(--hv-text-strong, #0f172a); margin-top: 3px; }
+.huta-air-status p { margin: 6px 0 0; font-size: .85rem; color: var(--hv-text, #57534e); }
+.huta-air-scale { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.huta-air-scale-item {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--hv-border, #e7e5e4);
+  font-size: .74rem; font-weight: 600;
+  color: var(--hv-text, #57534e);
+  opacity: .65;
+}
+.huta-air-scale-item i { width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
+.huta-air-scale-item.is-active { opacity: 1; border-color: currentColor; }
+.huta-air-scale-good { color: #16a34a; }
+.huta-air-scale-moderate { color: #ca8a04; }
+.huta-air-scale-unhealthy { color: #ea580c; }
+.huta-air-scale-very-unhealthy { color: #dc2626; }
+.huta-air-scale-hazardous { color: #9f1239; }
+.huta-air-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 9px;
+  margin-top: 14px;
+}
+.huta-air-grid div {
+  padding: 10px 12px;
+  border: 1px solid var(--hv-border, #e7e5e4);
+  border-radius: 11px;
+  background: var(--hv-card, #fff);
+}
+.huta-air-grid span { display: block; font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--hv-text, #57534e); }
+.huta-air-grid strong { display: block; font-size: 1.05rem; color: var(--hv-text-strong, #0f172a); }
+.huta-air-grid small { font-size: .7rem; color: var(--hv-text, #57534e); }
+.huta-air-note { margin: 14px 0 0; font-size: .78rem; line-height: 1.55; color: var(--hv-text, #57534e); }
+
+/* — Tabel prakiraan — */
+.huta-weather-table-panel { margin-top: 16px; }
+.huta-table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--hv-border, #e7e5e4);
+  border-radius: 12px;
+}
+.huta-data-table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+  font-size: .87rem;
+}
+.huta-data-table th {
+  padding: 11px 13px;
+  text-align: left;
+  white-space: nowrap;
+  font-weight: 600;
+  font-size: .78rem;
+  text-transform: uppercase; letter-spacing: .04em;
+  color: var(--hv-text-strong, #0f172a);
+  background: color-mix(in srgb, var(--hv-primary, #15803d) 9%, var(--hv-card, #fff));
+  border-bottom: 1px solid var(--hv-border, #e7e5e4);
+}
+.huta-data-table td { padding: 10px 13px; border-bottom: 1px solid var(--hv-border, #e7e5e4); color: var(--hv-text, #57534e); vertical-align: middle; }
+.huta-data-table tbody tr:last-child td { border-bottom: 0; }
+.huta-data-table tbody tr:hover td { background: color-mix(in srgb, var(--hv-primary, #15803d) 5%, transparent); }
+.huta-weather-condition { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
+.huta-weather-condition img { width: 34px; height: 34px; object-fit: contain; flex: none; }
+
+/* — Catatan sumber & status kosong — */
+.huta-source-note {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 18px;
+  font-size: .82rem;
+  color: var(--hv-text, #57534e);
+}
+.huta-source-note svg { width: 16px; height: 16px; flex: none; fill: currentColor; }
+.huta-empty-state { text-align: center; padding: clamp(24px, 5vw, 44px) 16px; }
+.huta-empty-state svg { width: clamp(48px, 8vw, 64px); height: clamp(48px, 8vw, 64px); fill: var(--hv-primary-ink, #15803d); opacity: .6; }
+.huta-empty-state strong { display: block; margin-top: 12px; font-size: 1.05rem; color: var(--hv-text-strong, #0f172a); }
+.huta-empty-state span { display: block; margin-top: 5px; font-size: .9rem; color: var(--hv-text, #57534e); }
+.huta-remote-status {
+  padding: 16px;
+  border: 1px dashed var(--hv-border, #e7e5e4);
+  border-radius: 12px;
+  text-align: center;
+  font-size: .88rem;
+  color: var(--hv-text, #57534e);
+}
+
+/* — Tabel jadi kartu di layar kecil — */
+@media (max-width: 760px) {
+  .huta-table-scroll { overflow: visible; border: 0; border-radius: 0; }
+  .huta-data-table { min-width: 0; }
+  .huta-data-table thead { display: none; }
+  .huta-data-table tbody { display: block; }
+  .huta-data-table tbody tr {
+    display: block;
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    background: var(--hv-card, #fff);
+    border: 1px solid var(--hv-border, #e7e5e4);
+    border-radius: 12px;
+  }
+  .huta-data-table td {
+    display: flex; align-items: center; justify-content: space-between; gap: 14px;
+    padding: 6px 0;
+    border-bottom: 1px dashed color-mix(in srgb, var(--hv-border, #e7e5e4) 80%, transparent);
+  }
+  .huta-data-table tbody tr td:last-child { border-bottom: 0; }
+  .huta-data-table td::before {
+    content: attr(data-label);
+    flex: none;
+    font-size: .72rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .04em;
+    color: var(--hv-text, #57534e);
+  }
+}
+
+@media (max-width: 560px) {
+  .huta-page-actions { margin-left: 0; width: 100%; }
+  .huta-print-action, .huta-page-back { flex: 1; justify-content: center; }
+  .huta-title-icon { width: 46px; height: 46px; flex-basis: 46px; }
+  .huta-title-icon svg { width: 24px; height: 24px; }
+  .huta-environment-metric { padding: 13px; gap: 11px; }
+  .huta-environment-metric-icon { width: 46px; height: 46px; flex-basis: 46px; }
+  .huta-environment-metric-icon svg, .huta-environment-metric-icon img { width: 26px; height: 26px; }
+}
+
+/* — Cetak: sembunyikan aksi, rapikan tabel — */
+@media print {
+  .huta-no-print { display: none !important; }
+  .huta-page-card { border: 0; box-shadow: none; padding: 0; }
+  .huta-table-scroll { overflow: visible; border: 0; }
+  .huta-data-table { min-width: 0; }
+}
