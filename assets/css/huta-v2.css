@@ -79,6 +79,23 @@ body { font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif; }
 }
 .hv-btn-gold:hover { background: var(--hv-accent-dark); color: var(--hv-accent-ink); }
 
+/* Responsive Aparatur widget: OwlCarousel (desktop) vs Grid (mobile) */
+.hv-ap-desktop { display: none; }
+.hv-ap-mobile { display: block; }
+@media (min-width: 768px) {
+    .hv-ap-desktop { display: block; }
+    .hv-ap-mobile { display: none; }
+}
+
+/* ===== Responsive Aparatur widget ===== */
+.hv-ap-desktop { display: none; }
+.hv-ap-mobile  { display: block; }
+
+@media (min-width: 768px) {
+    .hv-ap-desktop { display: block; }
+    .hv-ap-mobile  { display: none; }
+}
+
 /* ===== Task 2: Navbar modern ===== */
 .hv-nav {
   position: sticky; top: 0; z-index: 1050;
