@@ -1720,6 +1720,8 @@ textarea:focus-visible {
 @media (max-width: 560px) {
   .huta-earthquake-tabs { width: 100%; }
   .huta-earthquake-tabs button { flex: 1; }
+  .huta-earthquake-metrics { grid-template-columns: 1fr; }
   .huta-earthquake-metric { padding: 13px; gap: 11px; }
   .huta-earthquake-metric-icon { width: 44px; height: 44px; flex-basis: 44px; font-size: 18px; }
+  .huta-earthquake-info-grid { grid-template-columns: 1fr; }
 }

@@ -5,38 +5,42 @@
         </h3>
     </div>
     <div class="box-body">
-        <div class="owl-carousel">
-            @foreach ($aparatur_desa['daftar_perangkat'] as $data)
-                <div class="relative space-y-2">
-                    <div class="w-3/4 mx-auto">
-                        <img src="{{ $data['foto'] }}" alt="{{ $data['nama'] }}" loading="lazy" decoding="async" class="object-cover object-center bg-gray-300">
-                    </div>
-                    @if (getWidgetSetting('aparatur_desa', 'overlay') == true)
-                        <div class="space-y-1 text-sm text-center z-10">
-                            <span class="text-h6">{{ $data['nama'] }}</span>
-                            <span class="block">{{ $data['jabatan'] }}</span>
-                            @if ($data['pamong_niap'])
-                                <span class="block">{{ setting('sebutan_nip_desa') }} : {{ $data['pamong_niap'] }}</span>
-                            @endif
-                            @if ($tampilkan_status_kehadiran)
-                                @if ($data['kehadiran'] == 1)
-                                    @if ($data['status_kehadiran'] == 'hadir')
-                                        <span class="btn btn-primary w-auto mx-auto inline-block">Hadir</span>
-                                    @endif
-                                    @if ($data['tanggal'] == date('Y-m-d') && $data['status_kehadiran'] != 'hadir')
-                                        <span class="btn btn-danger w-auto mx-auto inline-block">{{ ucwords($data['status_kehadiran']) }}</span>
-                                    @endif
-                                    @if ($data['tanggal'] != date('Y-m-d'))
-                                        <span class="btn btn-danger w-auto mx-auto inline-block">Belum Rekam Kehadiran</span>
-                                    @endif
-                                @endif
-                            @else
-                                <span class="btn btn-default w-auto mx-auto inline-block">Hari Libur</span>
-                            @endif
+        <div class="hv-pm-gridwrap">
+            <div class="hv-pm-grid">
+                @foreach ($aparatur_desa['daftar_perangkat'] as $data)
+                    <div class="hv-pm-card">
+                        <div class="hv-pm-media">
+                            <img src="{{ $data['foto'] }}" alt="{{ $data['nama'] }}" loading="lazy" decoding="async" class="hv-pm-foto">
                         </div>
-                    @endif
-                </div>
-            @endforeach
+                        @if (getWidgetSetting('aparatur_desa', 'overlay') == true)
+                            <div class="hv-pm-info">
+                                <div class="hv-pm-nama">{{ $data['nama'] }}</div>
+                                <div class="hv-pm-jabatan">{{ $data['jabatan'] }}</div>
+                                @if ($data['pamong_niap'])
+                                    <div class="text-[10px] text-gray-500 mt-1 uppercase font-bold">{{ setting('sebutan_nip_desa') }} : {{ $data['pamong_niap'] }}</div>
+                                @endif
+                                
+                                <div class="hv-pm-hint">
+                                    @if ($tampilkan_status_kehadiran)
+                                        @if ($data['kehadiran'] == 1)
+                                            @if ($data['status_kehadiran'] == 'hadir')
+                                                <span class="hv-badge hv-badge--hadir">Hadir</span>
+                                            @else
+                                                <span class="hv-badge hv-badge--{{ $data['status_kehadiran'] }}">{{ ucwords($data['status_kehadiran']) }}</span>
+                                            @endif
+                                        @else
+                                            <span class="hv-badge hv-badge--belum">Belum Rekam</span>
+                                        @endif
+                                    @else
+                                        <span class="hv-badge hv-badge--libur">Hari Libur</span>
+                                    @endif
+                                    <i class="fas fa-arrow-right hv-pm-arrow"></i>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                @endforeach
+            </div>
         </div>
     </div>
 </div>
