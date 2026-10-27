@@ -37,6 +37,11 @@
                                     <i class="fas fa-arrow-right hv-pm-arrow"></i>
                                 </div>
                             </div>
+                        @else
+                            <div class="hv-pm-info">
+                                <div class="hv-pm-nama">{{ $data['nama'] }}</div>
+                                <div class="hv-pm-jabatan">{{ $data['jabatan'] }}</div>
+                            </div>
                         @endif
                     </div>
                 @endforeach
